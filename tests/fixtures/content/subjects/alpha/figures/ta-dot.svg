@@ -1,0 +1,1 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" font-family="inherit"><title>Точка движется равномерно</title><line class="s-ink" x1="10" y1="40" x2="190" y2="40" stroke-width="2"/><circle id="ta-dot-c" class="f-accent" cx="20" cy="40" r="6"><animate attributeName="cx" from="20" to="180" dur="3s" repeatCount="indefinite"/></circle></svg>

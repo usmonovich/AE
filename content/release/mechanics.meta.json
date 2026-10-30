@@ -1,0 +1,12 @@
+{
+  "sourcePack": "content/subjects/mechanics/pack.json",
+  "sourceSha256": "2c562ac044e83cfc376b8c120cdf6d15c6a272977fb08881769b01e66dd44d48",
+  "overlay": null,
+  "createdAt": "2026-10-30T20:46:59.550Z",
+  "kept": {
+    "theory": 0,
+    "formulas": 0,
+    "examples": 0,
+    "questions": 0
+  }
+}

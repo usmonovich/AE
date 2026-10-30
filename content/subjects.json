@@ -1,0 +1,96 @@
+{
+  "$comment": "Реестр предметов приложения AE. Порядок здесь = порядок карточек на стартовом экране. Поле id нельзя менять после того, как у предмета появился прогресс: от него зависят ключи хранилища, документы базы артефакта и имена файлов. prefix — первый сегмент адреса (#/<prefix>/…) и обязательное начало ID тем и записей предмета. style: notes — материалы по страницам файлов (фото/PDF), book — учебник с оглавлением (план курса, печатные страницы без изображений). vocab: materials | notes | book — как интерфейс называет источник. tone: accent | ok | warn | bad — цвет значка (токены дизайн-системы).",
+  "app": {
+    "title": "AE",
+    "eyebrow": "Учёба по предметам",
+    "lead": "Выберите предмет. Прогресс, тесты и избранное у каждого предмета свои.",
+    "storagePrefix": "ae",
+    "cloudPrefix": "ae"
+  },
+  "subjects": [
+    {
+      "id": "crm",
+      "prefix": "crm",
+      "emoji": "🧠",
+      "icon": "brain",
+      "tone": "accent",
+      "title": "Aviation Psychology and Crew Resource Management (CRM)",
+      "short": "CRM",
+      "tagline": "Авиационная психология и взаимодействие экипажа",
+      "style": "notes",
+      "vocab": "materials"
+    },
+    {
+      "id": "circuits",
+      "prefix": "ct",
+      "emoji": "⚡",
+      "icon": "bolt",
+      "tone": "warn",
+      "title": "Circuit Theory",
+      "short": "Circuit Theory",
+      "tagline": "Теория электрических цепей",
+      "style": "notes",
+      "vocab": "materials"
+    },
+    {
+      "id": "cost",
+      "prefix": "ce",
+      "emoji": "💰",
+      "icon": "coins",
+      "tone": "ok",
+      "title": "Cost Engineering",
+      "short": "Cost Engineering",
+      "tagline": "Инженерная оценка затрат",
+      "style": "notes",
+      "vocab": "materials"
+    },
+    {
+      "id": "hpm",
+      "prefix": "hpm",
+      "emoji": "🩺",
+      "icon": "stethoscope",
+      "tone": "bad",
+      "title": "Human Performance and Medicine",
+      "short": "Human Performance",
+      "tagline": "Возможности человека и авиационная медицина",
+      "style": "notes",
+      "vocab": "materials"
+    },
+    {
+      "id": "hydraulics",
+      "prefix": "hyd",
+      "emoji": "💧",
+      "icon": "droplet",
+      "tone": "accent",
+      "title": "Hydraulics and Hydraulic Systems",
+      "short": "Hydraulics",
+      "tagline": "Гидравлика и гидравлические системы",
+      "style": "notes",
+      "vocab": "materials"
+    },
+    {
+      "id": "math3",
+      "prefix": "m3",
+      "emoji": "📐",
+      "icon": "sigma",
+      "tone": "ok",
+      "title": "Mathematics III",
+      "short": "Mathematics III",
+      "tagline": "Математика, часть III",
+      "style": "notes",
+      "vocab": "materials"
+    },
+    {
+      "id": "mechanics",
+      "prefix": "mech",
+      "emoji": "⚙️",
+      "icon": "cog",
+      "tone": "warn",
+      "title": "Mechanics",
+      "short": "Mechanics",
+      "tagline": "Механика",
+      "style": "notes",
+      "vocab": "materials"
+    }
+  ]
+}

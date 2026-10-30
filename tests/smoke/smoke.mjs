@@ -1,0 +1,14 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch();
+const p = await b.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 });
+const errs = [];
+p.on('pageerror', e => errs.push('pageerror: ' + e.message));
+p.on('console', m => { if (m.type() === 'error') errs.push('console: ' + m.text()); });
+await p.goto('http://localhost:4173/');
+await p.waitForTimeout(800);
+await p.screenshot({ path: '/tmp/claude-0/s1-home.png', fullPage: true });
+await p.goto('http://localhost:4173/#/crm');
+await p.waitForTimeout(500);
+await p.screenshot({ path: '/tmp/claude-0/s2-subject.png' });
+console.log(errs.join('\n') || 'no errors');
+await b.close();

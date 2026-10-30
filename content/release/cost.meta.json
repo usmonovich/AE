@@ -1,0 +1,12 @@
+{
+  "sourcePack": "content/subjects/cost/pack.json",
+  "sourceSha256": "c480f92dc9955e4a2a540087570622bf4b0a303ec88a460179f9198129a99088",
+  "overlay": null,
+  "createdAt": "2026-10-30T20:46:59.546Z",
+  "kept": {
+    "theory": 0,
+    "formulas": 0,
+    "examples": 0,
+    "questions": 0
+  }
+}

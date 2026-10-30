@@ -1,0 +1,156 @@
+subsection: ta-motion
+
+topics:
+  - id: ta-speed
+    title: Скорость равномерного движения
+    pages: [a01]
+    theory:
+      - kind: definition
+        title: Скорость
+        fig: ta-dot
+        body: Скорость равномерного движения — путь, пройденный телом за единицу времени.
+        src: a01
+      - kind: definition
+        title: Путь
+        body: Путь — это перемещение тела.
+        errata: [ta-e1]
+        src: a01
+    formulas:
+      - title: Скорость
+        tex: '\upsilon = \frac{s}{t}'
+        sym: [v, s, t]
+        boxed: true
+        src: a01
+      - title: Путь
+        tex: 's = \upsilon t'
+        sym: [s, v, t]
+        src: a01
+      - title: Время
+        tex: 't = \frac{s}{\upsilon}'
+        sym: [t, s, v]
+        src: a01
+    examples:
+      - title: Путь за 3 секунды
+        given: '$\upsilon = 5$ м/с, $t = 3$ с'
+        steps: ['$s = \upsilon t$', '$s = 5\cdot3 = 15$ м']
+        answer: '15 м'
+        src: a01
+    questions:
+      - type: single
+        cat: theory
+        q: Что называют скоростью равномерного движения?
+        opts: ['Путь, пройденный за единицу времени', 'Изменение скорости за единицу времени', 'Время прохождения пути', 'Длину траектории']
+        ans: a
+        hint: Посмотрите определение в начале страницы.
+        explain: Скорость — путь, пройденный телом за единицу времени.
+        src: a01
+      - type: numeric
+        cat: problem
+        q: Тело движется со скоростью 12 м/с. Какой путь оно пройдёт за 4 с?
+        num: { value: 48, unit: 'м', check: '12*4' }
+        hint: 'Путь равен произведению скорости на время.'
+        explain: '$s = \upsilon t$.'
+        f: [2]
+        sol: { given: ['υ = 12 м/с', 't = 4 с'], find: 's', formula: 's = \upsilon t', calc: 's = 12\cdot4 = 48', answer: '48 м' }
+        src: a01
+      - type: multiple
+        cat: formula
+        q: Какие формулы верны для равномерного движения?
+        opts: ['$s = \upsilon t$', '$\upsilon = \frac{s}{t}$', '$s = \frac{\upsilon}{t}$', '$t = \upsilon s$']
+        ans: [a, b]
+        hint: Проверьте единицы измерения в каждой формуле.
+        explain: 'Верны $s = \upsilon t$ и $\upsilon = s/t$.'
+        f: [1, 2]
+        src: a01
+      - type: matching
+        cat: theory
+        q: Сопоставьте величину и единицу СИ.
+        pairs:
+          - ['Скорость', 'м/с']
+          - ['Путь', 'м']
+          - ['Время', 'с']
+        hint: Единица скорости — метр в секунду.
+        explain: Скорость — м/с, путь — м, время — с.
+        src: a01
+      - type: sequence
+        cat: problem
+        q: Расположите шаги решения задачи на путь по порядку.
+        seq: ['Записать, что дано', 'Выбрать формулу $s = \upsilon t$', 'Подставить числа', 'Записать ответ с единицами']
+        hint: Сначала — условие, в конце — ответ.
+        explain: Дано → формула → подстановка → ответ.
+        src: a01
+      - type: numeric
+        cat: problem
+        q: Тело прошло 90 м за 6 с. Найдите скорость.
+        num: { value: 15, unit: 'м/с', check: '90/6' }
+        hint: Разделите путь на время.
+        explain: '$\upsilon = s/t$.'
+        f: [1]
+        sol: { given: ['s = 90 м', 't = 6 с'], find: 'υ', formula: '\upsilon = \frac{s}{t}', calc: '\upsilon = \frac{90}{6} = 15', answer: '15 м/с' }
+        src: a01
+      - type: text
+        cat: theory
+        q: Своими словами объясните, что такое путь.
+        ref: Путь — длина траектории, по которой двигалось тело.
+        criteria: ['упомянута траектория', 'упомянута длина']
+        hint: Путь связан с траекторией.
+        explain: Путь — длина траектории.
+        src: a01
+  - id: ta-accel
+    title: Ускорение
+    pages: [a02]
+    theory:
+      - kind: definition
+        title: Ускорение
+        body: Ускорение — изменение скорости за единицу времени.
+        src: a02
+    formulas:
+      - title: Ускорение
+        tex: 'a = \frac{\Delta\upsilon}{t}'
+        sym: [a, dv, t]
+        src: a02
+    questions:
+      - type: single
+        cat: theory
+        q: Что показывает ускорение?
+        opts: ['Изменение скорости за единицу времени', 'Путь за единицу времени', 'Длину траектории', 'Время движения']
+        ans: a
+        hint: Ускорение связано со скоростью.
+        explain: Ускорение — изменение скорости за единицу времени.
+        src: a02
+      - type: numeric
+        cat: problem
+        q: Скорость выросла на 20 м/с за 5 с. Найдите ускорение.
+        num: { value: 4, unit: 'м/с²', check: '20/5' }
+        hint: Разделите изменение скорости на время.
+        explain: '$a = \Delta\upsilon/t$.'
+        f: [1]
+        sol: { given: ['Δυ = 20 м/с', 't = 5 с'], find: 'a', formula: 'a = \frac{\Delta\upsilon}{t}', calc: 'a = \frac{20}{5} = 4', answer: '4 м/с²' }
+        src: a02
+      - type: numeric
+        cat: problem
+        q: Скорость выросла на 30 м/с за 10 с. Найдите ускорение.
+        num: { value: 3, unit: 'м/с²', check: '30/10' }
+        hint: Разделите изменение скорости на время.
+        explain: '$a = \Delta\upsilon/t$.'
+        f: [1]
+        sol: { given: ['Δυ = 30 м/с', 't = 10 с'], find: 'a', formula: 'a = \frac{\Delta\upsilon}{t}', calc: 'a = \frac{30}{10} = 3', answer: '3 м/с²' }
+        src: a02
+      - type: numeric
+        cat: problem
+        q: Скорость тела всё время равна 10 м/с. Найдите ускорение за 5 с.
+        num: { value: 0, unit: 'м/с²', check: '(10-10)/5' }
+        hint: Изменилась ли скорость?
+        explain: 'Скорость не изменилась: $\Delta\upsilon = 0$, значит, $a = 0$.'
+        f: [1]
+        sol: { given: ['Δυ = 0', 't = 5 с'], find: 'a', formula: 'a = \frac{\Delta\upsilon}{t}', calc: 'a = \frac{0}{5} = 0', answer: '0' }
+        src: a02
+      - type: single
+        cat: formula
+        q: В каких единицах измеряется ускорение в СИ?
+        opts: ['м/с²', 'м/с', 'м', 'с']
+        ans: a
+        hint: Скорость делят на время.
+        explain: 'м/с : с = м/с².'
+        fromSource: true
+        src: a02

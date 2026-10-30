@@ -1,0 +1,22 @@
+# ⚡ Circuit Theory
+# Структура курса, файлы-источники, словарь обозначений, замечания к источнику.
+# Предмет создан пустым: разделы, темы и записи добавляются только по присланным материалам.
+# ID разделов, подразделов, тем и записей начинаются с «ct-».
+# Как добавлять материалы — docs/07-adding-materials.md; журнал предмета — docs/subjects/circuits.md.
+
+course:
+  id: circuits
+  title: "Circuit Theory"
+  owner: Husniddin
+  language: ru
+
+# файлы-источники (PDF, фото, презентации): id, title, fileName, kind, pdfPages, sha256, pagePrefix, notes
+sourceFiles: []
+
+sections: []
+
+subsections: []
+
+symbols: {}
+
+errata: []

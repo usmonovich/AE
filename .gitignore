@@ -1,0 +1,22 @@
+node_modules/
+dist/
+artifact/
+android/app/build/
+ios/App/build/
+.env
+*.keystore
+*.jks
+/release/
+android/local.properties
+# хеш PIN администратора — только у владельца
+.admin-pin
+# изображения страниц материалов и транскрипты — только у владельца (в репозитории — списки pages.txt)
+content/subjects/*/pages/*.webp
+content/subjects/*/pages/*.jpg
+content/subjects/*/pages/*.jpeg
+content/subjects/*/pages/*.png
+content/subjects/*/pages/ocr/
+content/subjects/*/transcript/
+content/subjects/*/originals/
+# служебные скрипты разработки
+tools/dev/

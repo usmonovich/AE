@@ -1,0 +1,14 @@
+{
+  "$comment": "Тестовые предметы для автотестов (e2e и unit). Это не учебный материал: содержание синтетическое и в приложение не попадает.",
+  "app": {
+    "title": "AE",
+    "eyebrow": "Учёба по предметам",
+    "lead": "Выберите предмет. Прогресс, тесты и избранное у каждого предмета свои.",
+    "storagePrefix": "ae",
+    "cloudPrefix": "ae"
+  },
+  "subjects": [
+    { "id": "alpha", "prefix": "ta", "emoji": "🧪", "icon": "bolt", "tone": "accent", "title": "Тестовый предмет А", "short": "Предмет А", "tagline": "Материалы по страницам файлов", "style": "notes", "vocab": "materials" },
+    { "id": "beta", "prefix": "tb", "emoji": "📘", "icon": "sigma", "tone": "ok", "title": "Тестовый предмет Б", "short": "Предмет Б", "tagline": "Учебник с оглавлением", "style": "book", "vocab": "book" }
+  ]
+}

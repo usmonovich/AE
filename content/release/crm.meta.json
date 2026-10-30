@@ -1,0 +1,12 @@
+{
+  "sourcePack": "content/subjects/crm/pack.json",
+  "sourceSha256": "385c3d2b38f41daba8b17e77cc8c9f6e194c3f40163774579bfa3fbc7d1fa054",
+  "overlay": null,
+  "createdAt": "2026-10-30T20:46:59.543Z",
+  "kept": {
+    "theory": 0,
+    "formulas": 0,
+    "examples": 0,
+    "questions": 0
+  }
+}

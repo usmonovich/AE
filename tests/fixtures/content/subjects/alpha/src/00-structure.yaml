@@ -1,0 +1,44 @@
+# Тестовый предмет А (стиль notes): синтетические записи для автотестов. Не учебный материал.
+course:
+  id: alpha
+  title: Тестовый предмет А
+  owner: test
+  language: ru
+
+sourceFiles:
+  - id: ta-file-1
+    title: Тестовый файл материалов
+    fileName: test-materials.pdf
+    kind: pdf-photo
+    pdfPages: 3
+    pagePrefix: a
+    notes:
+      - Синтетический файл для автотестов; изображений страниц в репозитории нет (только pages.txt).
+
+pageDates:
+  a01: 01.09.2026
+
+sections:
+  - { id: ta-sec-kin, title: 'Кинематика', status: active }
+  - { id: ta-sec-units, title: 'Единицы измерения', status: active }
+
+subsections:
+  - { id: ta-motion, sectionId: ta-sec-kin, title: 'Скорость и ускорение' }
+  - { id: ta-units, sectionId: ta-sec-units, title: 'Система СИ' }
+
+symbols:
+  v: { tex: '\upsilon', meaning: 'скорость', unit: 'м/с', src: a01 }
+  s: { tex: 's', meaning: 'пройденный путь', unit: 'м', src: a01 }
+  t: { tex: 't', meaning: 'время движения', unit: 'с', src: a01 }
+  a: { tex: 'a', meaning: 'ускорение', unit: 'м/с²', src: a02 }
+  dv: { tex: '\Delta\upsilon', meaning: 'изменение скорости', unit: 'м/с', src: a02 }
+
+errata:
+  - id: ta-e1
+    page: a01
+    severity: typo
+    target: определение пути
+    original: 'путь — это перемещение'
+    issue: путь и перемещение — разные величины
+    suggestion: 'путь — длина траектории'
+    todo: подтвердить исправление

@@ -1,0 +1,49 @@
+{
+  "name": "ae",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "AE — учебное приложение по предметам: теория, формулы, анимации и тесты по материалам владельца",
+  "scripts": {
+    "content:build": "node tools/content-all.mjs",
+    "content:build:strict": "node tools/content-all.mjs --strict",
+    "content:fixtures": "node tools/content-all.mjs --content tests/fixtures/content",
+    "build": "node tools/build.mjs",
+    "serve": "node tools/serve.mjs 4173",
+    "test:unit": "tsx --test tests/unit/*.test.ts",
+    "build:test": "node tools/build.mjs --test-pin 1234 --content tests/fixtures/content",
+    "build:test:subjects": "node tools/build.mjs --test-pin 1234",
+    "test:e2e": "npm run build:test && node tests/e2e/flows.mjs && npm run build:test:subjects && node tests/e2e/subjects.mjs",
+    "test:e2e:cloud": "npm run build:test && node tests/e2e/cloud.mjs",
+    "test:db": "bash tests/db/run.sh",
+    "test": "npm run content:build && npm run content:fixtures && npm run test:unit && npm run build",
+    "release:pack": "tsx tools/release-pack.ts",
+    "build:release": "node tools/build.mjs --release",
+    "cap:sync": "npm run build:release && npx cap sync",
+    "android": "npm run cap:sync && npx cap open android",
+    "ios": "npm run cap:sync && npx cap open ios"
+  },
+  "dependencies": {
+    "katex": "0.16.47",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "@capacitor/core": "^8.5.3",
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/ios": "^8.5.3"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^8.5.3",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "esbuild": "0.28.2",
+    "js-yaml": "3.15.1",
+    "playwright": "1.56.0",
+    "tsx": "4.23.12",
+    "typescript": "6.0.3"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

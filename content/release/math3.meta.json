@@ -1,0 +1,12 @@
+{
+  "sourcePack": "content/subjects/math3/pack.json",
+  "sourceSha256": "550b85a427eefa420a58e6bd8f1da20406647661ca636e3486719165f21d26f1",
+  "overlay": null,
+  "createdAt": "2026-10-30T20:46:59.550Z",
+  "kept": {
+    "theory": 0,
+    "formulas": 0,
+    "examples": 0,
+    "questions": 0
+  }
+}

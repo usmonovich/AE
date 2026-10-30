@@ -1,0 +1,11 @@
+{
+  "appId": "uz.husniddin.ae",
+  "appName": "AE",
+  "webDir": "dist",
+  "android": {
+    "allowMixedContent": false
+  },
+  "ios": {
+    "contentInset": "automatic"
+  }
+}

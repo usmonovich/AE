@@ -1,0 +1,31 @@
+# Тестовый предмет Б (стиль book): синтетические записи для автотестов. Не учебный материал.
+course:
+  id: beta
+  title: Тестовый предмет Б
+  owner: test
+  language: ru
+  book: 'Тестовая книга'
+
+sourceFiles:
+  - id: tb-book
+    title: Тестовая книга
+    fileName: test-book.pdf
+    kind: pdf-scan
+    pdfPages: 10
+    bookPages: [3, 10]
+    pdfOffset: 2
+    pagePrefix: b
+    notes:
+      - Синтетическая книга для автотестов.
+
+sections:
+  - { id: tb-alg, title: 'Арифметика', status: active }
+
+subsections:
+  - { id: tb-1-1, sectionId: tb-alg, title: '1.1 Действия с числами' }
+  - { id: tb-1-2, sectionId: tb-alg, title: '1.2 Проценты' }
+
+plan:
+  - { num: '1.1.1', subsectionId: tb-1-1, title: 'Порядок действий', pages: [b003, b004] }
+  - { num: '1.1.2', subsectionId: tb-1-1, title: 'Деление с остатком', pages: [b005] }
+  - { num: '1.2.1', subsectionId: tb-1-2, title: 'Нахождение процента от числа', pages: [b006, b007] }

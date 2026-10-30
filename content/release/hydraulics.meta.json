@@ -1,0 +1,12 @@
+{
+  "sourcePack": "content/subjects/hydraulics/pack.json",
+  "sourceSha256": "e4cbd6cc076b6cf91526ad24748e9da71ed9a0e9867e99d4ba49540781b0a42b",
+  "overlay": null,
+  "createdAt": "2026-10-30T20:46:59.548Z",
+  "kept": {
+    "theory": 0,
+    "formulas": 0,
+    "examples": 0,
+    "questions": 0
+  }
+}
