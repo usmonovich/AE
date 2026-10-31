@@ -1,0 +1,476 @@
+# Lecture 3. Uniform convergence of series, M-test, power series, radius of convergence, Taylor expansion (slides c01–c86).
+# Slide c85 repeats the exercises of Lecture 2 (b108) — they are not duplicated here.
+subsection: m3-l3
+
+topics:
+  - id: m3-series-abs-cond
+    title: Functional series at a point, absolute and conditional convergence
+    pages: [c01, c05, c09, c13, c16, c19, c25, c29]
+    theory:
+      - kind: text
+        title: From a functional series to a numerical series
+        body: 'Giving $x$ a particular value turns $\sum f_n(x)$ into a numerical series: e.g. at $x = 2$ we get $\sum f_n(2)$, whose terms are numbers. For $\sum x^n$ at $x_0 = \frac12$: $\frac12 + \frac14 + \frac18 + \dots$ — a convergent numerical series.'
+        src: [c05, c09, c13]
+      - kind: definition
+        title: Absolute and conditional convergence at a point
+        body: |
+          - If $\sum |f_n(x_0)|$ converges, the series $\sum f_n(x)$ is **absolutely convergent** at $x_0$.
+          - If $\sum f_n(x_0)$ converges but $\sum |f_n(x_0)|$ diverges, the series is **conditionally convergent** at $x_0$.
+        src: [c16, c19]
+      - kind: rule
+        title: How to find the set of convergence
+        body: |
+          1. Consider the series of absolute values $\sum |f_n(x)|$ and apply an appropriate test (e.g. the ratio test) — this gives the set of **absolute** convergence.
+          2. The **endpoints must be considered separately**: at each endpoint return to the original series $\sum f_n(x)$ and determine whether it converges.
+
+          Example: for $\sum\frac{x^n}{n}$ the ratio test for $\sum\frac{|x|^n}{n}$ gives $\lim\frac{n}{n+1}|x| = |x|$, so the series converges absolutely on $(-1,1)$.
+        src: [c25, c29]
+    questions:
+      - type: single
+        cat: theory
+        q: 'The series $\sum f_n(x)$ is conditionally convergent at $x_0$ if'
+        opts: ['$\sum f_n(x_0)$ converges and $\sum |f_n(x_0)|$ diverges', '$\sum |f_n(x_0)|$ converges', '$f_n(x_0) \to 0$', '$\sum f_n(x)$ converges uniformly']
+        ans: a
+        hint: Conditional = convergent, but not absolutely.
+        explain: 'Exactly as for numerical series, now at a fixed point $x_0$.'
+        src: c19
+      - type: single
+        cat: theory
+        q: 'When finding the set of convergence, what do we do at the endpoints?'
+        opts: ['Return to the original series and test it directly', 'Apply the ratio test once more', 'Always include them', 'Always exclude them']
+        ans: a
+        hint: The ratio test is inconclusive there.
+        explain: 'At the endpoints the original series $\sum f_n(x)$ is studied separately (comparison, Leibniz, divergence test…).'
+        src: c25
+      - type: single
+        cat: problem
+        q: 'At $x_0 = \frac12$ the series $\sum_{n=1}^{\infty} x^n$ becomes'
+        opts: ['$\frac12 + \frac14 + \frac18 + \dots$ — convergent, sum $1$', '$1 + 1 + 1 + \dots$ — divergent', '$\frac12 - \frac14 + \dots$ — conditionally convergent', 'a functional series']
+        ans: a
+        hint: 'Geometric series with $q = 1/2$, starting from $n = 1$.'
+        explain: '$\sum_{n\ge1}(1/2)^n = \frac{1/2}{1-1/2} = 1$.'
+        src: c13
+
+  - id: m3-uniform-series
+    title: Uniform convergence of a series
+    pages: [c30, c31, c32, c33, c34, c35, c36, c37, c38]
+    theory:
+      - kind: definition
+        title: Pointwise and uniform convergence of a series
+        body: |
+          Let $S_N(x) = \sum_{n=1}^{N} f_n(x)$ and let $S(x)$ be the sum.
+          - **Pointwise** on $E$: for every fixed $x \in E$, $S_N(x) \to S(x)$. The required number of terms may differ for different $x$.
+          - **Uniform** on $E$: for every $\varepsilon > 0$ there is $N$ with $|S_N(x) - S(x)| < \varepsilon$ **for every** $x \in E$ — one $N$ for all $x \in E$.
+
+          Uniform convergence is stronger than pointwise convergence.
+        src: [c30, c31, c32, c33, c35]
+      - kind: text
+        title: 'Example: $\sum x^n$ on $[0, 1/2]$'
+        body: |
+          $S(x) = \frac{1}{1-x}$, $S_N(x) = \sum_{n=0}^{N} x^n = \frac{1-x^{N+1}}{1-x}$, so $|S(x) - S_N(x)| = \frac{x^{N+1}}{1-x}$.
+
+          For $0 \le x \le \frac12$: $x^{N+1} \le \left(\frac12\right)^{N+1}$ and $1 - x \ge \frac12$, hence $|S(x) - S_N(x)| \le \frac{(1/2)^{N+1}}{1/2} = \frac{1}{2^N}$.
+
+          Given $\varepsilon > 0$ choose $N > \log_2\frac1\varepsilon$. Then $|S_N(x) - S(x)| < \varepsilon$ for all $x \in [0, \frac12]$. $N$ depends on $\varepsilon$ only ⇒ **uniform convergence** on $[0, \frac12]$.
+        src: [c34, c36, c37, c38]
+    formulas:
+      - title: Remainder of the geometric series
+        tex: '|S(x) - S_N(x)| = \frac{x^{N+1}}{1-x} \le \frac{1}{2^N}, \quad x \in \left[0, \tfrac12\right]'
+        src: c36
+    questions:
+      - type: numeric
+        cat: problem
+        q: 'For $\sum x^n$ on $[0, \frac12]$ we have $|S_N(x) - S(x)| \le \frac{1}{2^N}$. What is the smallest natural $N$ that guarantees an error less than $\varepsilon = 0.001$?'
+        num: { value: 10, unit: '', check: '10' }
+        hint: 'Need $2^N > 1000$.'
+        explain: '$2^9 = 512 < 1000 < 1024 = 2^{10}$, so $N = 10$ (i.e. $N > \log_2 1000 \approx 9.97$).'
+        sol: { method: 'Choose $N > \log_2(1/\varepsilon)$.', steps: ['$\log_2 1000 \approx 9.97$.', 'Smallest natural $N$ with $N > 9.97$ is $10$.'], answer: '10' }
+        src: c37
+      - type: single
+        cat: theory
+        q: 'In the proof that $\sum x^n$ converges uniformly on $[0, \frac12]$, the key point is that'
+        opts: ['the chosen $N$ depends on $\varepsilon$ but not on $x$', '$N$ depends on $x$', 'the sum $\frac1{1-x}$ is continuous', 'the series is alternating']
+        ans: a
+        hint: 'Recall the definition of uniform convergence.'
+        explain: 'The bound $\frac{1}{2^N}$ is the same for all $x \in [0, 1/2]$, so one $N$ works everywhere.'
+        src: c38
+      - type: single
+        cat: formula
+        q: 'The partial sum $S_N(x) = \sum_{n=0}^{N} x^n$ ($x \ne 1$) equals'
+        opts: ['$\dfrac{1-x^{N+1}}{1-x}$', '$\dfrac{1}{1-x}$', '$\dfrac{1-x^{N}}{1+x}$', '$\dfrac{x^{N+1}}{1-x}$']
+        ans: a
+        hint: 'Finite geometric sum.'
+        explain: '$S_N(x) = \frac{1-x^{N+1}}{1-x}$; the remainder is $\frac{x^{N+1}}{1-x}$.'
+        src: c36
+      - type: single
+        cat: theory
+        q: 'Which statement is true?'
+        opts: ['Uniform convergence of a series is stronger than pointwise convergence', 'Pointwise convergence is stronger than uniform', 'They are always equivalent', 'Uniform convergence is defined only for power series']
+        ans: a
+        hint: 'One $N$ for all $x$ is a stronger requirement.'
+        explain: 'Uniform ⇒ pointwise, but not conversely.'
+        src: c33
+
+  - id: m3-m-test
+    title: The Weierstrass M-test
+    pages: [c39, c40, c41, c42, c43, c44, c45, c46]
+    theory:
+      - kind: law
+        title: Weierstrass M-test
+        body: |
+          Let $\sum f_n(x)$ be a functional series on $E$. Suppose there are numbers $M_n \ge 0$ such that $|f_n(x)| \le M_n$ for all $x \in E$ and all $n$. If the **numerical** series $\sum M_n$ converges, then $\sum f_n(x)$ converges **uniformly and absolutely** on $E$.
+
+          **Important:** the numbers $M_n$ must not depend on $x$.
+        src: [c40, c41]
+      - kind: rule
+        title: How to apply the M-test
+        body: |
+          1. Find an upper bound $|f_n(x)| \le M_n$.
+          2. Make sure that $M_n$ does not depend on $x$.
+          3. Consider the numerical series $\sum M_n$.
+          4. If it converges, the functional series converges uniformly and absolutely.
+        src: c42
+    formulas:
+      - title: Weierstrass M-test
+        tex: '|f_n(x)| \le M_n\ \ \forall x\in E,\quad \sum M_n < \infty \ \Rightarrow\ \sum f_n(x)\ \text{converges uniformly and absolutely on } E'
+        src: c41
+    examples:
+      - title: '$\sum \frac{x^n}{n^2}$ on $[-1, 1]$'
+        given: '$f_n(x) = \frac{x^n}{n^2}$, $x \in [-1,1]$'
+        steps:
+          - '$|x| \le 1 \Rightarrow |x|^n \le 1$, so $\left|\frac{x^n}{n^2}\right| \le \frac{1}{n^2}$.'
+          - 'Take $M_n = \frac{1}{n^2}$ — it does not depend on $x$.'
+          - '$\sum\frac{1}{n^2}$ is a convergent p-series ($p = 2 > 1$).'
+          - 'By the M-test the series converges uniformly and absolutely on $[-1,1]$.'
+        answer: 'uniformly and absolutely convergent on $[-1,1]$'
+        src: [c43, c44, c45, c46]
+    questions:
+      - type: single
+        cat: theory
+        q: 'In the Weierstrass M-test the numbers $M_n$ must'
+        opts: ['not depend on $x$ and give a convergent $\sum M_n$', 'depend on $x$', 'tend to infinity', 'be equal to $f_n(0)$']
+        ans: a
+        hint: 'The majorant is a numerical series.'
+        explain: '$|f_n(x)| \le M_n$ for all $x$, with $M_n$ independent of $x$ and $\sum M_n < \infty$.'
+        src: c40
+      - type: single
+        cat: problem
+        q: 'Which majorant proves the uniform convergence of $\sum\frac{x^n}{n^2}$ on $[-1,1]$?'
+        opts: ['$M_n = \frac{1}{n^2}$', '$M_n = \frac{|x|^n}{n^2}$', '$M_n = \frac1n$', '$M_n = 1$']
+        ans: a
+        hint: '$|x|^n \le 1$ on $[-1,1]$.'
+        explain: '$M_n = 1/n^2$ does not depend on $x$ and $\sum 1/n^2$ converges. $\frac1n$ also bounds the terms, but $\sum\frac1n$ diverges.'
+        src: c44
+      - type: single
+        cat: problem
+        q: 'Does the M-test prove uniform convergence of $\sum\frac{\sin(nx)}{n^3}$ on $\mathbb{R}$?'
+        opts: ['Yes, with $M_n = \frac{1}{n^3}$', 'No, $\sin(nx)$ is unbounded', 'No, $\mathbb{R}$ is unbounded', 'Only on $[0, \pi]$']
+        ans: a
+        hint: '$|\sin(nx)| \le 1$ for all $x$.'
+        explain: '$\left|\frac{\sin nx}{n^3}\right| \le \frac{1}{n^3}$, $\sum\frac1{n^3}$ converges ($p = 3$) ⇒ uniform and absolute convergence on $\mathbb{R}$.'
+        sol: { method: 'Weierstrass M-test.', steps: ['$|\sin nx| \le 1$ ⇒ $|f_n(x)| \le 1/n^3 = M_n$.', '$\sum 1/n^3$ converges ⇒ uniform convergence on $\mathbb{R}$.'], answer: 'yes' }
+        src: c42
+      - type: multiple
+        cat: theory
+        q: 'If the M-test applies on $E$, the functional series converges on $E$'
+        opts: ['uniformly', 'absolutely', 'only conditionally', 'only at $x = 0$']
+        ans: [a, b]
+        hint: 'The conclusion of the theorem has two words.'
+        explain: 'The M-test gives uniform and absolute convergence.'
+        src: c42
+
+  - id: m3-power-intro
+    title: Power series and the structure of the convergence set
+    pages: [c47, c48, c49, c50, c51, c52, c54, c55, c57, c58]
+    theory:
+      - kind: definition
+        title: Power series
+        body: |
+          A **power series centered at $a$** is $\sum_{n=0}^{\infty} c_n(x-a)^n = c_0 + c_1(x-a) + c_2(x-a)^2 + \dots$, where $c_0, c_1, \dots$ are constants, $x$ is the variable and $a$ is the **center**.
+
+          Examples: $\sum x^n$, $\sum\frac{x^n}{n!}$, $\sum 2^n(x-1)^n$, $\sum\frac{(x+2)^n}{n+1}$.
+
+          Every power series is a functional series with $f_n(x) = c_n(x-a)^n$; not every functional series is a power series.
+        src: [c47, c48, c49, c50]
+      - kind: law
+        title: Convergence at one point
+        body: |
+          If $\sum c_n x^n$ converges at $x_0 \ne 0$, then it converges (absolutely) for every $|x| < |x_0|$.
+
+          **Why:** the terms of a convergent series are bounded, $|c_n x_0^n| \le M$. For $|x| < |x_0|$: $|c_n x^n| = |c_n x_0^n|\left|\frac{x}{x_0}\right|^n \le M\left|\frac{x}{x_0}\right|^n$, and the geometric series $\sum M\left|\frac{x}{x_0}\right|^n$ converges. By comparison $\sum c_n x^n$ converges absolutely.
+        src: [c54, c55]
+      - kind: law
+        title: Divergence property
+        body: 'If $\sum c_n x^n$ diverges at $x_0$, it diverges for every $|x| > |x_0|$. Hence the convergence set is symmetric about the center; only the boundary points need separate investigation.'
+        src: [c57, c58]
+    questions:
+      - type: single
+        cat: theory
+        q: 'What is the center of the power series $\sum 2^n(x-1)^n$?'
+        opts: ['$a = 1$', '$a = -1$', '$a = 2$', '$a = 0$']
+        ans: a
+        hint: 'Compare with $\sum c_n(x-a)^n$.'
+        explain: 'Here $c_n = 2^n$ and $(x - a) = (x - 1)$, so $a = 1$.'
+        src: c49
+      - type: single
+        cat: problem
+        q: 'A power series $\sum c_n x^n$ converges at $x_0 = 4$. Then it surely converges at'
+        opts: ['$x = -3$', '$x = 5$', '$x = -4$', '$x = 10$']
+        ans: a
+        hint: 'Convergence at $x_0$ ⇒ convergence for $|x| < |x_0|$.'
+        explain: '$|-3| < 4$, so the series converges (absolutely) at $x = -3$. Nothing is guaranteed at $x = -4$ or for $|x| > 4$.'
+        src: c54
+      - type: single
+        cat: problem
+        q: 'A power series $\sum c_n x^n$ diverges at $x_0 = 2$. Then it surely diverges at'
+        opts: ['$x = -3$', '$x = 1$', '$x = -2$', '$x = 0$']
+        ans: a
+        hint: 'Divergence property: $|x| > |x_0|$.'
+        explain: '$|-3| > 2$ ⇒ divergence. At $x = 0$ every power series converges.'
+        src: c57
+      - type: single
+        cat: theory
+        q: 'Which statement is correct?'
+        opts: ['Every power series is a functional series, but not conversely', 'Every functional series is a power series', 'Power series are numerical series', 'A power series always converges on $\mathbb{R}$']
+        ans: a
+        hint: '$\sum e^{-kx}$ is a functional series — is it a power series in $x$?'
+        explain: 'A power series has terms $c_n(x-a)^n$; general functional series may have any terms.'
+        src: c50
+
+  - id: m3-radius
+    title: Radius of convergence
+    pages: [c59, c60, c61, c63, c64, c65, c67, c68]
+    theory:
+      - kind: definition
+        title: Radius of convergence
+        body: 'There exists $R \in [0, \infty]$ such that the series converges absolutely for $|x| < R$ and diverges for $|x| > R$. $R$ is the **radius of convergence**. When $0 < R < \infty$, the points $x = \pm R$ must be studied separately.'
+        src: c59
+      - kind: law
+        title: Formula for the radius
+        body: |
+          Ratio test for $u_n = c_n x^n$: $\left|\frac{u_{n+1}}{u_n}\right| = \left|\frac{c_{n+1}}{c_n}\right||x| \to L|x|$, where $L = \lim\left|\frac{c_{n+1}}{c_n}\right|$. The series converges absolutely when $L|x| < 1$ and diverges when $L|x| > 1$. Hence
+          $R = \frac1L = \lim_{n\to\infty}\left|\frac{c_n}{c_{n+1}}\right|$ (if the limit exists).
+
+          The ratio test usually does **not** determine convergence at $x = \pm R$.
+        src: [c60, c61, c63]
+    formulas:
+      - title: Radius of convergence
+        tex: 'R = \lim_{n\to\infty}\left|\frac{c_n}{c_{n+1}}\right| = \frac{1}{L},\qquad L = \lim_{n\to\infty}\left|\frac{c_{n+1}}{c_n}\right|'
+        cond: 'If the limit exists; the endpoints $x = \pm R$ are examined separately.'
+        src: c63
+    examples:
+      - title: '$\sum_{n=1}^{\infty}\frac{n^2x^n}{3^n}$'
+        given: '$u_n = \frac{n^2x^n}{3^n}$'
+        steps:
+          - '$\left|\frac{u_{n+1}}{u_n}\right| = \left(\frac{n+1}{n}\right)^2\frac{|x|}{3} \to \frac{|x|}{3}$.'
+          - 'Convergence when $\frac{|x|}{3} < 1$, i.e. $|x| < 3$: $R = 3$.'
+          - '$x = 3$: $\sum n^2$, terms do not tend to 0 — diverges.'
+          - '$x = -3$: $\sum(-1)^n n^2$, terms do not tend to 0 — diverges.'
+        answer: '$R = 3$, convergence set $(-3, 3)$'
+        src: [c64, c65, c67, c68]
+    questions:
+      - type: numeric
+        cat: problem
+        q: 'Find the radius of convergence of $\sum_{n=1}^{\infty}\frac{n^2 x^n}{3^n}$.'
+        num: { value: 3, unit: '', check: '3' }
+        hint: 'Ratio test: the limit is $\frac{|x|}{3}$.'
+        explain: '$\frac{|x|}{3} < 1 \iff |x| < 3$, so $R = 3$.'
+        sol: { method: 'Ratio test.', steps: ['$\left|\frac{u_{n+1}}{u_n}\right| = \left(\frac{n+1}{n}\right)^2\frac{|x|}{3}$.', 'Limit $\frac{|x|}{3} < 1 \iff |x| < 3$.'], answer: 'R = 3' }
+        src: c65
+      - type: single
+        cat: problem
+        q: 'The convergence set of $\sum_{n=1}^{\infty}\frac{n^2 x^n}{3^n}$ is'
+        opts: ['$(-3, 3)$', '$[-3, 3)$', '$[-3, 3]$', '$(-3, 3]$']
+        ans: a
+        hint: 'At $x = \pm3$ do the terms tend to 0?'
+        explain: 'At $x = 3$: $\sum n^2$; at $x = -3$: $\sum(-1)^n n^2$. In both cases the terms do not tend to 0 ⇒ divergence.'
+        src: [c67, c68]
+      - type: numeric
+        cat: problem
+        q: 'Find the radius of convergence of $\sum_{n=0}^{\infty} 2^n x^n$.'
+        num: { value: 0.5, unit: '', check: '1/2' }
+        hint: '$R = \lim\left|\frac{c_n}{c_{n+1}}\right|$ with $c_n = 2^n$.'
+        explain: '$\frac{2^n}{2^{n+1}} = \frac12$, so $R = \frac12$.'
+        sol: { method: 'Formula $R = \lim|c_n/c_{n+1}|$.', steps: ['$c_n = 2^n$.', '$\frac{c_n}{c_{n+1}} = \frac12$ ⇒ $R = 0.5$.'], answer: '0.5' }
+        src: c63
+      - type: single
+        cat: formula
+        q: 'If $L = \lim\left|\frac{c_{n+1}}{c_n}\right|$ exists and $0 < L < \infty$, the radius of convergence of $\sum c_n x^n$ is'
+        opts: ['$R = \frac1L$', '$R = L$', '$R = L^2$', '$R = 1 - L$']
+        ans: a
+        hint: 'Convergence condition: $L|x| < 1$.'
+        explain: '$L|x| < 1 \iff |x| < \frac1L$.'
+        src: c61
+      - type: single
+        cat: theory
+        q: 'At the points $x = \pm R$ a power series'
+        opts: ['may converge or diverge: they are studied separately', 'always converges', 'always diverges', 'converges only conditionally']
+        ans: a
+        hint: '$\sum x^n/n$: one endpoint in, one out.'
+        explain: 'The ratio test is inconclusive at $|x| = R$. For $\sum\frac{x^n}{n}$ the set is $[-1,1)$, for $\sum\frac{x^n}{n^2}$ it is $[-1,1]$.'
+        src: c63
+
+  - id: m3-power-props
+    title: Properties of power series, term-by-term differentiation and integration
+    pages: [c69, c71, c72, c74, c75, c76]
+    theory:
+      - kind: law
+        title: Uniform convergence and continuity inside the interval
+        body: |
+          Let $\sum c_n x^n$ have radius $R$.
+          - For every $0 < r < R$ the series converges **absolutely and uniformly** on $[-r, r]$.
+          - The sum $S(x)$ is **continuous** on $(-R, R)$: $\lim_{x\to x_0} S(x) = S(x_0)$ for every $x_0 \in (-R,R)$.
+        src: [c69, c71, c72]
+      - kind: law
+        title: Term-by-term differentiation
+        body: 'If $S(x) = \sum c_n x^n$ has radius $R > 0$, then for $x \in (-R, R)$: $S''(x) = \sum_{n=1}^{\infty} n c_n x^{n-1}$, and the differentiated series has the **same radius** $R$.'
+        src: c74
+      - kind: law
+        title: Term-by-term integration
+        body: 'For $x \in (-R, R)$: $\int_0^x S(t)\,dt = \sum_{n=0}^{\infty}\frac{c_n}{n+1}x^{n+1}$; the integrated series has the **same radius** $R$.'
+        src: c76
+    formulas:
+      - title: Term-by-term differentiation
+        tex: '\frac{d}{dx}\sum_{n=0}^{\infty}c_n x^n = \sum_{n=1}^{\infty} n c_n x^{n-1}, \quad |x| < R'
+        src: c74
+      - title: Term-by-term integration
+        tex: '\int_0^x \sum_{n=0}^{\infty} c_n t^n\,dt = \sum_{n=0}^{\infty}\frac{c_n}{n+1}x^{n+1}, \quad |x| < R'
+        src: c76
+      - title: Derivative of the geometric series
+        tex: '\sum_{n=1}^{\infty} n x^{n-1} = 1 + 2x + 3x^2 + \dots = \frac{1}{(1-x)^2}, \quad |x| < 1'
+        src: c75
+    questions:
+      - type: single
+        cat: formula
+        q: 'Differentiate $\frac{1}{1-x} = \sum_{n=0}^{\infty} x^n$ term by term. Which result is correct?'
+        opts: ['$\frac{1}{(1-x)^2} = \sum_{n=1}^{\infty} n x^{n-1}$', '$\frac{1}{(1-x)^2} = \sum_{n=0}^{\infty} x^{n+1}$', '$\frac{1}{(1-x)^2} = \sum n^2 x^n$', '$-\frac{1}{(1-x)^2} = \sum n x^{n-1}$']
+        ans: a
+        hint: '$(x^n)'' = n x^{n-1}$ and $\left(\frac{1}{1-x}\right)'' = \frac{1}{(1-x)^2}$.'
+        explain: '$1 + 2x + 3x^2 + \dots = \frac{1}{(1-x)^2}$ for $|x| < 1$.'
+        src: c75
+      - type: numeric
+        cat: problem
+        q: 'Use $\sum_{n=1}^{\infty} n x^{n-1} = \frac{1}{(1-x)^2}$ to find $\sum_{n=1}^{\infty}\frac{n}{2^{n-1}}$.'
+        num: { value: 4, unit: '', check: '1/(1-0.5)**2' }
+        hint: 'Substitute $x = \frac12$.'
+        explain: '$\frac{1}{(1-1/2)^2} = 4$.'
+        sol: { method: 'Value of the differentiated geometric series.', steps: ['$x = 1/2$ lies inside $(-1,1)$.', '$\frac{1}{(1/2)^2} = 4$.'], answer: '4' }
+        src: c75
+      - type: single
+        cat: theory
+        q: 'Differentiating a power series term by term, the radius of convergence'
+        opts: ['stays the same', 'is doubled', 'is halved', 'becomes infinite']
+        ans: a
+        hint: 'See Property 3 on the slide.'
+        explain: 'Both the differentiated and the integrated series have the same radius $R$ (the behavior at the endpoints may change).'
+        src: c74
+      - type: single
+        cat: theory
+        q: 'If $\sum c_n x^n$ has radius $R$ and $0 < r < R$, then on $[-r, r]$ the series converges'
+        opts: ['absolutely and uniformly', 'only pointwise', 'only conditionally', 'nowhere']
+        ans: a
+        hint: 'Compare with a convergent geometric series on $[-r, r]$.'
+        explain: 'Property 1: absolute and uniform convergence on every closed interval inside $(-R, R)$.'
+        src: c71
+
+  - id: m3-taylor
+    title: Taylor and Maclaurin series
+    pages: [c78, c79, c80, c81, c82, c83, c84, c85, c86]
+    theory:
+      - kind: definition
+        title: Power series expansion, Taylor series
+        body: |
+          Representing $f(x) = \sum c_n x^n$ is a **power series expansion** of $f$ (e.g. $\frac{1}{1-x} = 1 + x + x^2 + \dots$, $|x| < 1$).
+
+          If $f$ has derivatives of all orders near $x = a$, its **Taylor series** centered at $a$ is $\sum_{n=0}^{\infty}\frac{f^{(n)}(a)}{n!}(x-a)^n = f(a) + f'(a)(x-a) + \frac{f''(a)}{2!}(x-a)^2 + \dots$ If it converges to $f(x)$, then $f(x) = \sum\frac{f^{(n)}(a)}{n!}(x-a)^n$.
+        src: [c78, c79]
+      - kind: definition
+        title: Maclaurin series
+        body: 'For the center $a = 0$ the Taylor series is called the **Maclaurin series**: $f(x) = \sum_{n=0}^{\infty}\frac{f^{(n)}(0)}{n!}x^n$. We need the derivatives of $f$ at $x = 0$.'
+        src: c80
+      - kind: rule
+        title: How to find a power series expansion
+        body: |
+          1. Identify the function $f(x)$.
+          2. Calculate $f'(x), f''(x), f^{(3)}(x), \dots$
+          3. Evaluate them at the center: $f(0), f'(0), f''(0), \dots$
+          4. Substitute into the Taylor formula.
+          5. Determine the radius and interval of convergence.
+        src: c84
+    formulas:
+      - title: Maclaurin series of $e^x$
+        tex: 'e^x = \sum_{n=0}^{\infty}\frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \dots, \quad x \in \mathbb{R}'
+        src: [c81, c83]
+      - title: Maclaurin series of $\sin x$
+        tex: '\sin x = \sum_{n=0}^{\infty}(-1)^n\frac{x^{2n+1}}{(2n+1)!} = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \dots, \quad x \in \mathbb{R}'
+        src: [c82, c83]
+      - title: Maclaurin series of $\cos x$
+        tex: '\cos x = \sum_{n=0}^{\infty}(-1)^n\frac{x^{2n}}{(2n)!}, \quad x \in \mathbb{R}'
+        src: c83
+      - title: Geometric series
+        tex: '\frac{1}{1-x} = \sum_{n=0}^{\infty}x^n, \quad |x| < 1'
+        src: c83
+    examples:
+      - title: 'Maclaurin series of $e^x$'
+        given: '$f(x) = e^x$'
+        steps:
+          - 'All derivatives equal $e^x$, so $f^{(n)}(0) = 1$ for every $n$.'
+          - 'Substitute into the Maclaurin formula: $e^x = \sum\frac{x^n}{n!}$.'
+          - 'Ratio test: $\frac{|x|}{n+1} \to 0 < 1$ for every $x$ — convergence on $\mathbb{R}$.'
+        answer: '$e^x = 1 + x + \frac{x^2}{2!} + \dots$, $x \in \mathbb{R}$'
+        src: c81
+      - title: 'Maclaurin series of $\sin x$'
+        given: '$f(x) = \sin x$'
+        steps:
+          - 'Derivatives repeat: $\sin x, \cos x, -\sin x, -\cos x, \sin x, \dots$'
+          - 'At $x = 0$: $0, 1, 0, -1, 0, \dots$ — only odd powers remain, with alternating signs.'
+        answer: '$\sin x = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \dots$'
+        src: c82
+    questions:
+      - type: single
+        cat: theory
+        q: 'The Maclaurin series is the Taylor series centered at'
+        opts: ['$a = 0$', '$a = 1$', '$a = -1$', 'any point $a$']
+        ans: a
+        hint: 'Definition on slide 80.'
+        explain: 'Maclaurin series = Taylor series with $a = 0$.'
+        src: c80
+      - type: single
+        cat: formula
+        q: 'The coefficient $c_n$ of the Taylor series of $f$ centered at $a$ is'
+        opts: ['$\dfrac{f^{(n)}(a)}{n!}$', '$f^{(n)}(a)$', '$\dfrac{f(a)}{n!}$', '$\dfrac{f^{(n)}(0)}{n}$']
+        ans: a
+        hint: 'Look at the factorial.'
+        explain: '$f(x) = \sum\frac{f^{(n)}(a)}{n!}(x-a)^n$.'
+        src: c79
+      - type: numeric
+        cat: problem
+        q: 'Find the coefficient of $x^3$ in the Maclaurin series of $\sin x$.'
+        num: { value: -0.1666667, unit: '', check: '-1/6' }
+        hint: '$\sin x = x - \frac{x^3}{3!} + \dots$'
+        explain: '$-\frac{1}{3!} = -\frac16 \approx -0.1667$.'
+        sol: { method: 'Maclaurin formula.', steps: ['$f^{(3)}(x) = -\cos x$, $f^{(3)}(0) = -1$.', '$c_3 = \frac{-1}{3!} = -\frac16$.'], answer: '−1/6' }
+        src: c82
+      - type: numeric
+        cat: problem
+        q: 'Approximate $e^{0.1}$ by the first three terms of its Maclaurin series ($1 + x + \frac{x^2}{2}$).'
+        num: { value: 1.105, unit: '', tolAbs: 0.0005, check: '1+0.1+0.01/2' }
+        hint: 'Substitute $x = 0.1$.'
+        explain: '$1 + 0.1 + 0.005 = 1.105$ (exact value $e^{0.1} \approx 1.10517$).'
+        sol: { method: 'Partial sum of the Maclaurin series.', steps: ['$x = 0.1$, $x^2/2 = 0.005$.', '$1 + 0.1 + 0.005 = 1.105$.'], answer: '1.105' }
+        src: c81
+      - type: single
+        cat: formula
+        q: 'Which expansion is valid for every $x \in \mathbb{R}$?'
+        opts: ['$\cos x = \sum (-1)^n\frac{x^{2n}}{(2n)!}$', '$\frac{1}{1-x} = \sum x^n$', '$\ln(1+x) = \sum(-1)^{n}\frac{x^{n+1}}{n+1}$', 'None of them']
+        ans: a
+        hint: 'The geometric series requires $|x| < 1$.'
+        explain: '$e^x$, $\sin x$, $\cos x$ expand on all of $\mathbb{R}$; $\frac{1}{1-x}$ and $\ln(1+x)$ need $|x| < 1$ (for $\ln(1+x)$ also $x = 1$).'
+        src: c83
+      - type: sequence
+        cat: theory
+        q: 'Put the steps of finding a power series expansion in order.'
+        seq: ['Identify the function $f(x)$', 'Calculate the derivatives $f'', f'''', f^{(3)}, \dots$', 'Evaluate the derivatives at the center', 'Substitute into the Taylor formula', 'Determine the radius and interval of convergence']
+        hint: 'Convergence is checked at the end.'
+        explain: 'Steps 1–5 on slide 84.'
+        src: c84

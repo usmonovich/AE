@@ -1,0 +1,562 @@
+# Lecture 8. Higher-order linear ODEs with constant coefficients (slides h01–h66).
+# The review quiz (h52–h63) has an answer key on slides h64–h65; all 20 answers were checked.
+subsection: m3-l8
+
+topics:
+  - id: m3-char-eq
+    title: Homogeneous equations — characteristic roots
+    pages: [h01, h02, h03, h08, h11, h12, h13, h16, h19, h20, h21, h22, h23, h24, h25, h26, h27, h28, h52, h53, h54, h55, h56, h57, h64]
+    theory:
+      - kind: text
+        title: Motivation
+        body: |
+          Spring–mass–damper system: $mx'' + cx' + kx = 0$ ($m$ — mass, $c$ — damping coefficient, $k$ — spring stiffness). RLC circuit: $Lq'' + Rq' + \frac1Cq = 0$ ($q(t)$ — electric charge).
+
+          **A common idea:** the type of motion is determined by the **roots of a polynomial**, not by repeated integration.
+        src: h03
+      - kind: definition
+        title: Homogeneous linear ODE with constant coefficients
+        body: '$a_ny^{(n)} + a_{n-1}y^{(n-1)} + \dots + a_1y'' + a_0y = 0$, $a_n \ne 0$. The unknown is $y = y(x)$ (or $y(t)$), the coefficients $a_0, \dots, a_n$ are fixed real numbers; the general real solution contains $n$ independent constants. Example: $y'''''' - 4y'''' + y'' + 6y = 0$ (order 3).'
+        src: h08
+      - kind: law
+        title: Characteristic equation
+        body: 'Try $y = e^{rx}$: $y'' = re^{rx}$, $y'''' = r^2e^{rx}$, …, $y^{(n)} = r^ne^{rx}$. Substitution gives $e^{rx}(a_nr^n + \dots + a_1r + a_0) = 0$; since $e^{rx} \ne 0$, the **characteristic equation** is $P(r) = a_nr^n + a_{n-1}r^{n-1} + \dots + a_1r + a_0 = 0$.'
+        src: h11
+      - kind: rule
+        title: A systematic solution procedure
+        body: |
+          1. Write the differential equation in homogeneous form.
+          2. Form the characteristic polynomial $P(r)$.
+          3. Find all roots, including multiplicities.
+          4. Construct the corresponding independent solutions.
+          5. Add them to obtain the general solution.
+          6. If initial conditions are given, determine the constants.
+
+          **Important:** all roots must be counted with multiplicity. An order-$n$ equation requires $n$ independent solution functions.
+        src: h12
+      - kind: law
+        title: Case 1 — distinct real roots
+        body: 'If $P(r) = 0$ has $n$ distinct real roots $r_1, \dots, r_n$: $y = C_1e^{r_1x} + C_2e^{r_2x} + \dots + C_ne^{r_nx}$. Example: $y'''' - 5y'' + 6y = 0$, $r^2 - 5r + 6 = (r-2)(r-3)$, $y = C_1e^{2x} + C_2e^{3x}$.'
+        src: h13
+      - kind: law
+        title: Case 2 — repeated real roots
+        body: |
+          A real root $r$ of multiplicity $m$ gives $m$ independent solutions $e^{rx}, xe^{rx}, \dots, x^{m-1}e^{rx}$; contribution $(C_1 + C_2x + \dots + C_mx^{m-1})e^{rx}$.
+
+          Example: $y'' - 4y' + 4y = 0$, $(r-2)^2 = 0$, $y = (C_1 + C_2x)e^{2x}$.
+
+          **Common mistake:** $C_1e^x + C_2e^x + C_3e^x$ is only **one** independent function, not three.
+        src: [h19, h20]
+      - kind: law
+        title: Case 3 — complex conjugate roots
+        fig: m3-damped-resonance
+        body: |
+          Real coefficients ⇒ complex roots occur in conjugate pairs $r = \alpha \pm i\beta$, $\beta > 0$. By Euler's formula we get the real pair $e^{\alpha x}\cos\beta x$, $e^{\alpha x}\sin\beta x$:
+          $y = e^{\alpha x}(C_1\cos\beta x + C_2\sin\beta x)$.
+          $\alpha$ controls exponential growth or decay; $\beta$ controls the oscillation frequency.
+
+          If $\alpha \pm i\beta$ has multiplicity $m$, use the $2m$ functions $x^ke^{\alpha x}\cos\beta x$, $x^ke^{\alpha x}\sin\beta x$, $k = 0, \dots, m-1$. Example: $(D^2 + 4)^2y = 0$ ($D = d/dx$): $y = (C_1 + C_2x)\cos2x + (C_3 + C_4x)\sin2x$.
+        src: [h21, h24]
+      - kind: text
+        title: Quick classification table
+        body: |
+          | Root type | Example | Solution contribution |
+          |---|---|---|
+          | Distinct real | $r = 1, -2$ | $C_1e^x + C_2e^{-2x}$ |
+          | Repeated real | $r = 3$ (twice) | $(C_1 + C_2x)e^{3x}$ |
+          | Complex conjugate | $r = -1 \pm 2i$ | $e^{-x}(C_1\cos2x + C_2\sin2x)$ |
+          | Repeated complex | $r = \pm i$ (twice) | $(C_1 + C_2x)\cos x + (C_3 + C_4x)\sin x$ |
+        src: h28
+      - kind: note
+        title: Common mistakes to avoid
+        body: |
+          - Repeated root: forgetting the factors $x, x^2, \dots$
+          - Complex roots: writing only $e^{(\alpha + i\beta)x}$ instead of a real solution basis.
+          - Order count: listing fewer independent functions than the order.
+          - Initial conditions: differentiating $y$ incorrectly before substituting $x = 0$.
+          - Factoring: failing to verify the characteristic polynomial after factorization.
+        src: h48
+    formulas:
+      - title: Characteristic equation
+        tex: 'a_n r^n + a_{n-1} r^{n-1} + \dots + a_1 r + a_0 = 0'
+        cond: 'For $a_ny^{(n)} + \dots + a_1y'' + a_0y = 0$; obtained by the trial $y = e^{rx}$.'
+        src: h11
+      - title: Complex roots $\alpha \pm i\beta$
+        tex: 'y = e^{\alpha x}\left(C_1\cos\beta x + C_2\sin\beta x\right)'
+        src: h21
+      - title: Real root of multiplicity m
+        tex: '(C_1 + C_2x + \dots + C_mx^{m-1})\,e^{rx}'
+        src: h19
+      - title: Spring–mass–damper
+        tex: 'm x'''' + c x'' + k x = 0'
+        vars:
+          - { sym: m, name: mass }
+          - { sym: c, name: damping coefficient }
+          - { sym: k, name: spring stiffness }
+        src: h03
+    examples:
+      - title: 'Three distinct real roots: $y'''''' - 2y'''' - 5y'' + 6y = 0$'
+        given: '$P(r) = r^3 - 2r^2 - 5r + 6$.'
+        steps:
+          - '$P(r) = (r-1)(r-3)(r+2)$; roots $1, 3, -2$.'
+          - 'Each term solves the ODE because its exponent is a root of $P$.'
+        answer: '$y = C_1e^x + C_2e^{3x} + C_3e^{-2x}$'
+        src: h16
+      - title: 'Triple root: $y'''''' - 3y'''' + 3y'' - y = 0$'
+        given: '$P(r) = r^3 - 3r^2 + 3r - 1 = (r-1)^3$.'
+        steps:
+          - '$r = 1$ has multiplicity 3: functions $e^x, xe^x, x^2e^x$.'
+        answer: '$y = (C_1 + C_2x + C_3x^2)e^x$'
+        src: h20
+      - title: 'Purely imaginary and damped oscillations'
+        given: '$y'''' + 9y = 0$ and $y'''' + 4y'' + 13y = 0$.'
+        steps:
+          - '$r^2 + 9 = 0$, $r = \pm3i$ ⇒ $y = C_1\cos3x + C_2\sin3x$.'
+          - '$r^2 + 4r + 13 = 0$, $r = \frac{-4 \pm \sqrt{16 - 52}}{2} = -2 \pm 3i$ ⇒ $y = e^{-2x}(C_1\cos3x + C_2\sin3x)$.'
+        answer: 'undamped: $C_1\cos3x + C_2\sin3x$; damped: $e^{-2x}(C_1\cos3x + C_2\sin3x)$'
+        src: [h22, h23]
+      - title: 'Mixed roots: $y^{(4)} - 2y'''''' + 2y'''' - 10y'' - 15y = 0$'
+        given: '$P(r) = (r-3)(r+1)(r^2+5)$ — check: multiplying the factors reproduces the ODE.'
+        steps:
+          - 'Operator form $(D-3)(D+1)(D^2+5)y = 0$.'
+          - 'Roots $3, -1, \pm i\sqrt5$.'
+        answer: '$y = C_1e^{3x} + C_2e^{-x} + C_3\cos\sqrt5x + C_4\sin\sqrt5x$'
+        src: h25
+      - title: 'IVP: $y'''' - 3y'' + 2y = 0$, $y(0) = 4$, $y''(0) = 5$'
+        given: '$r^2 - 3r + 2 = (r-1)(r-2)$, $y = C_1e^x + C_2e^{2x}$, $y'' = C_1e^x + 2C_2e^{2x}$.'
+        steps:
+          - '$x = 0$: $C_1 + C_2 = 4$, $C_1 + 2C_2 = 5$.'
+          - '$C_2 = 1$, $C_1 = 3$.'
+        answer: '$y = 3e^x + e^{2x}$'
+        src: h26
+      - title: 'IVP with complex roots: $y'''' + 4y = 0$, $y(0) = 2$, $y''(0) = -4$'
+        given: '$y = C_1\cos2x + C_2\sin2x$, $y'' = -2C_1\sin2x + 2C_2\cos2x$.'
+        steps:
+          - '$y(0) = C_1 = 2$; $y''(0) = 2C_2 = -4$ ⇒ $C_2 = -2$.'
+        answer: '$y = 2\cos2x - 2\sin2x$'
+        src: h27
+      - title: 'Student check (slides 34–35): general solution forms'
+        given: '1) $y'''' - y = 0$; 2) $y'''' + 6y'' + 9y = 0$; 3) $y'''' - 2y'' + 10y = 0$; 4) $y'''''' - y'''' = 0$.'
+        steps:
+          - '1) $r = \pm1$: $C_1e^x + C_2e^{-x}$.'
+          - '2) $r = -3$ (double): $(C_1 + C_2x)e^{-3x}$.'
+          - '3) $r = 1 \pm 3i$: $e^x(C_1\cos3x + C_2\sin3x)$.'
+          - '4) $r^2(r - 1) = 0$: $C_1 + C_2x + C_3e^x$.'
+        answer: 'see the steps'
+        src: [h46, h47]
+      - title: 'Independent practice (slide 39)'
+        given: '1) $y'''' - 7y'' + 12y = 0$; 2) $y'''''' - 6y'''' + 12y'' - 8y = 0$; 3) $y'''' + 2y'' + 5y = 0$; 4) $(D-1)^2(D^2+1)y = 0$; 5) $y'''' - 4y = 0$, $y(0) = 1$, $y''(0) = 0$.'
+        steps:
+          - '1) $(r-3)(r-4) = 0$: $C_1e^{3x} + C_2e^{4x}$.'
+          - '2) $(r-2)^3 = 0$: $(C_1 + C_2x + C_3x^2)e^{2x}$.'
+          - '3) $r = -1 \pm 2i$: $e^{-x}(C_1\cos2x + C_2\sin2x)$.'
+          - '4) $r = 1$ (double), $r = \pm i$: $(C_1 + C_2x)e^x + C_3\cos x + C_4\sin x$.'
+          - '5) $y = C_1e^{2x} + C_2e^{-2x}$; $C_1 + C_2 = 1$, $2C_1 - 2C_2 = 0$ ⇒ $C_1 = C_2 = \frac12$: $y = \frac{e^{2x} + e^{-2x}}{2} = \cosh2x$.'
+        answer: 'see the steps'
+        src: h51
+    questions:
+      - type: single
+        cat: formula
+        q: 'Quiz Q1: which is the characteristic equation of $y'''''' - 4y'''' + y'' + 6y = 0$?'
+        opts: ['$r^3 - 4r^2 + r + 6 = 0$', '$r^3 + 4r^2 + r + 6 = 0$', '$r^2 - 4r + 1 = 0$', '$r^3 - 4r^2 + 6 = 0$']
+        ans: a
+        hint: 'Replace $y^{(k)}$ by $r^k$.'
+        explain: 'Answer key: A.'
+        fromSource: true
+        src: [h53, h64]
+      - type: single
+        cat: problem
+        q: 'Quiz Q2: the general solution of $y'''' - 5y'' + 6y = 0$ is'
+        opts: ['$C_1e^{-2x} + C_2e^{-3x}$', '$C_1e^{2x} + C_2e^{3x}$', '$(C_1 + C_2x)e^{2x}$', '$C_1\cos2x + C_2\sin3x$']
+        ans: b
+        hint: '$(r-2)(r-3) = 0$.'
+        explain: 'Roots 2 and 3. Answer key: B.'
+        fromSource: true
+        src: [h53, h64]
+      - type: single
+        cat: theory
+        q: 'Quiz Q3: if $r = 2$ is a double root, its contribution to the general solution is'
+        opts: ['$C_1e^{2x} + C_2e^{-2x}$', '$C_1e^{2x} + C_2e^{2x}$', '$(C_1 + C_2x)e^{2x}$', '$(C_1 + C_2x^2)e^{2x}$']
+        ans: c
+        hint: 'Functions $e^{rx}$, $xe^{rx}$.'
+        explain: 'Answer key: C. Option B is only one independent function.'
+        fromSource: true
+        src: [h54, h64]
+      - type: single
+        cat: problem
+        q: 'Quiz Q4: the characteristic roots of $y'''' + 9y = 0$ are'
+        opts: ['$\pm3$', '$\pm9i$', '$3 \pm i$', '$\pm3i$']
+        ans: d
+        hint: '$r^2 = -9$.'
+        explain: 'Answer key: D.'
+        fromSource: true
+        src: [h54, h64]
+      - type: single
+        cat: problem
+        q: 'Quiz Q5: the general real solution of $y'''' + 4y'' + 13y = 0$ is'
+        opts: ['$e^{-2x}(C_1\cos3x + C_2\sin3x)$', '$e^{2x}(C_1\cos3x + C_2\sin3x)$', '$C_1e^{-2x} + C_2e^{-3x}$', '$C_1\cos13x + C_2\sin13x$']
+        ans: a
+        hint: '$r = -2 \pm 3i$.'
+        explain: 'Answer key: A.'
+        fromSource: true
+        src: [h55, h64]
+      - type: single
+        cat: theory
+        q: 'Quiz Q6: for $(r-1)^3 = 0$, which set consists of three independent solutions?'
+        opts: ['$e^x, e^{2x}, e^{3x}$', '$e^x, xe^x, x^2e^x$', '$e^x, e^x, e^x$', '$1, x, x^2$']
+        ans: b
+        hint: 'Triple root $r = 1$.'
+        explain: 'Answer key: B.'
+        fromSource: true
+        src: [h55, h64]
+      - type: single
+        cat: theory
+        q: 'Quiz Q7: how many independent arbitrary constants occur in the general solution of a homogeneous linear ODE of order four?'
+        opts: ['Two', 'Three', 'Four', 'Five']
+        ans: c
+        hint: 'Order $n$ ⇒ $n$ constants.'
+        explain: 'Answer key: C.'
+        fromSource: true
+        src: [h56, h64]
+      - type: single
+        cat: problem
+        q: 'Quiz Q8: if the characteristic roots are $1 \pm 2i$, the general real solution is'
+        opts: ['$C_1e^x + C_2e^{2x}$', '$e^{-x}(C_1\cos2x + C_2\sin2x)$', '$e^x(C_1\cos x + C_2\sin x)$', '$e^x(C_1\cos2x + C_2\sin2x)$']
+        ans: d
+        hint: '$\alpha = 1$, $\beta = 2$.'
+        explain: 'Answer key: D.'
+        fromSource: true
+        src: [h56, h64]
+      - type: single
+        cat: problem
+        q: 'Quiz Q9: the solution of $y'''' - 3y'' + 2y = 0$, $y(0) = 4$, $y''(0) = 5$ is'
+        opts: ['$3e^x + e^{2x}$', '$e^x + 3e^{2x}$', '$4e^x + 5e^{2x}$', '$2e^x + 2e^{2x}$']
+        ans: a
+        hint: '$C_1 + C_2 = 4$, $C_1 + 2C_2 = 5$.'
+        explain: 'Answer key: A.'
+        fromSource: true
+        src: [h57, h64]
+      - type: single
+        cat: problem
+        q: 'Quiz Q10: the general solution of $y'''''' - y'''' = 0$ is'
+        opts: ['$C_1 + C_2e^x + C_3e^{-x}$', '$C_1 + C_2x + C_3e^x$', '$C_1e^x + C_2xe^x + C_3x^2e^x$', '$C_1 + C_2x + C_3x^2$']
+        ans: b
+        hint: '$r^2(r-1) = 0$: double root 0.'
+        explain: 'Root 0 (double) gives $1, x$; root 1 gives $e^x$. Answer key: B.'
+        fromSource: true
+        src: [h57, h64]
+      - type: numeric
+        cat: problem
+        q: 'Solve $y'''' + 4y = 0$, $y(0) = 2$, $y''(0) = -4$ and compute $y(\pi/8)$.'
+        num: { value: 0, unit: '', tolAbs: 1e-6, check: '2*Math.cos(Math.PI/4)-2*Math.sin(Math.PI/4)' }
+        hint: '$y = 2\cos2x - 2\sin2x$.'
+        explain: '$2\cos\frac\pi4 - 2\sin\frac\pi4 = 0$.'
+        sol: { method: 'IVP with complex roots.', steps: ['$C_1 = 2$, $C_2 = -2$.', '$y(\pi/8) = 2\cdot\frac{\sqrt2}{2} - 2\cdot\frac{\sqrt2}{2} = 0$.'], answer: '0' }
+        src: h27
+      - type: numeric
+        cat: problem
+        q: 'Independent practice 5: solve $y'''' - 4y = 0$, $y(0) = 1$, $y''(0) = 0$ and compute $y(0.5)$.'
+        num: { value: 1.5430806, unit: '', tolAbs: 0.0005, check: '(Math.exp(1)+Math.exp(-1))/2' }
+        hint: '$y = C_1e^{2x} + C_2e^{-2x}$, $C_1 = C_2 = \frac12$.'
+        explain: '$y = \cosh2x$, $y(0.5) = \cosh1 \approx 1.543$.'
+        sol: { method: 'Distinct real roots $\pm2$ + initial conditions.', steps: ['$C_1 + C_2 = 1$, $2C_1 - 2C_2 = 0$.', '$y = \frac{e^{2x} + e^{-2x}}{2}$.', '$y(0.5) = \cosh 1 \approx 1.543$.'], answer: '≈ 1.543' }
+        fromSource: true
+        src: h51
+      - type: single
+        cat: problem
+        q: 'Independent practice 4: solve $(D-1)^2(D^2+1)y = 0$.'
+        opts: ['$(C_1 + C_2x)e^x + C_3\cos x + C_4\sin x$', '$C_1e^x + C_2\cos x + C_3\sin x$', '$(C_1 + C_2x)e^x + C_3e^{x} + C_4e^{-x}$', '$C_1e^x + C_2e^{-x} + C_3\cos x + C_4\sin x$']
+        ans: a
+        hint: 'Double root 1 and the pair $\pm i$.'
+        explain: 'Fourth order ⇒ four independent functions: $e^x, xe^x, \cos x, \sin x$.'
+        fromSource: true
+        src: h51
+      - type: single
+        cat: problem
+        q: 'Independent practice 2: solve $y'''''' - 6y'''' + 12y'' - 8y = 0$.'
+        opts: ['$(C_1 + C_2x + C_3x^2)e^{2x}$', '$C_1e^{2x} + C_2e^{-2x} + C_3$', '$C_1e^{2x} + C_2e^{4x} + C_3e^{6x}$', '$(C_1 + C_2x)e^{2x}$']
+        ans: a
+        hint: '$r^3 - 6r^2 + 12r - 8 = (r-2)^3$.'
+        explain: 'Triple root $r = 2$.'
+        fromSource: true
+        src: h51
+      - type: single
+        cat: theory
+        q: 'In $y = e^{\alpha x}(C_1\cos\beta x + C_2\sin\beta x)$ the number $\alpha$ controls'
+        opts: ['exponential growth or decay', 'the oscillation frequency', 'the order of the equation', 'nothing']
+        ans: a
+        hint: '$\beta$ controls the frequency.'
+        explain: '$\alpha < 0$ — damped oscillations, $\alpha > 0$ — growing; $\beta$ — frequency.'
+        src: h21
+
+  - id: m3-undetermined
+    title: Nonhomogeneous equations — undetermined coefficients, resonance
+    pages: [h31, h32, h33, h34, h35, h36, h37, h38, h39, h40, h41, h42, h43, h44, h45, h49, h50, h58, h59, h60, h61, h62, h63, h65, h66]
+    theory:
+      - kind: law
+        title: Superposition principle
+        body: |
+          A forcing term $g(x)$ gives a nonhomogeneous equation $a_ny^{(n)} + \dots + a_0y = g(x)$. Its general solution is $y = y_h + y_p$: $y_h$ is the general solution of the homogeneous equation ($g = 0$), $y_p$ is one particular solution of the forced equation.
+
+          Two-stage method: 1) solve the characteristic equation for $y_h$; 2) find $y_p$ by a suitable method, then add.
+        src: h31
+      - kind: rule
+        title: Method of undetermined coefficients
+        body: |
+          Suitable forcing terms: sums of polynomials, exponentials, sine/cosine functions and their finite products.
+          1. Identify the type of $g(x)$.
+          2. Propose a trial function $y_p$ with unknown coefficients.
+          3. Check overlap with $y_h$.
+          4. If necessary, multiply the trial by $x^s$.
+          5. Substitute into the ODE and solve for the coefficients.
+
+          **Limitation:** there is no finite standard trial for arbitrary forcing such as $\ln x$ or $\tan x$.
+        src: h32
+      - kind: law
+        title: The general trial-solution rule
+        body: |
+          For $p(D)y = g(x)$ with $g(x) = e^{\alpha x}\left[P_m(x)\cos\beta x + Q_k(x)\sin\beta x\right]$ put $d = \max\{m, k\}$ (a missing polynomial is zero). The correct trial is
+          $y_p = x^s e^{\alpha x}\left[U_d(x)\cos\beta x + V_d(x)\sin\beta x\right]$,
+          where $U_d$, $V_d$ are general polynomials of degree at most $d$.
+
+          **Resonance exponent $s$** = multiplicity of $\alpha + i\beta$ as a root of $p(r)$; $s = 0$ if it is not a root. If $\beta = 0$, use $y_p = x^se^{\alpha x}U_d(x)$.
+
+          **Sums:** if $g = g_1 + g_2 + \dots$, choose a trial for each component separately (with its own resonance factor) and add the trials.
+        src: [h33, h34, h41]
+      - kind: text
+        title: Illustrations of the trial rule (before resonance)
+        body: |
+          | Forcing $g(x)$ | Trial |
+          |---|---|
+          | $4x^2 - 1$ | $Ax^2 + Bx + C$ |
+          | $3e^{2x}(x+1)$ | $e^{2x}(Ax + B)$ |
+          | $5\sin3x$ | $A\cos3x + B\sin3x$ |
+          | $xe^{-x}\cos2x$ | $e^{-x}[(Ax+B)\cos2x + (Cx+D)\sin2x]$ |
+          | $(x^2+1)\sin x + 3\cos x$ | $(Ax^2+Bx+C)\cos x + (Dx^2+Ex+F)\sin x$ |
+
+          Then multiply each trial by $x^s$ if the corresponding $\alpha + i\beta$ is a characteristic root of multiplicity $s$.
+        src: [h35, h37]
+      - kind: text
+        title: Three resonance cases
+        body: |
+          1. $y'' - 3y' + 2y = e^{3x}$: roots 1, 2; 3 is not a root ⇒ $s = 0$, $y_p = Ae^{3x}$.
+          2. $y'' - 3y' + 2y = e^x$: 1 is a simple root ⇒ $s = 1$, $y_p = Axe^x$.
+          3. $y'' - 2y' + y = e^x$: 1 is a double root ⇒ $s = 2$, $y_p = Ax^2e^x$ ($A = \frac12$).
+
+          Complex resonance: $y'' + 4y = \cos2x$, roots $\pm2i$ ⇒ $s = 1$, $y_p = x(A\cos2x + B\sin2x)$.
+        src: [h36, h41]
+    formulas:
+      - title: Structure of the general solution
+        tex: 'y = y_h + y_p'
+        src: h31
+      - title: Trial with the resonance factor
+        tex: 'y_p = x^s e^{\alpha x}\left[U_d(x)\cos\beta x + V_d(x)\sin\beta x\right]'
+        cond: '$s$ — multiplicity of $\alpha + i\beta$ as a characteristic root ($s = 0$ if not a root), $d = \max\{m, k\}$.'
+        src: h33
+    examples:
+      - title: 'Polynomial forcing: $y'''' - 3y'' + 2y = 4x + 1$'
+        given: '$y_h = C_1e^x + C_2e^{2x}$.'
+        steps:
+          - 'Try $y_p = Ax + B$: $y_p'' = A$, $y_p''''= 0$.'
+          - '$-3A + 2(Ax + B) = 4x + 1$ ⇒ $2A = 4$, $2B - 3A = 1$ ⇒ $A = 2$, $B = \frac72$.'
+        answer: '$y = C_1e^x + C_2e^{2x} + 2x + \frac72$'
+        src: h38
+      - title: 'Exponential forcing: $y'''' - y = 3e^{2x}$'
+        given: '$y_h = C_1e^x + C_2e^{-x}$; $e^{2x}$ is not in $y_h$.'
+        steps:
+          - '$y_p = Ae^{2x}$: $(4A - A)e^{2x} = 3Ae^{2x} = 3e^{2x}$ ⇒ $A = 1$.'
+        answer: '$y = C_1e^x + C_2e^{-x} + e^{2x}$'
+        src: h39
+      - title: 'Resonance: $y'''' - 3y'' + 2y = e^x$'
+        given: '$y_h = C_1e^x + C_2e^{2x}$ — $Ae^x$ fails because the operator sends it to zero.'
+        steps:
+          - '$y_p = Axe^x$: $y_p'' = A(1+x)e^x$, $y_p'''' = A(2+x)e^x$.'
+          - '$y_p'''' - 3y_p'' + 2y_p = -Ae^x = e^x$ ⇒ $A = -1$.'
+        answer: '$y = C_1e^x + C_2e^{2x} - xe^x$'
+        src: h40
+      - title: 'Trigonometric forcing: $y'''' + 4y = \cos x$'
+        given: '$y_h = C_1\cos2x + C_2\sin2x$; no overlap.'
+        steps:
+          - '$y_p = A\cos x + B\sin x$: $y_p'''' + 4y_p = 3A\cos x + 3B\sin x$.'
+          - '$A = \frac13$, $B = 0$.'
+        answer: '$y = C_1\cos2x + C_2\sin2x + \frac13\cos x$'
+        src: h42
+      - title: 'Resonant oscillations: $y'''' + y = \sin x$'
+        given: '$y_h = C_1\cos x + C_2\sin x$ contains $\sin x$.'
+        steps:
+          - '$y_p = x(A\cos x + B\sin x)$; substitution gives $A = -\frac12$, $B = 0$.'
+          - 'The factor $x$ makes the forced oscillation amplitude grow — resonance in an ideal undamped model.'
+        answer: '$y = C_1\cos x + C_2\sin x - \frac x2\cos x$'
+        src: h43
+      - title: 'Several components: $y'''' - y = 2 + e^{2x}$'
+        given: '$y_h = C_1e^x + C_2e^{-x}$; $y_p = y_{p,1} + y_{p,2}$.'
+        steps:
+          - 'For $2$: try $A$: $-A = 2$ ⇒ $y_{p,1} = -2$.'
+          - 'For $e^{2x}$: try $Be^{2x}$: $3B = 1$ ⇒ $y_{p,2} = \frac13e^{2x}$.'
+        answer: '$y = C_1e^x + C_2e^{-x} - 2 + \frac13e^{2x}$'
+        src: h44
+      - title: 'Nonhomogeneous practice (slide 38)'
+        given: '1) $y'''' - 3y'' + 2y = 6$; 2) $y'''' + 9y = \sin2x$; 3) $y'''' - 4y = 8e^{2x}$; 4) $y'''' + 4y = \cos2x$.'
+        steps:
+          - '1) $y_p = A$: $2A = 6$, $A = 3$ ⇒ $y = C_1e^x + C_2e^{2x} + 3$.'
+          - '2) roots $\pm3i$, no resonance: $y_p = A\cos2x + B\sin2x$, $5B = 1$ ⇒ $y = C_1\cos3x + C_2\sin3x + \frac15\sin2x$.'
+          - '3) roots $\pm2$, $s = 1$: $y_p = Axe^{2x}$, $y_p'''' - 4y_p = 4Ae^{2x}$ ⇒ $A = 2$: $y = C_1e^{2x} + C_2e^{-2x} + 2xe^{2x}$.'
+          - '4) roots $\pm2i$, $s = 1$: $y_p = x(A\cos2x + B\sin2x)$ ⇒ $A = 0$, $B = \frac14$: $y = C_1\cos2x + C_2\sin2x + \frac x4\sin2x$.'
+        answer: 'see the steps'
+        src: h50
+    questions:
+      - type: single
+        cat: formula
+        q: 'Quiz Q11: the general solution of a nonhomogeneous linear equation has the form'
+        opts: ['$y = y_h - y_p$', '$y = y_hy_p$', '$y = y_h + y_p$', '$y = y_p/y_h$']
+        ans: c
+        hint: 'Superposition principle.'
+        explain: 'Answer key: C.'
+        fromSource: true
+        src: [h59, h65]
+      - type: single
+        cat: problem
+        q: 'Quiz Q12: for $y'''' - 3y'' + 2y = 4x + 1$, a suitable trial for $y_p$ is'
+        opts: ['$Ax + B$', '$Ae^x$', '$Ax^2 + B$', '$A\cos x + B\sin x$']
+        ans: a
+        hint: 'First-degree polynomial forcing; 0 is not a root.'
+        explain: 'Answer key: A.'
+        fromSource: true
+        src: [h59, h65]
+      - type: single
+        cat: problem
+        q: 'Quiz Q13: for $y'''' - y = 3e^{2x}$, a suitable trial for $y_p$ is'
+        opts: ['$Axe^{2x}$', '$Ae^{2x}$', '$Ae^{-2x}$', '$Ax^2e^{2x}$']
+        ans: b
+        hint: 'Roots $\pm1$; is 2 a root?'
+        explain: 'No resonance ⇒ $Ae^{2x}$. Answer key: B.'
+        fromSource: true
+        src: [h60, h65]
+      - type: single
+        cat: problem
+        q: 'Quiz Q14: for $y'''' - 3y'' + 2y = e^x$, a suitable trial for $y_p$ is'
+        opts: ['$Ae^x$', '$Ax^2e^x$', '$Ae^{2x}$', '$Axe^x$']
+        ans: d
+        hint: '1 is a simple root.'
+        explain: '$s = 1$. Answer key: D.'
+        fromSource: true
+        src: [h60, h65]
+      - type: single
+        cat: problem
+        q: 'Quiz Q15: for $y'''' - 2y'' + y = e^x$, a suitable trial for $y_p$ is'
+        opts: ['$Ae^x$', '$Axe^x$', '$Ax^2e^x$', '$Ax^3e^x$']
+        ans: c
+        hint: '$(r-1)^2 = 0$.'
+        explain: 'Double root ⇒ $s = 2$. Answer key: C.'
+        fromSource: true
+        src: [h61, h65]
+      - type: single
+        cat: problem
+        q: 'Quiz Q16: a suitable initial trial for the forcing $5\sin3x$, assuming no resonance, is'
+        opts: ['$A\sin3x$', '$A\cos3x + B\sin3x$', '$Ae^{3x}$', '$Ax\sin3x$']
+        ans: b
+        hint: 'Use both sine and cosine.'
+        explain: 'Answer key: B.'
+        fromSource: true
+        src: [h61, h65]
+      - type: single
+        cat: problem
+        q: 'Quiz Q17: for $y'''' + 4y = \cos2x$, the correct trial for $y_p$ is'
+        opts: ['$x(A\cos2x + B\sin2x)$', '$A\cos2x + B\sin2x$', '$x^2(A\cos2x + B\sin2x)$', '$Ae^{2x}$']
+        ans: a
+        hint: '$\pm2i$ are simple roots.'
+        explain: 'Answer key: A.'
+        fromSource: true
+        src: [h62, h65]
+      - type: single
+        cat: problem
+        q: 'Quiz Q18: for $g(x) = e^{2x}(x + 1)$, before checking resonance, the appropriate trial is'
+        opts: ['$Ae^{2x}$', '$(Ax + B)e^x$', '$(Ax^2 + B)e^{2x}$', '$e^{2x}(Ax + B)$']
+        ans: d
+        hint: 'Same exponential, general polynomial of the same degree.'
+        explain: 'Answer key: D.'
+        fromSource: true
+        src: [h62, h65]
+      - type: single
+        cat: theory
+        q: 'Quiz Q19: which forcing term does not have a standard finite trial of the undetermined-coefficients type?'
+        opts: ['$x^2 + 1$', '$e^x\cos x$', '$\ln x$', '$4\sin2x$']
+        ans: c
+        hint: 'Limitation on slide 20.'
+        explain: 'Answer key: C.'
+        fromSource: true
+        src: [h63, h65]
+      - type: single
+        cat: problem
+        q: 'Quiz Q20: the general solution of $y'''' - y = 2 + e^{2x}$ is'
+        opts: ['$C_1e^x + C_2e^{-x} + 2 + e^{2x}$', '$C_1e^x + C_2e^{-x} - 2 + \frac13e^{2x}$', '$C_1e^x + C_2e^{-x} - 2 + 3e^{2x}$', '$C_1e^x + C_2e^{-x} + 2 - \frac13e^{2x}$']
+        ans: b
+        hint: 'Treat each component separately.'
+        explain: 'Answer key: B.'
+        fromSource: true
+        src: [h63, h65]
+      - type: matching
+        cat: problem
+        q: 'Student check (slide 33): match each equation with the correct form of $y_p$.'
+        pairs:
+          - ['$y'''' + y = 3x - 1$', '$Ax + B$']
+          - ['$y'''' - 4y = e^{3x}$', '$Ae^{3x}$']
+          - ['$y'''' + 4y = \sin2x$', '$x(A\cos2x + B\sin2x)$']
+          - ['$y'''' - 2y'' + y = 5e^x$', '$Ax^2e^x$']
+        hint: 'Check resonance for each.'
+        explain: 'Suggested trials on the slide: $Ax + B$; $Ae^{3x}$; $x(A\cos2x + B\sin2x)$; $Ax^2e^x$.'
+        fromSource: true
+        src: h45
+      - type: numeric
+        cat: problem
+        q: 'For $y'''' - 3y'' + 2y = 4x + 1$ with $y_p = Ax + B$, find $B$.'
+        num: { value: 3.5, unit: '', check: '7/2' }
+        hint: '$2A = 4$, $2B - 3A = 1$.'
+        explain: '$A = 2$, $B = \frac{1 + 6}{2} = 3.5$.'
+        sol: { method: 'Comparing coefficients.', steps: ['$-3A + 2Ax + 2B = 4x + 1$.', '$A = 2$; $2B = 1 + 3A = 7$.'], answer: '7/2' }
+        fromSource: true
+        src: h38
+      - type: numeric
+        cat: problem
+        q: 'For $y'''' - 2y'' + y = e^x$ with $y_p = Ax^2e^x$, find $A$.'
+        num: { value: 0.5, unit: '', check: '1/2' }
+        hint: '$(D - 1)^2(x^2e^x) = 2e^x$.'
+        explain: '$2A = 1$ ⇒ $A = \frac12$.'
+        sol: { method: 'Substitution of the resonant trial.', steps: ['$y_p'' = A(2x + x^2)e^x$, $y_p'''' = A(2 + 4x + x^2)e^x$.', '$y_p'''' - 2y_p'' + y_p = 2Ae^x$ ⇒ $A = 1/2$.'], answer: '1/2' }
+        fromSource: true
+        src: h41
+      - type: numeric
+        cat: problem
+        q: 'Nonhomogeneous practice 3: for $y'''' - 4y = 8e^{2x}$ with $y_p = Axe^{2x}$, find $A$.'
+        num: { value: 2, unit: '', check: '8/4' }
+        hint: '$y_p'''' - 4y_p = 4Ae^{2x}$.'
+        explain: '$4A = 8$ ⇒ $A = 2$; $y = C_1e^{2x} + C_2e^{-2x} + 2xe^{2x}$.'
+        sol: { method: 'Resonance $s = 1$.', steps: ['$y_p'' = A(1 + 2x)e^{2x}$, $y_p'''' = A(4 + 4x)e^{2x}$.', '$y_p'''' - 4y_p = 4Ae^{2x} = 8e^{2x}$.'], answer: '2' }
+        fromSource: true
+        src: h50
+      - type: numeric
+        cat: problem
+        q: 'Nonhomogeneous practice 2: for $y'''' + 9y = \sin2x$, find the coefficient $B$ in $y_p = B\sin2x$.'
+        num: { value: 0.2, unit: '', check: '1/5' }
+        hint: '$(-4 + 9)B = 1$.'
+        explain: '$B = \frac15$; $y = C_1\cos3x + C_2\sin3x + \frac15\sin2x$.'
+        sol: { method: 'No resonance ($\pm2i$ are not roots).', steps: ['$y_p'''' = -4B\sin2x$.', '$5B\sin2x = \sin2x$ ⇒ $B = 1/5$.'], answer: '0.2' }
+        fromSource: true
+        src: h50
+      - type: numeric
+        cat: problem
+        q: 'Nonhomogeneous practice 4: for $y'''' + 4y = \cos2x$, $y_p = x(A\cos2x + B\sin2x)$. Find $B$.'
+        num: { value: 0.25, unit: '', check: '1/4' }
+        hint: 'For $y_p = Bx\sin2x$: $y_p'''' + 4y_p = 4B\cos2x$.'
+        explain: '$A = 0$, $B = \frac14$: $y_p = \frac x4\sin2x$.'
+        sol: { method: 'Complex resonance $s = 1$.', steps: ['$y_p'''' + 4y_p = -4A\sin2x + 4B\cos2x$.', 'Compare with $\cos2x$: $A = 0$, $B = 1/4$.'], answer: '1/4' }
+        fromSource: true
+        src: h50
+      - type: single
+        cat: theory
+        q: 'Why does the resonant solution $-\frac x2\cos x$ of $y'''' + y = \sin x$ matter in engineering?'
+        opts: ['Its amplitude grows with time — resonance of an undamped system', 'It decays to zero', 'It is periodic with constant amplitude', 'It shows that the forcing has no effect']
+        ans: a
+        hint: 'Look at the factor $x$.'
+        explain: 'The factor $x$ makes the forced oscillation amplitude grow — resonance in an ideal undamped model.'
+        src: h43

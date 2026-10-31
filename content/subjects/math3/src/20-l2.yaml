@@ -1,0 +1,389 @@
+# Lecture 2. Numerical series and functional series (slides b01–b109, animation frames deduplicated).
+subsection: m3-l2
+
+topics:
+  - id: m3-num-series
+    title: Numerical series, partial sums, necessary condition
+    pages: [b01, b03, b07, b12, b16, b20, b24, b29]
+    theory:
+      - kind: definition
+        title: Numerical series
+        body: 'Given a sequence of real numbers $a_1, a_2, a_3, \dots$, the expression $\sum_{n=1}^{\infty} a_n = a_1 + a_2 + \dots + a_n + \dots$ is called a **numerical series** ("the sum from $n$ equals one to infinity of $a$ sub $n$").'
+        src: b03
+      - kind: text
+        title: From a finite sum to an infinite series
+        body: |
+          A finite sum can be computed by a formula: $\sum_{n=1}^{N} n = \frac{N(N+1)}{2}$, so $\sum_{n=1}^{100} n = \frac{100\cdot101}{2} = 5050$.
+
+          If we do not stop, $1 + 2 + 3 + \dots$ has infinitely many terms and $\lim_{N\to\infty}\frac{N(N+1)}{2} = \infty$ — the infinite sum is not a finite number.
+
+          But not every infinite series diverges: for $\sum_{n=0}^{\infty}\left(\frac12\right)^n$ the partial sums are $1,\ 1.5,\ 1.75,\ 1.875,\dots \to 2$, so $1 + \frac12 + \frac14 + \frac18 + \dots = 2$.
+        src: [b07, b12, b16]
+      - kind: definition
+        title: Convergent and divergent series
+        body: 'The **partial sums** are $S_N = \sum_{n=1}^{N} a_n$. If $\lim_{N\to\infty} S_N = S$ is a finite number, the series is **convergent** and $\sum a_n = S$. If this limit does not exist as a finite number, the series is **divergent**.'
+        src: b20
+      - kind: law
+        title: Necessary condition for convergence
+        body: |
+          Since $a_N = S_N - S_{N-1}$, convergence $S_N \to S$ gives $\lim a_N = S - S = 0$:
+          $\sum a_n$ converges $\Rightarrow \lim_{n\to\infty} a_n = 0$.
+
+          **Warning:** the converse is false. The harmonic series $\sum \frac1n$ has $\frac1n \to 0$ but **diverges**. So $a_n \to 0$ is necessary, but not sufficient.
+        src: [b24, b29]
+    formulas:
+      - title: Partial sum and sum of a series
+        tex: 'S_N = \sum_{n=1}^{N} a_n, \qquad \sum_{n=1}^{\infty} a_n = \lim_{N\to\infty} S_N'
+        cond: 'The series converges if the limit is finite (Lecture 2, slide 20).'
+        src: b20
+      - title: Sum of the first N natural numbers
+        tex: '\sum_{n=1}^{N} n = \frac{N(N+1)}{2}'
+        src: b07
+    examples:
+      - title: Partial sums of $\sum (1/2)^n$
+        given: '$\sum_{n=0}^{\infty} \left(\frac12\right)^n = 1 + \frac12 + \frac14 + \dots$'
+        steps:
+          - '$S_1 = 1$, $S_2 = 1.5$, $S_3 = 1.75$, $S_4 = 1.875$.'
+          - 'The distance to 2 halves each time: $2 - S_N = \left(\frac12\right)^{N-1}$.'
+          - 'Hence $S_N \to 2$ and the series converges.'
+        answer: '$\sum (1/2)^n = 2$'
+        src: b16
+    questions:
+      - type: numeric
+        cat: formula
+        q: 'Compute $\sum_{n=1}^{100} n$.'
+        num: { value: 5050, unit: '', check: '100*101/2' }
+        hint: 'Use $\frac{N(N+1)}{2}$.'
+        explain: '$\frac{100\cdot 101}{2} = 5050$.'
+        sol: { method: 'Formula for the sum of the first $N$ natural numbers.', steps: ['$N = 100$.', '$\frac{100\cdot101}{2} = 5050$.'], answer: '5050' }
+        src: b07
+      - type: numeric
+        cat: problem
+        q: 'Compute the partial sum $S_4 = 1 + \frac12 + \frac14 + \frac18$ of the series $\sum_{n=0}^{\infty}(1/2)^n$.'
+        num: { value: 1.875, unit: '', check: '1+1/2+1/4+1/8' }
+        hint: Add four terms.
+        explain: '$S_4 = 1.875$; the partial sums approach 2.'
+        sol: { method: 'Direct addition.', steps: ['$1 + 0.5 = 1.5$', '$1.5 + 0.25 = 1.75$', '$1.75 + 0.125 = 1.875$'], answer: '1.875' }
+        src: b16
+      - type: single
+        cat: theory
+        q: 'A series $\sum a_n$ is called convergent if'
+        opts: ['the partial sums $S_N$ have a finite limit', '$a_n \to 0$', 'all terms are positive', 'the terms are decreasing']
+        ans: a
+        hint: The definition is about partial sums.
+        explain: 'Convergence means $\lim S_N = S$, a finite number. $a_n \to 0$ is only necessary.'
+        src: b20
+      - type: single
+        cat: theory
+        q: 'Which statement about the condition $a_n \to 0$ is correct?'
+        opts: ['It is necessary but not sufficient for convergence', 'It is sufficient for convergence', 'It is necessary and sufficient', 'It is neither necessary nor sufficient']
+        ans: a
+        hint: Think of the harmonic series.
+        explain: 'Convergence implies $a_n \to 0$; but $\sum 1/n$ diverges although $1/n \to 0$.'
+        src: b29
+      - type: single
+        cat: problem
+        q: 'The harmonic series $\sum_{n=1}^{\infty}\frac1n$'
+        opts: ['diverges, although $\frac1n \to 0$', 'converges to 1', 'converges to 2', 'converges because $\frac1n \to 0$']
+        ans: a
+        hint: 'p-series with $p = 1$.'
+        explain: 'The harmonic series diverges; this shows that $a_n \to 0$ is not sufficient.'
+        src: b29
+      - type: single
+        cat: problem
+        q: 'Does $\sum_{n=1}^{\infty}\frac{n}{n+1}$ converge?'
+        opts: ['No: $\frac{n}{n+1} \to 1 \ne 0$', 'Yes: the terms are less than 1', 'Yes, by the ratio test', 'Cannot be decided']
+        ans: a
+        hint: Check the necessary condition.
+        explain: 'If the terms do not tend to 0, the series diverges (necessary condition).'
+        sol: { method: 'Necessary condition (divergence test).', steps: ['$\lim \frac{n}{n+1} = 1$.', '$1 \ne 0$ ⇒ the series diverges.'], answer: 'diverges' }
+        src: b24
+
+  - id: m3-positive-tests
+    title: Positive-term series and convergence tests
+    pages: [b33, b35, b38, b41, b45, b49, b52, b57, b60, b64]
+    theory:
+      - kind: definition
+        title: Positive-term series
+        body: |
+          A series with $a_n \ge 0$ for all $n$ is a **positive-term series** (e.g. $\sum \frac1{n^2}$, $\sum \frac1{2^n}$, $\sum\frac{n}{n^3+1}$). Its partial sums increase: $S_{N+1} = S_N + a_{N+1} \ge S_N$.
+
+          Therefore only two cases are possible: the partial sums are **bounded** ⇒ the series converges; or they grow **without bound** ⇒ the series diverges.
+        src: [b33, b35]
+      - kind: law
+        title: Two reference series
+        body: |
+          1. **Geometric series** $\sum_{n=0}^{\infty} q^n = 1 + q + q^2 + \dots$ converges iff $|q| < 1$, and then $\sum_{n=0}^{\infty} q^n = \frac{1}{1-q}$.
+          2. **p-series** $\sum_{n=1}^{\infty}\frac{1}{n^p}$ converges when $p > 1$ and diverges when $p \le 1$.
+        src: b38
+      - kind: law
+        title: Comparison test
+        body: |
+          Let $0 \le a_n \le b_n$ for all $n \ge N$.
+          - If the larger series $\sum b_n$ converges, then $\sum a_n$ converges.
+          - If the smaller series $\sum a_n$ diverges, then $\sum b_n$ diverges.
+
+          Remember: smaller than a convergent series ⇒ convergent; larger than a divergent series ⇒ divergent.
+        src: [b41, b45]
+      - kind: law
+        title: Limit comparison test
+        body: 'Let $a_n > 0$, $b_n > 0$ and $\lim_{n\to\infty}\frac{a_n}{b_n} = L$ with $0 < L < \infty$. Then $\sum a_n$ and $\sum b_n$ have the same behavior: both converge or both diverge.'
+        src: b52
+      - kind: law
+        title: Ratio test
+        body: 'For a positive-term series let $\lim_{n\to\infty}\left|\frac{a_{n+1}}{a_n}\right| = L$. Then $L < 1$ ⇒ the series converges; $L > 1$ ⇒ it diverges; $L = 1$ ⇒ the test is **inconclusive**.'
+        src: b60
+    formulas:
+      - title: Sum of a geometric series
+        tex: '\sum_{n=0}^{\infty} q^n = \frac{1}{1-q}, \qquad |q| < 1'
+        src: b38
+      - title: p-series
+        tex: '\sum_{n=1}^{\infty}\frac{1}{n^p}\ \text{converges} \iff p > 1'
+        src: b38
+      - title: Ratio test
+        tex: 'L = \lim_{n\to\infty}\left|\frac{a_{n+1}}{a_n}\right|:\quad L<1 \Rightarrow \text{conv.},\ \ L>1 \Rightarrow \text{div.},\ \ L=1 \Rightarrow \text{?}'
+        src: b60
+    examples:
+      - title: 'Comparison test: $\sum \frac{1}{n^2+1}$'
+        given: '$a_n = \frac{1}{n^2+1}$'
+        steps:
+          - 'Since $n^2 + 1 \ge n^2$: $0 < \frac{1}{n^2+1} \le \frac1{n^2}$.'
+          - '$\sum\frac1{n^2}$ is a convergent p-series ($p = 2 > 1$).'
+          - 'By the comparison test the given series converges.'
+        answer: converges
+        src: b49
+      - title: 'Limit comparison: $\sum \frac{3n+1}{n^3+2}$'
+        given: '$a_n = \frac{3n+1}{n^3+2}$'
+        steps:
+          - 'For large $n$: $\frac{3n+1}{n^3+2} \sim \frac{3n}{n^3} = \frac{3}{n^2}$; take $b_n = \frac1{n^2}$.'
+          - '$\lim\frac{a_n}{b_n} = \lim\frac{3n^3+n^2}{n^3+2} = 3$, and $0 < 3 < \infty$.'
+          - '$\sum\frac1{n^2}$ converges ⇒ the given series converges.'
+        answer: converges
+        src: b57
+      - title: 'Ratio test: $\sum \frac{1}{n!}$'
+        given: '$a_n = \frac1{n!}$'
+        steps:
+          - '$\frac{a_{n+1}}{a_n} = \frac{n!}{(n+1)!} = \frac1{n+1}$.'
+          - '$L = \lim\frac{1}{n+1} = 0 < 1$.'
+        answer: converges
+        src: b64
+    questions:
+      - type: single
+        cat: theory
+        q: 'For a positive-term series the partial sums are'
+        opts: ['non-decreasing', 'decreasing', 'alternating in sign', 'always bounded']
+        ans: a
+        hint: '$S_{N+1} = S_N + a_{N+1}$ with $a_{N+1} \ge 0$.'
+        explain: 'Each new term is non-negative, so $S_1 \le S_2 \le \dots$; the series converges iff the partial sums are bounded.'
+        src: b33
+      - type: numeric
+        cat: formula
+        q: 'Find the sum of the geometric series $\sum_{n=0}^{\infty}\left(\frac13\right)^n$.'
+        num: { value: 1.5, unit: '', check: '1/(1-1/3)' }
+        hint: '$\frac{1}{1-q}$ with $q = \frac13$.'
+        explain: '$\frac{1}{1 - 1/3} = \frac32$.'
+        sol: { method: 'Geometric series formula.', steps: ['$|q| = 1/3 < 1$ ⇒ converges.', '$S = \frac{1}{1-1/3} = 1.5$.'], answer: '1.5' }
+        src: b38
+      - type: single
+        cat: formula
+        q: 'The p-series $\sum\frac{1}{n^p}$ converges if and only if'
+        opts: ['$p > 1$', '$p \ge 1$', '$p > 0$', '$p < 1$']
+        ans: a
+        hint: 'For $p = 1$ we get the harmonic series.'
+        explain: 'Converges for $p > 1$, diverges for $p \le 1$.'
+        src: b38
+      - type: single
+        cat: problem
+        q: 'Which reference series is convenient for the limit comparison test with $\sum\frac{3n+1}{n^3+2}$?'
+        opts: ['$\sum\frac1{n^2}$', '$\sum\frac1n$', '$\sum\frac1{n^3}$', '$\sum 3^n$']
+        ans: a
+        hint: 'Keep only the highest powers of $n$.'
+        explain: '$\frac{3n+1}{n^3+2} \sim \frac{3}{n^2}$, so compare with $\sum\frac{1}{n^2}$; the limit of the ratio is 3.'
+        src: b57
+      - type: numeric
+        cat: problem
+        q: 'Compute $L = \lim\limits_{n\to\infty}\dfrac{a_n}{b_n}$ for $a_n = \dfrac{3n+1}{n^3+2}$, $b_n = \dfrac{1}{n^2}$.'
+        num: { value: 3, unit: '', check: '3' }
+        hint: 'Divide numerator and denominator by $n^3$.'
+        explain: '$\frac{3n^3+n^2}{n^3+2} \to 3$; since $0 < 3 < \infty$, both series behave in the same way.'
+        sol: { method: 'Limit comparison.', steps: ['$\frac{a_n}{b_n} = \frac{(3n+1)n^2}{n^3+2} = \frac{3n^3+n^2}{n^3+2}$.', 'Divide by $n^3$: $\to 3$.'], answer: '3' }
+        src: b57
+      - type: single
+        cat: theory
+        q: 'The ratio test gives $L = 1$. What can we conclude?'
+        opts: ['Nothing: the test is inconclusive', 'The series converges', 'The series diverges', 'The series converges conditionally']
+        ans: a
+        hint: 'Both $\sum 1/n$ and $\sum 1/n^2$ give $L = 1$.'
+        explain: 'For $L = 1$ another test is needed.'
+        src: b60
+      - type: single
+        cat: problem
+        q: 'Apply the ratio test to $\sum\frac{1}{n!}$.'
+        opts: ['$L = 0$, converges', '$L = 1$, inconclusive', '$L = \infty$, diverges', '$L = 1/2$, converges']
+        ans: a
+        hint: '$\frac{n!}{(n+1)!} = ?$'
+        explain: '$\frac{a_{n+1}}{a_n} = \frac1{n+1} \to 0 < 1$.'
+        sol: { method: 'Ratio test.', steps: ['$\frac{a_{n+1}}{a_n} = \frac{1}{n+1}$.', '$L = 0 < 1$ ⇒ converges.'], answer: 'converges' }
+        src: b64
+      - type: single
+        cat: problem
+        q: 'Use the comparison test: $\sum\frac{1}{n^2+1}$'
+        opts: ['converges, because $\frac{1}{n^2+1} \le \frac1{n^2}$', 'diverges, because $\frac{1}{n^2+1} \ge \frac{1}{2n^2}$', 'diverges, because the terms tend to 0', 'converges, because $\frac{1}{n^2+1} \ge \frac1{n}$']
+        ans: a
+        hint: 'Smaller than a convergent series ⇒ convergent.'
+        explain: '$0 < \frac{1}{n^2+1} \le \frac1{n^2}$, and $\sum\frac{1}{n^2}$ converges ($p = 2$).'
+        src: b49
+
+  - id: m3-abs-alt
+    title: Absolute and conditional convergence, Leibniz test
+    pages: [b68, b71, b74, b76, b79]
+    theory:
+      - kind: definition
+        title: Absolute convergence
+        body: 'If the terms $a_n$ may be positive or negative, consider $\sum |a_n|$. If $\sum |a_n|$ converges, then $\sum a_n$ is called **absolutely convergent**.'
+        src: b68
+      - kind: law
+        title: Absolute convergence implies convergence
+        body: '$\sum|a_n| < \infty \Rightarrow \sum a_n$ converges. The converse is not always true: a series that converges while $\sum|a_n|$ diverges is called **conditionally convergent**.'
+        src: b71
+      - kind: text
+        title: 'Example: alternating harmonic series'
+        body: '$\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n} = 1 - \frac12 + \frac13 - \frac14 + \dots$ converges, but $\sum\left|\frac{(-1)^{n+1}}{n}\right| = \sum\frac1n$ diverges. Hence the alternating harmonic series is **conditionally convergent**.'
+        src: b74
+      - kind: law
+        title: Leibniz test (alternating series test)
+        body: |
+          An **alternating series** has the form $\sum_{n=1}^{\infty}(-1)^{n+1}a_n$, $a_n > 0$ (signs $+,-,+,-,\dots$).
+
+          If $a_{n+1} \le a_n$ for sufficiently large $n$ and $\lim a_n = 0$, then the series converges.
+        src: [b76, b79]
+    formulas:
+      - title: Leibniz test
+        tex: 'a_n > 0,\ a_{n+1} \le a_n,\ a_n \to 0 \ \Rightarrow\ \sum_{n=1}^{\infty}(-1)^{n+1}a_n \ \text{converges}'
+        src: b79
+    questions:
+      - type: single
+        cat: theory
+        q: 'A series $\sum a_n$ is conditionally convergent if'
+        opts: ['$\sum a_n$ converges, but $\sum |a_n|$ diverges', '$\sum |a_n|$ converges', 'both diverge', '$a_n \to 0$']
+        ans: a
+        hint: 'Compare with the definition of absolute convergence.'
+        explain: 'Conditional = convergent, but not absolutely convergent.'
+        src: b71
+      - type: single
+        cat: problem
+        q: 'The alternating harmonic series $\sum\frac{(-1)^{n+1}}{n}$ is'
+        opts: ['conditionally convergent', 'absolutely convergent', 'divergent', 'convergent to 0']
+        ans: a
+        hint: 'It converges by the Leibniz test; what about $\sum\frac1n$?'
+        explain: 'It converges (Leibniz), while the series of absolute values is the divergent harmonic series.'
+        src: b74
+      - type: multiple
+        cat: theory
+        q: 'Which conditions are required in the Leibniz test for $\sum(-1)^{n+1}a_n$, $a_n > 0$?'
+        opts: ['$a_{n+1} \le a_n$ for sufficiently large $n$', '$\lim a_n = 0$', '$\sum a_n$ converges', '$a_n \le \frac1{n^2}$']
+        ans: [a, b]
+        hint: 'Two conditions: monotonicity and limit.'
+        explain: 'Decreasing $a_n$ and $a_n \to 0$ are sufficient. If $\sum a_n$ converged, the series would be absolutely convergent — that is not required.'
+        src: b79
+      - type: single
+        cat: theory
+        q: 'Which implication is always true?'
+        opts: ['Absolute convergence ⇒ convergence', 'Convergence ⇒ absolute convergence', 'Conditional convergence ⇒ absolute convergence', 'Divergence of $\sum |a_n|$ ⇒ divergence of $\sum a_n$']
+        ans: a
+        hint: 'The alternating harmonic series is a counterexample to the others.'
+        explain: 'Only absolute ⇒ convergence holds in general.'
+        src: b71
+      - type: single
+        cat: problem
+        q: 'Classify $\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n^2}$.'
+        opts: ['absolutely convergent', 'conditionally convergent', 'divergent', 'the Leibniz test is not applicable']
+        ans: a
+        hint: 'Check $\sum\left|\frac{(-1)^{n+1}}{n^2}\right|$.'
+        explain: '$\sum\frac1{n^2}$ converges ($p = 2$), so the series converges absolutely.'
+        sol: { method: 'Absolute convergence.', steps: ['$|a_n| = 1/n^2$.', '$\sum 1/n^2$ converges ⇒ absolute convergence.'], answer: 'absolutely convergent' }
+        src: b68
+
+  - id: m3-conv-set
+    title: Convergence set of a functional series
+    pages: [b82, b85, b88, b91, b97, b100, b103, b108, b109]
+    theory:
+      - kind: definition
+        title: Convergence of a functional series at a point
+        body: 'For a functional series $\sum f_n(x)$ and a fixed point $x_0$ we get a numerical series $\sum f_n(x_0)$. If it converges, the functional series **converges at $x_0$**.'
+        src: [b82, b85]
+      - kind: law
+        title: Ratio test for functional series
+        body: 'Fix $x$ and compute $L(x) = \lim_{n\to\infty}\left|\frac{f_{n+1}(x)}{f_n(x)}\right|$. Then $L(x) < 1$ ⇒ absolute convergence; $L(x) > 1$ ⇒ divergence; $L(x) = 1$ ⇒ inconclusive.'
+        src: b88
+      - kind: rule
+        title: Two-step procedure
+        body: |
+          1. Find the **interior** of the convergence set using a convergence test (e.g. $|x| < 1$).
+          2. Check the **boundary points** (e.g. $x = -1$ and $x = 1$) separately — the test is usually inconclusive there.
+        src: b97
+    examples:
+      - title: 'Convergence set of $\sum_{n=1}^{\infty}\frac{x^n}{n}$'
+        given: '$f_n(x) = \frac{x^n}{n}$'
+        steps:
+          - '$\left|\frac{f_{n+1}}{f_n}\right| = |x|\frac{n}{n+1} \to |x| = L(x)$; so $|x| < 1$ ⇒ absolute convergence.'
+          - '$x = 1$: $\sum\frac1n$ — harmonic series, diverges.'
+          - '$x = -1$: $\sum\frac{(-1)^n}{n}$ converges by the Leibniz test, but not absolutely — conditional convergence.'
+        answer: '$[-1, 1)$: absolute on $(-1,1)$, conditional at $x = -1$, divergent at $x = 1$'
+        src: [b91, b100, b103]
+    questions:
+      - type: single
+        cat: problem
+        q: 'Find the convergence set of $\sum_{n=0}^{\infty}\left(\frac{x}{2}\right)^n$.'
+        opts: ['$(-2, 2)$', '$[-2, 2)$', '$[-2, 2]$', '$(-1, 1)$']
+        ans: a
+        hint: 'Geometric series with $q = x/2$.'
+        explain: '$|x/2| < 1 \iff |x| < 2$; at $x = \pm2$ the terms are $1$ or $(-1)^n$ and do not tend to 0.'
+        sol: { method: 'Geometric series.', steps: ['Converges iff $|x/2| < 1$.', 'At $x = 2$: $\sum 1$ diverges; at $x = -2$: $\sum(-1)^n$ diverges.'], answer: '(−2, 2)' }
+        fromSource: true
+        src: b108
+      - type: single
+        cat: problem
+        q: 'Find the convergence set of $\sum_{n=1}^{\infty}\frac{x^n}{n}$.'
+        opts: ['$[-1, 1)$', '$(-1, 1]$', '$[-1, 1]$', '$(-1, 1)$']
+        ans: a
+        hint: 'Check $x = 1$ (harmonic series) and $x = -1$ (Leibniz).'
+        explain: 'Interior $|x| < 1$; $x = -1$ converges conditionally; $x = 1$ diverges.'
+        fromSource: true
+        src: [b103, b108]
+      - type: single
+        cat: problem
+        q: 'Find the convergence set of $\sum_{n=1}^{\infty}\frac{x^n}{n^2}$.'
+        opts: ['$[-1, 1]$', '$[-1, 1)$', '$(-1, 1)$', '$\mathbb{R}$']
+        ans: a
+        hint: 'At $x = \pm1$ compare with $\sum\frac{1}{n^2}$.'
+        explain: 'Ratio test: $L = |x|$; at $|x| = 1$ we get $\sum\frac{(\pm1)^n}{n^2}$, absolutely convergent ($p = 2$).'
+        sol: { method: 'Ratio test + boundary points.', steps: ['$L(x) = |x|\left(\frac{n}{n+1}\right)^2 \to |x|$.', '$x = \pm1$: $\sum\frac{1}{n^2}$ converges ⇒ both endpoints included.'], answer: '[−1, 1]' }
+        fromSource: true
+        src: b108
+      - type: single
+        cat: problem
+        q: 'Find the convergence set of $\sum_{n=1}^{\infty}\frac{(-1)^n x^n}{n}$.'
+        opts: ['$(-1, 1]$', '$[-1, 1)$', '$[-1, 1]$', '$(-1, 1)$']
+        ans: a
+        hint: 'Substitute $x = 1$ and $x = -1$.'
+        explain: '$x = 1$: $\sum\frac{(-1)^n}{n}$ converges (Leibniz); $x = -1$: $\sum\frac{1}{n}$ diverges.'
+        sol: { method: 'Ratio test + boundary points.', steps: ['$L(x) = |x|$ ⇒ interior $(-1,1)$.', '$x = 1$: alternating harmonic — converges.', '$x = -1$: $(-1)^n(-1)^n = 1$ ⇒ harmonic — diverges.'], answer: '(−1, 1]' }
+        fromSource: true
+        src: b108
+      - type: single
+        cat: theory
+        q: 'Why must the boundary points $|x| = 1$ be checked separately after the ratio test?'
+        opts: ['At these points $L(x) = 1$ and the test is inconclusive', 'At these points the series always diverges', 'At these points the series always converges', 'They need not be checked']
+        ans: a
+        hint: 'What is $L(x)$ at $|x| = 1$?'
+        explain: 'The ratio test gives $L = 1$ there, so another test (comparison, Leibniz, …) is needed.'
+        src: b97
+      - type: numeric
+        cat: problem
+        q: 'For $\sum\frac{x^n}{n}$ compute $L(x) = \lim\left|\frac{f_{n+1}(x)}{f_n(x)}\right|$ at $x = 0.5$.'
+        num: { value: 0.5, unit: '', check: '0.5' }
+        hint: '$L(x) = |x|$.'
+        explain: '$L(0.5) = 0.5 < 1$ ⇒ the series converges absolutely at $x = 0.5$.'
+        sol: { method: 'Ratio test.', steps: ['$\left|\frac{f_{n+1}}{f_n}\right| = |x|\frac{n}{n+1}$.', 'Limit $= |x| = 0.5$.'], answer: '0.5' }
+        src: b91

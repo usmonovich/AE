@@ -1,0 +1,305 @@
+# Lecture 1. Sequences of functions. Functional series. Uniform convergence (slides a01–a21).
+subsection: m3-l1
+
+topics:
+  - id: m3-pointwise
+    title: Sequences of functions and pointwise convergence
+    pages: [a01, a02, a03, a04, a05, a06]
+    theory:
+      - kind: definition
+        title: Sequence of functions
+        body: 'Let $A \subseteq \mathbb{R}$ be a nonempty set. A **sequence of functions** is a family $\{f_n\}_{n\ge 1}$, $f_n : A \to \mathbb{R}$. For each fixed $x_0 \in A$ the values $f_1(x_0), f_2(x_0), f_3(x_0), \dots$ form a **numerical sequence**.'
+        src: a02
+      - kind: definition
+        title: Pointwise convergence
+        body: |
+          $\{f_n\}$ **converges pointwise** on $A$ to $f : A \to \mathbb{R}$ if $\lim_{n\to\infty} f_n(x) = f(x)$ for every $x \in A$; we write $f_n \to f$ pointwise on $A$.
+
+          In $\varepsilon$–$N$ language: for every $x \in A$ and every $\varepsilon > 0$ there is $N = N(x,\varepsilon)$ such that $n \ge N \Rightarrow |f_n(x) - f(x)| < \varepsilon$.
+
+          **Important:** the index $N$ may depend on both $x$ and $\varepsilon$. We first fix $x$, then let $n \to \infty$.
+        src: [a02, a03, a06]
+      - kind: text
+        title: Examples
+        body: |
+          1. $f_n(x) = \sin\left(x + \frac1n\right)$, $x \in \mathbb{R}$: for every fixed $x$, $\lim_{n\to\infty} f_n(x) = \sin x$, so $f_n \to \sin x$ pointwise on $\mathbb{R}$.
+          2. $f_n(x) = x^n$, $x \in [0,1]$: $\lim_{n\to\infty} x^n = 0$ for $0 \le x < 1$ and $=1$ for $x = 1$. The pointwise limit is $f(x) = 0$ on $[0,1)$, $f(1) = 1$.
+        src: [a04, a05]
+    examples:
+      - title: Pointwise limit of $x^n$ on $[0,1]$
+        given: '$f_n(x) = x^n$, $x \in [0,1]$.'
+        steps:
+          - 'Fix $x \in [0,1)$: then $0 \le x < 1$, so $x^n \to 0$.'
+          - 'Fix $x = 1$: $1^n = 1 \to 1$.'
+          - 'Collect the values: the limit function is $0$ on $[0,1)$ and $1$ at $x=1$.'
+        answer: '$f(x) = 0$ for $0 \le x < 1$, $f(1) = 1$'
+        src: a05
+    questions:
+      - type: single
+        cat: theory
+        q: 'In the definition of pointwise convergence, the number $N$ may depend on'
+        opts: ['both $x$ and $\varepsilon$', 'only $\varepsilon$', 'only $x$', 'neither $x$ nor $\varepsilon$']
+        ans: a
+        hint: For pointwise convergence we first fix the point $x$.
+        explain: 'Pointwise: $N = N(x, \varepsilon)$. This dependence on $x$ is the main difference from uniform convergence.'
+        src: a03
+      - type: single
+        cat: formula
+        q: 'What is the pointwise limit of $f_n(x) = \sin\left(x + \frac1n\right)$ on $\mathbb{R}$?'
+        opts: ['$\sin x$', '$0$', '$\sin(x+1)$', 'The limit does not exist']
+        ans: a
+        hint: '$\frac1n \to 0$ and $\sin$ is continuous.'
+        explain: 'For every fixed $x$: $\lim \sin(x + 1/n) = \sin x$.'
+        src: a04
+      - type: numeric
+        cat: problem
+        q: 'For $f_n(x) = x^n$ on $[0,1]$, find the value of the pointwise limit function at $x = 1$.'
+        num: { value: 1, unit: '', check: '1' }
+        hint: 'Substitute $x = 1$ first: $1^n = ?$'
+        explain: '$1^n = 1$ for all $n$, so $f(1) = 1$ (while $f(x) = 0$ for $0 \le x < 1$).'
+        sol: { method: 'Fix the point, then take the limit in $n$.', steps: ['$f_n(1) = 1^n = 1$.', '$\lim_{n\to\infty} 1 = 1$.'], answer: '1' }
+        src: a05
+      - type: numeric
+        cat: problem
+        q: 'For $f_n(x) = x^n$, compute $\lim_{n\to\infty} f_n(0.9)$.'
+        num: { value: 0, unit: '', tolAbs: 1e-9, check: '0' }
+        hint: 'What happens to $q^n$ when $|q| < 1$?'
+        explain: 'Since $0 \le 0.9 < 1$, $0.9^n \to 0$.'
+        sol: { method: 'Limit of a geometric sequence.', steps: ['$|0.9| < 1$, so $0.9^n \to 0$.'], answer: '0' }
+        src: a05
+      - type: single
+        cat: theory
+        q: 'For each fixed $x_0 \in A$, the values $f_1(x_0), f_2(x_0), \dots$ form'
+        opts: ['a numerical sequence', 'a functional series', 'a power series', 'a differential equation']
+        ans: a
+        hint: The point is fixed, so every value is a number.
+        explain: 'Fixing $x_0$ turns a sequence of functions into a numerical sequence.'
+        src: a02
+
+  - id: m3-uniform-seq
+    title: Uniform convergence of a sequence of functions
+    pages: [a07, a08, a09, a10, a11, a12]
+    theory:
+      - kind: definition
+        title: Uniform convergence
+        body: |
+          $\{f_n\}$ **converges uniformly** on $A$ to $f$ if for every $\varepsilon > 0$ there exists $N = N(\varepsilon)$ such that
+          $n \ge N \Rightarrow |f_n(x) - f(x)| < \varepsilon$ **for all** $x \in A$.
+
+          **Key difference:** for uniform convergence $N = N(\varepsilon)$ does **not** depend on $x$; for pointwise convergence $N = N(x,\varepsilon)$ may depend on $x$.
+        src: a07
+      - kind: law
+        title: Supremum criterion
+        body: |
+          For a bounded $g: A \to \mathbb{R}$ put $\|g\|_{\infty,A} = \sup_{x \in A} |g(x)|$. Then
+          $f_n \to f$ uniformly on $A$ $\iff$ $\lim_{n\to\infty} \sup_{x\in A} |f_n(x) - f(x)| = 0$.
+
+          Uniform convergence means that the **maximum error** over the whole set tends to zero.
+        src: a08
+      - kind: law
+        title: Uniform implies pointwise (but not conversely)
+        body: 'If $f_n \to f$ uniformly on $A$, then for every fixed $x$: $|f_n(x) - f(x)| \le \sup_{y\in A}|f_n(y) - f(y)| \to 0$, so $f_n \to f$ pointwise. The converse is generally **false**: pointwise convergence does not imply uniform convergence.'
+        src: a09
+      - kind: law
+        title: A criterion with a majorant sequence
+        body: 'Suppose $f_n \to f$ pointwise on $A$. If there are numbers $M_n \ge 0$ with $|f_n(x) - f(x)| \le M_n$ for all $x \in A$ and $M_n \to 0$, then $f_n \to f$ uniformly on $A$.'
+        src: a12
+    formulas:
+      - title: Supremum criterion of uniform convergence
+        tex: 'f_n \rightrightarrows f \text{ on } A \iff \lim_{n\to\infty}\ \sup_{x\in A} |f_n(x)-f(x)| = 0'
+        cond: 'Lecture 1, slide 8.'
+        src: a08
+    examples:
+      - title: 'Is $\sin(x + 1/n) \to \sin x$ uniform on $\mathbb{R}$? (exercise on the slide)'
+        given: '$f_n(x) = \sin\left(x+\frac1n\right)$, $f(x) = \sin x$, $x \in \mathbb{R}$.'
+        steps:
+          - 'By the mean value theorem, $|\sin a - \sin b| \le |a - b|$.'
+          - 'Hence $|f_n(x) - f(x)| \le \frac1n$ for every $x \in \mathbb{R}$.'
+          - 'Take $M_n = \frac1n \to 0$; by the criterion on slide 12 the convergence is uniform.'
+        answer: 'yes, uniform on $\mathbb{R}$'
+        src: [a10, a12]
+      - title: '$f_n(x) = \dfrac{nx}{1+n^2x^2}$ on $(0,1)$ and on $[1,\infty)$ (exercise on the slide)'
+        given: '$A_1 = (0,1)$, $A_2 = [1,\infty)$.'
+        steps:
+          - 'Pointwise limit: for fixed $x > 0$, $f_n(x) = \frac{nx}{1+n^2x^2} \sim \frac{1}{nx} \to 0$, so $f = 0$ on both sets.'
+          - 'On $A_1$: at $x = \frac1n \in (0,1)$ we get $f_n(1/n) = \frac12$, so $\sup_{A_1}|f_n| \ge \frac12 \not\to 0$ — **not uniform**.'
+          - 'On $A_2$: for $x \ge 1 \ge \frac1n$ the function decreases, so $\sup_{A_2}|f_n| = f_n(1) = \frac{n}{1+n^2} \to 0$ — **uniform**.'
+        answer: 'limit 0 on both; uniform on $[1,\infty)$, not uniform on $(0,1)$'
+        src: a11
+    questions:
+      - type: single
+        cat: theory
+        q: 'Which statement is the key difference between uniform and pointwise convergence?'
+        opts: ['For uniform convergence $N$ depends only on $\varepsilon$, not on $x$', 'For uniform convergence $N$ depends on $x$', 'Pointwise convergence requires $\sup |f_n - f| \to 0$', 'There is no difference on bounded sets']
+        ans: a
+        hint: Look at what $N$ is allowed to depend on.
+        explain: 'Uniform: $N = N(\varepsilon)$, one $N$ works for all $x$. Pointwise: $N = N(x,\varepsilon)$.'
+        src: a07
+      - type: single
+        cat: theory
+        q: 'Which implication is always true?'
+        opts: ['Uniform convergence ⇒ pointwise convergence', 'Pointwise convergence ⇒ uniform convergence', 'Pointwise convergence ⇒ continuity of the limit', 'None of them']
+        ans: a
+        hint: If the maximum error tends to zero, what about the error at a fixed point?
+        explain: 'Uniform implies pointwise; the converse is false in general.'
+        src: a09
+      - type: single
+        cat: formula
+        q: '$f_n \to f$ uniformly on $A$ if and only if'
+        opts: ['$\lim_{n\to\infty} \sup_{x\in A} |f_n(x)-f(x)| = 0$', '$\sup_{x\in A} \lim_{n\to\infty} |f_n(x)-f(x)| = 0$', '$\lim_{n\to\infty} f_n(x_0) = f(x_0)$ at one point', '$|f_n(x)| \le 1$ for all $n$']
+        ans: a
+        hint: The order is important — first the supremum over $x$, then the limit in $n$.
+        explain: 'Supremum criterion: the maximum error over $A$ must tend to zero.'
+        src: a08
+      - type: numeric
+        cat: problem
+        q: 'For $f_n(x) = \dfrac{nx}{1+n^2x^2}$, compute $\sup_{0<x<1} |f_n(x)|$ for $n \ge 2$ (the value at $x = 1/n$).'
+        num: { value: 0.5, unit: '', check: '(5*(1/5))/(1+25*(1/5)**2)' }
+        hint: 'Substitute $x = 1/n$.'
+        explain: '$f_n(1/n) = \frac{1}{1+1} = \frac12$, so the maximum error does not tend to 0 and the convergence on $(0,1)$ is not uniform.'
+        sol: { method: 'Supremum criterion.', steps: ['$f_n(1/n) = \frac{n\cdot\frac1n}{1+n^2\cdot\frac1{n^2}} = \frac12$.', 'The maximum of $\frac{t}{1+t^2}$ ($t = nx$) is $\frac12$ at $t = 1$.'], answer: '1/2' }
+        fromSource: true
+        src: a11
+      - type: numeric
+        cat: problem
+        q: 'For the same $f_n(x) = \dfrac{nx}{1+n^2x^2}$ on $[1,\infty)$, compute $\sup_{x\ge1}|f_n(x)|$ for $n = 10$.'
+        num: { value: 0.0990099, unit: '', check: '10/(1+100)' }
+        hint: 'On $[1,\infty)$ the function decreases, so the maximum is at $x = 1$.'
+        explain: '$\sup = f_{10}(1) = \frac{10}{101} \approx 0.099$; in general $\frac{n}{1+n^2} \to 0$, so the convergence is uniform on $[1,\infty)$.'
+        sol: { method: 'Supremum criterion.', steps: ['For $x \ge 1 > 1/n$ the function is decreasing.', '$\sup = f_n(1) = \frac{n}{1+n^2}$; for $n=10$: $\frac{10}{101}$.'], answer: '≈ 0.099' }
+        fromSource: true
+        src: a11
+      - type: single
+        cat: problem
+        q: 'Does $f_n(x) = \sin\left(x+\frac1n\right)$ converge uniformly to $\sin x$ on $\mathbb{R}$?'
+        opts: ['Yes, since $|f_n(x) - \sin x| \le \frac1n$ for all $x$', 'No, because $\mathbb{R}$ is unbounded', 'No, the limit is discontinuous', 'Only on $[0,\pi]$']
+        ans: a
+        hint: '$|\sin a - \sin b| \le |a - b|$.'
+        explain: 'The bound $M_n = 1/n$ does not depend on $x$ and tends to 0, so the convergence is uniform on $\mathbb{R}$.'
+        sol: { method: 'Majorant criterion (slide 12).', steps: ['$|\sin(x+1/n) - \sin x| \le 1/n$.', '$M_n = 1/n \to 0$ independently of $x$ ⇒ uniform.'], answer: 'yes' }
+        fromSource: true
+        src: a10
+
+  - id: m3-uniform-props
+    title: Uniform limits, integration and differentiation
+    pages: [a13, a14, a15, a16, a17]
+    theory:
+      - kind: law
+        title: Continuity of the uniform limit
+        body: 'If $f_n \in C(A)$ for all $n$ and $f_n \to f$ uniformly on $A$, then $f \in C(A)$: **uniform convergence preserves continuity**.'
+        src: a13
+      - kind: note
+        title: 'Example: $x^n$ on $[0,1]$'
+        fig: m3-xn-nonuniform
+        body: 'Every $f_n(x) = x^n$ is continuous on $[0,1]$, but the pointwise limit ($0$ on $[0,1)$, $1$ at $x=1$) is discontinuous. By the theorem above the convergence **cannot be uniform** on $[0,1]$.'
+        src: a14
+      - kind: law
+        title: Uniform convergence and integration
+        body: 'If each $f_n$ is integrable on $[a,b]$ and $f_n \to f$ uniformly on $[a,b]$, then $\lim_{n\to\infty}\int_a^b f_n(x)\,dx = \int_a^b f(x)\,dx$, i.e. the limit and the integral can be interchanged.'
+        src: a15
+      - kind: law
+        title: Uniform convergence and differentiation
+        body: 'Let $f_n \in C^1[a,b]$. If $f_n \to f$ **pointwise** and $f_n'' \to g$ **uniformly** on $[a,b]$, then $f \in C^1[a,b]$ and $f'' = g$.'
+        src: a17
+    formulas:
+      - title: Limit under the integral sign
+        tex: '\lim_{n\to\infty}\int_a^b f_n(x)\,dx = \int_a^b \lim_{n\to\infty} f_n(x)\,dx'
+        cond: 'Valid when $f_n \to f$ uniformly on $[a,b]$ (Lecture 1, slide 15).'
+        src: a15
+    examples:
+      - title: '$\displaystyle\lim_{n\to\infty}\int_0^1 \frac{x}{1+nx}\,dx$ (Problem 2 on the slide)'
+        given: '$f_n(x) = \frac{x}{1+nx}$, $x\in[0,1]$.'
+        steps:
+          - 'Pointwise limit: for $x = 0$, $f_n(0) = 0$; for $x > 0$, $f_n(x) \le \frac{x}{nx} = \frac1n \to 0$. So $f = 0$.'
+          - 'Uniform: $0 \le f_n(x) \le \frac1n$ for all $x \in [0,1]$, and $\frac1n \to 0$, so $f_n \to 0$ uniformly.'
+          - 'Therefore $\lim \int_0^1 f_n\,dx = \int_0^1 0\,dx = 0$.'
+        answer: '$0$'
+        src: a16
+    questions:
+      - type: single
+        cat: theory
+        q: 'Each $f_n$ is continuous on $A$ and $f_n \to f$ uniformly on $A$. What can we say about $f$?'
+        opts: ['$f$ is continuous on $A$', '$f$ is differentiable on $A$', '$f$ may be discontinuous', '$f$ is constant']
+        ans: a
+        hint: Uniform convergence preserves one important property.
+        explain: 'The uniform limit of continuous functions is continuous.'
+        src: a13
+      - type: single
+        cat: problem
+        q: 'Why does $f_n(x) = x^n$ NOT converge uniformly on $[0,1]$?'
+        opts: ['All $f_n$ are continuous, but the pointwise limit is discontinuous at $x=1$', 'Because $f_n(1) = 1$', 'Because $[0,1]$ is closed', 'It does converge uniformly']
+        ans: a
+        hint: Use the theorem on continuity of the uniform limit.
+        explain: 'If the convergence were uniform, the limit would be continuous; but it jumps from 0 to 1 at $x=1$.'
+        sol: { method: 'Proof by contradiction with the continuity theorem.', steps: ['$f_n \in C[0,1]$.', 'The limit equals 0 on $[0,1)$ and 1 at $x=1$ — discontinuous.', 'So the convergence is not uniform.'], answer: 'not uniform' }
+        fromSource: true
+        src: a14
+      - type: numeric
+        cat: problem
+        q: 'Evaluate $\displaystyle\lim_{n\to\infty}\int_0^1 \frac{x}{1+nx}\,dx$.'
+        num: { value: 0, unit: '', tolAbs: 1e-9, check: '0' }
+        hint: 'Show that $0 \le \frac{x}{1+nx} \le \frac1n$ on $[0,1]$.'
+        explain: 'Uniform convergence to 0 lets us pass to the limit under the integral: the answer is 0.'
+        sol: { method: 'Uniform convergence and integration.', steps: ['$0 \le f_n(x) \le 1/n$ ⇒ $f_n \to 0$ uniformly.', '$\lim\int_0^1 f_n = \int_0^1 0 = 0$.'], answer: '0' }
+        fromSource: true
+        src: a16
+      - type: multiple
+        cat: theory
+        q: 'Conditions of the theorem on differentiation of a limit ($f_n \in C^1[a,b]$):'
+        opts: ['$f_n \to f$ pointwise on $[a,b]$', '$f_n'' \to g$ uniformly on $[a,b]$', '$f_n \to f$ uniformly is NOT enough by itself', '$f_n$ must be polynomials']
+        ans: [a, b, c]
+        hint: 'The uniform convergence is required for the derivatives.'
+        explain: 'Pointwise convergence of $f_n$ plus uniform convergence of $f_n''$ give $f'' = g$; uniform convergence of $f_n$ alone does not guarantee convergence of derivatives.'
+        src: a17
+
+  - id: m3-funcseries-domain
+    title: Functional series and the domain of convergence
+    pages: [a18, a19, a20, a21]
+    theory:
+      - kind: definition
+        title: Functional series
+        body: 'For $f_n : A \to \mathbb{R}$, a **functional series** is $\sum_{n=1}^{\infty} f_n(x) = f_1(x) + f_2(x) + \dots$, $x \in A$. For each fixed $x_0$ we get the numerical series $\sum f_n(x_0)$.'
+        src: a18
+      - kind: definition
+        title: Domain of pointwise convergence
+        body: 'The **domain of convergence** is $D = \{x \in A : \sum_{k\ge k_0} f_k(x) \text{ converges}\}$, i.e. the set of points where the partial sums $s_n(x) = \sum_{k=k_0}^{n} f_k(x)$ have a finite limit.'
+        src: a19
+    questions:
+      - type: single
+        cat: problem
+        q: 'Find the domain of convergence of $\sum_{k=1}^{\infty} x^k$.'
+        opts: ['$(-1, 1)$', '$[-1, 1)$', '$[-1, 1]$', '$\mathbb{R}$']
+        ans: a
+        hint: 'This is a geometric series with ratio $x$.'
+        explain: 'A geometric series converges iff $|q| < 1$; at $x = \pm1$ the terms do not tend to 0.'
+        sol: { method: 'Geometric series test.', steps: ['Ratio $q = x$: converges for $|x| < 1$.', 'At $x = 1$: $1+1+\dots$ diverges; at $x = -1$: $-1+1-1+\dots$ diverges (terms do not tend to 0).'], answer: '(−1, 1)' }
+        fromSource: true
+        src: a20
+      - type: single
+        cat: problem
+        q: 'Find the domain of convergence of $\sum_{k=1}^{\infty} e^{-kx}$.'
+        opts: ['$x > 0$', '$x \ge 0$', '$x < 0$', '$\mathbb{R}$']
+        ans: a
+        hint: '$e^{-kx} = (e^{-x})^k$ — a geometric series.'
+        explain: 'Ratio $q = e^{-x}$; $|q| < 1 \iff x > 0$. At $x = 0$ all terms equal 1 — divergence.'
+        sol: { method: 'Geometric series with $q = e^{-x}$.', steps: ['$0 < e^{-x} < 1 \iff x > 0$.', 'For $x \le 0$ the terms do not tend to 0.'], answer: 'x > 0' }
+        fromSource: true
+        src: a20
+      - type: single
+        cat: problem
+        q: 'Find the domain of convergence of $\sum_{k=1}^{\infty} k^{x}$.'
+        opts: ['$x < -1$', '$x \le -1$', '$x > 1$', '$x < 0$']
+        ans: a
+        hint: '$k^x = \frac{1}{k^{-x}}$ — compare with the p-series.'
+        explain: '$\sum \frac{1}{k^{p}}$ with $p = -x$ converges iff $p > 1$, i.e. $x < -1$.'
+        sol: { method: 'p-series.', steps: ['$k^x = 1/k^{-x}$, $p = -x$.', 'Converges iff $p > 1$ ⇔ $x < -1$.'], answer: 'x < −1' }
+        fromSource: true
+        src: a20
+      - type: single
+        cat: theory
+        q: 'The domain of pointwise convergence of $\sum f_k(x)$ is the set of points where'
+        opts: ['the partial sums $s_n(x)$ have a finite limit', '$f_k(x) = 0$ for all $k$', 'the series converges uniformly', 'every term is continuous']
+        ans: a
+        hint: 'A series converges when its partial sums converge.'
+        explain: '$D = \{x : s_n(x) \text{ converges as } n\to\infty\}$.'
+        src: a19

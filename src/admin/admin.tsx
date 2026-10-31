@@ -334,10 +334,10 @@ function EntityPreview({ e }: { e: ContentEntity }) {
       </div>
     );
   }
-  if ('tex' in e) return <div className="rq-preview"><p className="muted small">{topic} · {(e as Formula).title}</p><Tex tex={(e as Formula).tex} display /></div>;
-  if ('body' in e) return <div className="rq-preview"><p className="muted small">{topic}{(e as Theory).title ? ` · ${(e as Theory).title}` : ''}</p><Rich text={(e as Theory).body} /></div>;
+  if ('tex' in e) return <div className="rq-preview"><p className="muted small">{topic} · <Rich inline text={(e as Formula).title} /></p><Tex tex={(e as Formula).tex} display /></div>;
+  if ('body' in e) return <div className="rq-preview"><p className="muted small">{topic}{(e as Theory).title ? <> · <Rich inline text={(e as Theory).title} /></> : ''}</p><Rich text={(e as Theory).body} /></div>;
   const x = e as Example;
-  return <div className="rq-preview"><p className="muted small">{topic} · {x.title}</p><ol className="small">{x.steps.map((s, i) => <li key={i}><Rich inline text={s} /></li>)}</ol></div>;
+  return <div className="rq-preview"><p className="muted small">{topic} · <Rich inline text={x.title} /></p><ol className="small">{x.steps.map((s, i) => <li key={i}><Rich inline text={s} /></li>)}</ol></div>;
 }
 
 function texError(tex: string): string | null {

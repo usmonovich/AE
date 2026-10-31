@@ -240,7 +240,7 @@ export function TheoryBlock({ t }: { t: Theory }) {
         <span className="kind">{KIND[t.kind]}</span>
         <StatusBadge status={t.status} web={!!t.web} />
       </div>
-      {t.title ? <h3>{t.title}</h3> : null}
+      {t.title ? <h3><Rich inline text={t.title} /></h3> : null}
       <Rich text={t.body} />
       {t.figure ? <AnimFigure id={t.figure} web={!!t.web} /> : null}
       <SourceChips sources={t.sources} web={t.web} />
@@ -276,7 +276,7 @@ export function FormulaCard({ f, compact = false }: { f: Formula; compact?: bool
   return (
     <article className={`formula${f.boxed ? ' boxed' : ''}`} id={f.id}>
       <div className="formula-head">
-        <h3>{f.title}</h3>
+        <h3><Rich inline text={f.title} /></h3>
         <div className="formula-tools">
           <StatusBadge status={f.status} web={!!f.web} />
           {f.boxed ? <Badge tone="accent" title="В источнике формула обведена рамкой">в рамке</Badge> : null}
@@ -312,7 +312,7 @@ export function ExampleBlock({ e }: { e: Example }) {
         <span className="kind">{e.web ? 'Разобранный пример' : 'Пример из источника'}</span>
         <StatusBadge status={e.status} web={!!e.web} />
       </div>
-      <h3>{e.title}</h3>
+      <h3><Rich inline text={e.title} /></h3>
       {e.given ? <p className="given"><b>{e.find ? 'Условие и данные:' : 'Дано:'}</b> <Rich inline text={e.given} /></p> : null}
       {e.find ? <p className="given"><b>Найти:</b> <Rich inline text={e.find} /></p> : null}
       {e.method ? <p className="given"><b>Метод:</b> <Rich inline text={e.method} /></p> : null}

@@ -1,0 +1,350 @@
+# Lecture 5. Fourier series (slides e01–e42).
+subsection: m3-l5
+
+topics:
+  - id: m3-fourier-idea
+    title: The idea of Fourier series
+    pages: [e01, e02, e03, e04, e05, e09, e11, e12, e13, e18, e19]
+    theory:
+      - kind: text
+        title: A short history
+        body: |
+          In the early nineteenth century mathematicians studied **how heat propagates** through physical bodies: how does temperature change with position and time inside a heated body? **Joseph Fourier** (1768–1830), a French mathematician and physicist, studying heat conduction, came to the idea: **a complicated function can be represented as a combination of simple sine and cosine functions.** This idea became one of the foundations of modern Fourier analysis.
+        src: [e02, e03, e04, e05]
+      - kind: law
+        title: The heat equation
+        body: 'One-dimensional heat equation: $\frac{\partial u}{\partial t} = \alpha\frac{\partial^2 u}{\partial x^2}$, where $u(x,t)$ is the temperature, $x$ the spatial coordinate, $t$ time, $\alpha$ the thermal diffusivity. The temperature distribution may be complicated — how can it be represented mathematically?'
+        src: e09
+      - kind: definition
+        title: Trigonometric series
+        body: 'The building blocks are $1, \cos x, \sin x, \cos 2x, \sin 2x, \dots$ Instead of studying a complicated function directly, we try to write $f(x) = a_0 + \sum_{n=1}^{\infty}(a_n\cos nx + b_n\sin nx)$.'
+        src: e11
+      - kind: text
+        title: Engineering applications
+        body: 'Fourier series are used to analyze periodic phenomena: electrical signals and circuits, vibrations and mechanical systems, acoustics and sound, communication systems, signal processing, control and measurement systems. **A complex signal = fundamental wave + harmonics.**'
+        src: e12
+      - kind: text
+        title: 'Square wave: more harmonics, better approximation'
+        fig: m3-fourier-square
+        body: |
+          The periodic square wave $f(x) = -1$ for $-\pi \le x < 0$, $f(x) = 1$ for $0 \le x < \pi$ (period $2\pi$) is approximated by
+          $S_N(x) = \frac{4}{\pi}\sum_{k=1}^{N}\frac{\sin((2k-1)x)}{2k-1}$.
+          More harmonics ⇒ better approximation. The fundamental question: how do we determine the coefficients $a_0, a_1, \dots, b_1, b_2, \dots$?
+        src: [e13, e18, e19]
+    formulas:
+      - title: Heat equation
+        tex: '\frac{\partial u}{\partial t} = \alpha\,\frac{\partial^2 u}{\partial x^2}'
+        vars:
+          - { sym: 'u(x,t)', name: temperature }
+          - { sym: x, name: spatial coordinate }
+          - { sym: t, name: time }
+          - { sym: '\alpha', name: thermal diffusivity }
+        src: e09
+      - title: Partial sums for the square wave $\pm1$
+        tex: 'S_N(x) = \frac{4}{\pi}\sum_{k=1}^{N}\frac{\sin((2k-1)x)}{2k-1}'
+        src: e18
+    questions:
+      - type: single
+        cat: theory
+        q: 'Fourier series appeared in the study of'
+        opts: ['heat conduction', 'planetary motion', 'probability', 'prime numbers']
+        ans: a
+        hint: 'The story begins with temperature in a heated body.'
+        explain: 'Fourier studied how heat propagates and how temperature changes inside a body.'
+        src: e02
+      - type: single
+        cat: theory
+        q: 'Fourier''s main idea is that'
+        opts: ['a complicated function can be represented as a combination of sines and cosines', 'every function is a polynomial', 'every series converges uniformly', 'heat is a wave']
+        ans: a
+        hint: 'Building blocks: $1, \cos x, \sin x, \cos 2x, \dots$'
+        explain: 'A complicated (periodic) function = combination of simple trigonometric functions.'
+        src: e04
+      - type: single
+        cat: formula
+        q: 'In the heat equation $u_t = \alpha u_{xx}$, the constant $\alpha$ is'
+        opts: ['the thermal diffusivity', 'the temperature', 'the period', 'the Fourier coefficient']
+        ans: a
+        hint: 'Slide 9.'
+        explain: '$u$ is temperature, $\alpha$ is thermal diffusivity.'
+        src: e09
+      - type: numeric
+        cat: problem
+        q: 'For the square wave $\pm1$, compute the partial sum $S_2(x) = \frac4\pi\left(\sin x + \frac{\sin 3x}{3}\right)$ at $x = \frac\pi2$.'
+        num: { value: 0.8488264, unit: '', tolAbs: 0.0001, check: '4/Math.PI*(1-1/3)' }
+        hint: '$\sin\frac\pi2 = 1$, $\sin\frac{3\pi}{2} = -1$.'
+        explain: '$\frac4\pi\left(1 - \frac13\right) = \frac{8}{3\pi} \approx 0.849$; with more harmonics $S_N(\pi/2) \to 1$.'
+        sol: { method: 'Substitute into the partial sum.', steps: ['$\sin(\pi/2) = 1$, $\sin(3\pi/2) = -1$.', '$\frac{4}{\pi}\cdot\frac23 = \frac{8}{3\pi} \approx 0.849$.'], answer: '≈ 0.849' }
+        src: e18
+      - type: multiple
+        cat: theory
+        q: 'Where are Fourier series used today?'
+        opts: ['electrical signals and circuits', 'vibrations and mechanical systems', 'acoustics and signal processing', 'only in heat conduction']
+        ans: [a, b, c]
+        hint: 'A complex signal = fundamental wave + harmonics.'
+        explain: 'The Fourier idea is no longer limited to heat conduction.'
+        src: e12
+
+  - id: m3-fourier-coeff
+    title: Orthogonality and Fourier coefficients
+    pages: [e20, e22, e23, e24, e25, e27, e28, e29, e31, e32, e33]
+    theory:
+      - kind: law
+        title: Orthogonality relations
+        body: 'For integers $m, n \ge 1$: $\int_{-\pi}^{\pi}\cos nx\cos mx\,dx = \int_{-\pi}^{\pi}\sin nx\sin mx\,dx = 0$ for $n \ne m$ and $= \pi$ for $n = m$; $\int_{-\pi}^{\pi}\sin nx\cos mx\,dx = 0$ for all $n, m$.'
+        src: e20
+      - kind: text
+        title: Derivation of the coefficients
+        body: |
+          Assume $f(x) = a_0 + \sum(a_n\cos nx + b_n\sin nx)$ on $[-\pi,\pi]$ and term-by-term integration is permissible.
+          - Integrate over $[-\pi,\pi]$: since $\int_{-\pi}^{\pi}\cos nx\,dx = \frac1n[\sin n\pi - \sin(-n\pi)] = 0$ and $\int_{-\pi}^{\pi}\sin nx\,dx = 0$, we get $\int_{-\pi}^{\pi}f\,dx = 2\pi a_0$.
+          - Multiply by $\cos mx$ and integrate: by orthogonality the only nonzero term is $a_m\pi$, so $\int_{-\pi}^{\pi} f\cos mx\,dx = a_m\pi$.
+          - Multiply by $\sin mx$: similarly $\int_{-\pi}^{\pi} f\sin mx\,dx = b_m\pi$.
+        src: [e22, e27, e28, e29, e31]
+      - kind: definition
+        title: Fourier series of a piecewise continuous function
+        body: |
+          A function is **piecewise continuous** on $[a,b]$ if it is continuous except perhaps for a finite number of removable or jump discontinuities.
+
+          Let $f$ be piecewise continuous on $[-\pi,\pi]$. Its **Fourier series** is $a_0 + \sum_{n=1}^{\infty}(a_n\cos nx + b_n\sin nx)$ with the **Fourier coefficients**
+          $a_0 = \frac{1}{2\pi}\int_{-\pi}^{\pi}f(x)\,dx$, $a_n = \frac1\pi\int_{-\pi}^{\pi}f(x)\cos nx\,dx$, $b_n = \frac1\pi\int_{-\pi}^{\pi}f(x)\sin nx\,dx$.
+        src: [e31, e32]
+    formulas:
+      - title: Orthogonality
+        tex: '\int_{-\pi}^{\pi}\cos nx\cos mx\,dx = \int_{-\pi}^{\pi}\sin nx\sin mx\,dx = \begin{cases}0, & n\ne m\\ \pi, & n = m\end{cases},\qquad \int_{-\pi}^{\pi}\sin nx\cos mx\,dx = 0'
+        src: e20
+      - title: Fourier coefficients (period $2\pi$)
+        tex: 'a_0 = \frac{1}{2\pi}\int_{-\pi}^{\pi} f(x)\,dx,\quad a_n = \frac{1}{\pi}\int_{-\pi}^{\pi} f(x)\cos nx\,dx,\quad b_n = \frac{1}{\pi}\int_{-\pi}^{\pi} f(x)\sin nx\,dx'
+        cond: 'Note: in these lectures the constant term is $a_0$ itself (not $a_0/2$).'
+        src: e32
+    examples:
+      - title: 'Square wave $0/1$ (example on the slide)'
+        given: '$f(x) = 0$ for $-\pi \le x < 0$, $f(x) = 1$ for $0 \le x < \pi$, $f(x + 2\pi) = f(x)$.'
+        steps:
+          - '$a_0 = \frac{1}{2\pi}\int_0^\pi 1\,dx = \frac12$.'
+          - '$a_n = \frac1\pi\int_0^\pi\cos nx\,dx = \frac{\sin n\pi}{n\pi} = 0$.'
+          - '$b_n = \frac1\pi\int_0^\pi\sin nx\,dx = \frac{1 - \cos n\pi}{n\pi} = \frac{1-(-1)^n}{n\pi}$: $0$ for even $n$, $\frac{2}{n\pi}$ for odd $n$.'
+          - 'Odd $n = 2k - 1$.'
+        answer: '$\frac12 + \sum_{k=1}^{\infty}\frac{2}{(2k-1)\pi}\sin(2k-1)x$'
+        src: e33
+      - title: 'Problem 1: square wave $1/-1$'
+        given: '$f(x) = 1$ for $-\pi \le x < 0$, $f(x) = -1$ for $0 \le x < \pi$, period $2\pi$.'
+        steps:
+          - '$a_0 = 0$ (equal areas of opposite sign); $f$ is odd up to the values at discontinuities, so $a_n = 0$.'
+          - '$b_n = \frac1\pi\left[\int_{-\pi}^0\sin nx\,dx - \int_0^\pi\sin nx\,dx\right] = -\frac{2(1-(-1)^n)}{n\pi}$: $-\frac{4}{n\pi}$ for odd $n$.'
+          - 'At $x = k\pi$ (jumps) the sum is the average of the one-sided limits, $0$.'
+        answer: '$-\frac{4}{\pi}\sum_{k=1}^{\infty}\frac{\sin(2k-1)x}{2k-1}$; equals $f(x)$ for $x \ne k\pi$'
+        src: e39
+      - title: 'Problem 2: $f = 0$ on $[-\pi,0)$, $f = \cos x$ on $[0,\pi)$'
+        given: 'Period $2\pi$.'
+        steps:
+          - '$a_0 = \frac{1}{2\pi}\int_0^\pi\cos x\,dx = 0$.'
+          - '$a_1 = \frac1\pi\int_0^\pi\cos^2x\,dx = \frac12$; for $n \ge 2$: $a_n = \frac{1}{2\pi}\int_0^\pi[\cos(n-1)x + \cos(n+1)x]\,dx = 0$.'
+          - '$b_1 = \frac1\pi\int_0^\pi\cos x\sin x\,dx = 0$; for $n \ge 2$: $b_n = \frac{1}{2\pi}\int_0^\pi[\sin(n+1)x + \sin(n-1)x]\,dx = \frac{n(1+(-1)^n)}{\pi(n^2-1)}$, i.e. $\frac{2n}{\pi(n^2-1)}$ for even $n$, $0$ for odd $n$.'
+        answer: '$\frac12\cos x + \sum_{m=1}^{\infty}\frac{4m}{\pi(4m^2-1)}\sin 2mx$'
+        src: e39
+    questions:
+      - type: numeric
+        cat: formula
+        q: 'Compute $\int_{-\pi}^{\pi}\sin^2(3x)\,dx$.'
+        num: { value: 3.14159265, unit: '', tolAbs: 0.0001, check: 'Math.PI' }
+        hint: 'Orthogonality with $n = m$.'
+        explain: '$\int_{-\pi}^{\pi}\sin nx\sin mx\,dx = \pi$ for $n = m$.'
+        sol: { method: 'Orthogonality relation.', steps: ['$n = m = 3$.', 'The integral equals $\pi \approx 3.1416$.'], answer: 'π' }
+        src: e20
+      - type: single
+        cat: formula
+        q: '$\int_{-\pi}^{\pi}\sin 2x\cos 5x\,dx = $'
+        opts: ['$0$', '$\pi$', '$2\pi$', '$\frac{\pi}{2}$']
+        ans: a
+        hint: '$\sin nx$ and $\cos mx$ are orthogonal for all $n, m$.'
+        explain: '$\int_{-\pi}^{\pi}\sin nx\cos mx\,dx = 0$.'
+        src: e20
+      - type: single
+        cat: formula
+        q: 'In the lectures the constant term $a_0$ of the Fourier series is'
+        opts: ['$\frac{1}{2\pi}\int_{-\pi}^{\pi}f\,dx$ — the mean value of $f$', '$\frac{1}{\pi}\int_{-\pi}^{\pi}f\,dx$', '$\int_{-\pi}^{\pi}f\,dx$', '$f(0)$']
+        ans: a
+        hint: '$\int f\,dx = 2\pi a_0$.'
+        explain: 'Integrating the series: $\int_{-\pi}^\pi f = 2\pi a_0$, hence $a_0 = \frac1{2\pi}\int f$.'
+        src: e27
+      - type: numeric
+        cat: problem
+        q: 'For the square wave $f = 0$ on $[-\pi,0)$, $f = 1$ on $[0,\pi)$, find $a_0$.'
+        num: { value: 0.5, unit: '', check: '1/2' }
+        hint: '$a_0$ is the mean value over a period.'
+        explain: '$a_0 = \frac{1}{2\pi}\cdot\pi = \frac12$.'
+        sol: { method: 'Formula for $a_0$.', steps: ['$\int_{-\pi}^{\pi}f\,dx = \int_0^{\pi}1\,dx = \pi$.', '$a_0 = \pi/(2\pi) = 1/2$.'], answer: '1/2' }
+        fromSource: true
+        src: e33
+      - type: numeric
+        cat: problem
+        q: 'For the same square wave ($0$ on $[-\pi,0)$, $1$ on $[0,\pi)$) find $b_1$.'
+        num: { value: 0.63661977, unit: '', tolAbs: 0.0001, check: '2/Math.PI' }
+        hint: '$b_n = \frac{1-(-1)^n}{n\pi}$.'
+        explain: '$b_1 = \frac{2}{\pi} \approx 0.637$, matching the answer $\frac12 + \sum\frac{2}{(2k-1)\pi}\sin(2k-1)x$.'
+        sol: { method: 'Formula for $b_n$.', steps: ['$b_1 = \frac1\pi\int_0^\pi\sin x\,dx = \frac{2}{\pi}$.'], answer: '2/π ≈ 0.637' }
+        fromSource: true
+        src: e33
+      - type: single
+        cat: problem
+        q: 'Problem 1: the Fourier series of $f = 1$ on $[-\pi,0)$, $f = -1$ on $[0,\pi)$ is'
+        opts: ['$-\frac{4}{\pi}\sum_{k\ge1}\frac{\sin(2k-1)x}{2k-1}$', '$\frac{4}{\pi}\sum_{k\ge1}\frac{\sin(2k-1)x}{2k-1}$', '$\frac12 - \frac{2}{\pi}\sum_{k\ge1}\frac{\sin(2k-1)x}{2k-1}$', '$-\frac{4}{\pi}\sum_{k\ge1}\frac{\cos(2k-1)x}{2k-1}$']
+        ans: a
+        hint: 'It is minus the square wave from slide 18.'
+        explain: '$a_0 = a_n = 0$, $b_n = -\frac{4}{n\pi}$ for odd $n$, $0$ for even $n$.'
+        fromSource: true
+        src: e39
+      - type: numeric
+        cat: problem
+        q: 'Problem 2: for $f = 0$ on $[-\pi,0)$, $f = \cos x$ on $[0,\pi)$, find $a_1$.'
+        num: { value: 0.5, unit: '', check: '1/2' }
+        hint: '$\int_0^\pi\cos^2 x\,dx = \frac\pi2$.'
+        explain: '$a_1 = \frac1\pi\cdot\frac\pi2 = \frac12$.'
+        sol: { method: 'Formula for $a_n$.', steps: ['$a_1 = \frac1\pi\int_0^\pi\cos^2 x\,dx$.', '$= \frac1\pi\cdot\frac\pi2 = \frac12$.'], answer: '1/2' }
+        fromSource: true
+        src: e39
+      - type: numeric
+        cat: problem
+        q: 'Problem 2: for $f = 0$ on $[-\pi,0)$, $f = \cos x$ on $[0,\pi)$, find $b_2$.'
+        num: { value: 0.42441318, unit: '', tolAbs: 0.0001, check: '4/(3*Math.PI)' }
+        hint: '$b_n = \frac{1}{2\pi}\int_0^\pi[\sin(n+1)x + \sin(n-1)x]\,dx$.'
+        explain: '$b_2 = \frac{1}{2\pi}\left(\frac23 + 2\right) = \frac{4}{3\pi} \approx 0.424$.'
+        sol: { method: 'Product-to-sum formula.', steps: ['$\cos x\sin 2x = \frac12(\sin 3x + \sin x)$.', '$\int_0^\pi\sin 3x\,dx = \frac23$, $\int_0^\pi\sin x\,dx = 2$.', '$b_2 = \frac{1}{2\pi}\cdot\frac83 = \frac{4}{3\pi}$.'], answer: '4/(3π) ≈ 0.424' }
+        fromSource: true
+        src: e39
+
+  - id: m3-fourier-conv
+    title: Convergence theorem and functions of period 2L
+    pages: [e34, e35, e37, e38, e39, e40, e41, e42]
+    theory:
+      - kind: law
+        title: Convergence theorem
+        body: |
+          If $f$ is periodic with period $2\pi$ and $f$ and $f'$ are piecewise continuous on $[-\pi,\pi]$, then the Fourier series is convergent. Its sum equals $f(x)$ at all points where $f$ is continuous; at points of discontinuity the sum is the **average of the right and left limits** $\frac12[f(x^+) + f(x^-)]$, where $f(a^+) = \lim_{x\to a^+}f(x)$, $f(a^-) = \lim_{x\to a^-}f(x)$.
+        src: e34
+      - kind: law
+        title: Functions of period 2L
+        body: |
+          If $f(x + 2L) = f(x)$, the change of variable $t = \pi x/L$, $g(t) = f(Lt/\pi)$ gives a $2\pi$-periodic $g$ ($x = \pm L$ ↔ $t = \pm\pi$). Using $x = Lt/\pi$, $dt = (\pi/L)dx$, the Fourier series of a piecewise continuous $f$ on $[-L, L]$ is
+          $a_0 + \sum_{n=1}^{\infty}\left[a_n\cos\frac{n\pi x}{L} + b_n\sin\frac{n\pi x}{L}\right]$ with
+          $a_0 = \frac{1}{2L}\int_{-L}^{L}f\,dx$, $a_n = \frac1L\int_{-L}^{L}f\cos\frac{n\pi x}{L}dx$, $b_n = \frac1L\int_{-L}^{L}f\sin\frac{n\pi x}{L}dx$.
+        src: [e35, e37]
+    formulas:
+      - title: Sum at a jump discontinuity
+        tex: 'S(x) = \frac{1}{2}\left[f(x^+) + f(x^-)\right]'
+        src: e34
+      - title: Fourier coefficients for period $2L$
+        tex: 'a_0 = \frac{1}{2L}\int_{-L}^{L} f\,dx,\quad a_n = \frac{1}{L}\int_{-L}^{L} f(x)\cos\frac{n\pi x}{L}\,dx,\quad b_n = \frac{1}{L}\int_{-L}^{L} f(x)\sin\frac{n\pi x}{L}\,dx'
+        src: e37
+    examples:
+      - title: 'Triangular wave $f(x) = |x|$, $-1 \le x \le 1$, period 2'
+        given: '$L = 1$; $f$ is even ⇒ $b_n = 0$.'
+        steps:
+          - '$a_0 = \frac12\int_{-1}^{1}|x|\,dx = \frac12$.'
+          - '$a_n = 2\int_0^1 x\cos n\pi x\,dx = \frac{2((-1)^n - 1)}{n^2\pi^2}$: $-\frac{4}{n^2\pi^2}$ for odd $n$, $0$ for even $n$.'
+          - '$f$ is continuous everywhere ⇒ the series equals $f(x)$ for all $x$.'
+        answer: '$|x| = \frac12 - \sum_{k=1}^{\infty}\frac{4}{(2k-1)^2\pi^2}\cos((2k-1)\pi x)$ for all $x$'
+        src: e38
+      - title: 'Problem 3: $f = 1$ for $|x| < 1$, $f = 0$ for $1 \le |x| < 2$, period 4'
+        given: '$L = 2$; $f$ is even ⇒ $b_n = 0$.'
+        steps:
+          - '$a_0 = \frac14\int_{-1}^{1}1\,dx = \frac12$.'
+          - '$a_n = \frac12\int_{-1}^{1}\cos\frac{n\pi x}{2}dx = \frac{2}{n\pi}\sin\frac{n\pi}{2}$.'
+        answer: '$\frac12 + \sum_{n=1}^{\infty}\frac{2}{n\pi}\sin\frac{n\pi}{2}\cos\frac{n\pi x}{2}$'
+        src: e40
+      - title: 'Problem 4: $f = -x$ on $[-4,0)$, $f = 0$ on $[0,4)$, period 8'
+        given: '$L = 4$.'
+        steps:
+          - '$a_0 = \frac18\int_{-4}^{0}(-x)\,dx = 1$.'
+          - '$a_n = \frac14\int_{-4}^0(-x)\cos\frac{n\pi x}{4}dx = -\frac{4(1-(-1)^n)}{n^2\pi^2}$.'
+          - '$b_n = \frac14\int_{-4}^0(-x)\sin\frac{n\pi x}{4}dx = \frac{4(-1)^n}{n\pi}$.'
+        answer: '$a_0 + \sum\left(a_n\cos\frac{n\pi x}{4} + b_n\sin\frac{n\pi x}{4}\right)$ with $a_0 = 1$, $a_n = -\frac{4(1-(-1)^n)}{n^2\pi^2}$, $b_n = \frac{4(-1)^n}{n\pi}$'
+        src: e40
+      - title: 'Problem 5: $f = 1 - x$, $-1 \le x \le 1$, period 2'
+        given: '$L = 1$.'
+        steps:
+          - '$a_0 = \frac12\int_{-1}^{1}(1-x)\,dx = 1$; $a_n = 0$ ($1$ gives 0, $x\cos n\pi x$ is odd).'
+          - '$b_n = -\int_{-1}^{1}x\sin n\pi x\,dx = \frac{2(-1)^n}{n\pi}$.'
+        answer: '$1 + \sum_{n=1}^{\infty}\frac{2(-1)^n}{n\pi}\sin n\pi x$ (equal to $f$ for $-1 < x < 1$; sum $1$ at $x = \pm1$)'
+        src: e40
+    questions:
+      - type: single
+        cat: theory
+        q: 'At a jump discontinuity of $f$, the Fourier series converges to'
+        opts: ['$\frac12[f(x^+) + f(x^-)]$', '$f(x^+)$', '$f(x^-)$', 'it diverges']
+        ans: a
+        hint: 'Convergence theorem, slide 34.'
+        explain: 'The sum is the average of the right and left limits.'
+        src: e34
+      - type: numeric
+        cat: problem
+        q: 'Problem 6: $f = -1$ on $[-4,0)$, $f = 3$ on $[0,4)$, period 8. What is the sum of its Fourier series at $x = 0$?'
+        num: { value: 1, unit: '', check: '(3+(-1))/2' }
+        hint: 'Average of the one-sided limits.'
+        explain: '$\frac{3 + (-1)}{2} = 1$. The same value is obtained at $x = \pm4$.'
+        sol: { method: 'Convergence theorem.', steps: ['$f(0^+) = 3$, $f(0^-) = -1$.', '$S(0) = 1$.'], answer: '1' }
+        fromSource: true
+        src: e41
+      - type: numeric
+        cat: problem
+        q: 'Problem 7: $f = x$ on $[-1,0)$, $f = 1 - x$ on $[0,1)$, period 2. What is the sum of its Fourier series at $x = 0$?'
+        num: { value: 0.5, unit: '', check: '(1+0)/2' }
+        hint: '$f(0^-) = 0$, $f(0^+) = 1$.'
+        explain: '$S(0) = \frac{0 + 1}{2} = \frac12$. At $x = \pm1$: $f(1^-) = 0$, $f(-1^+) = -1$, so $S = -\frac12$.'
+        sol: { method: 'Convergence theorem.', steps: ['Left limit at 0: $x \to 0$.', 'Right limit: $1 - 0 = 1$.', 'Average $= 1/2$.'], answer: '1/2' }
+        fromSource: true
+        src: e41
+      - type: numeric
+        cat: problem
+        q: 'Problem 8: $f(x) = x^3$, $-1 \le x \le 1$, extended with period 2. What is the sum of its Fourier series at $x = 1$?'
+        num: { value: 0, unit: '', tolAbs: 1e-9, check: '(1+(-1))/2' }
+        hint: 'The periodic extension jumps from $1$ to $-1$ at $x = 1$.'
+        explain: '$\frac{1 + (-1)}{2} = 0$.'
+        sol: { method: 'Convergence theorem.', steps: ['$f(1^-) = 1$, $f(1^+) = f(-1^+) = -1$.', 'Sum $= 0$.'], answer: '0' }
+        fromSource: true
+        src: e41
+      - type: numeric
+        cat: problem
+        q: 'For the triangular wave $f(x) = |x|$ ($-1 \le x \le 1$, period 2) find $a_0$.'
+        num: { value: 0.5, unit: '', check: '1/2' }
+        hint: '$a_0 = \frac{1}{2L}\int_{-L}^{L}f\,dx$ with $L = 1$.'
+        explain: '$\frac12\int_{-1}^{1}|x|\,dx = \frac12\cdot1 = \frac12$.'
+        sol: { method: 'Formula for $a_0$, period $2L$.', steps: ['$\int_{-1}^1|x|dx = 1$.', '$a_0 = 1/2$.'], answer: '1/2' }
+        fromSource: true
+        src: e38
+      - type: numeric
+        cat: problem
+        q: 'For the triangular wave $f(x) = |x|$ ($-1 \le x \le 1$, period 2) find $a_1$.'
+        num: { value: -0.40528473, unit: '', tolAbs: 0.0001, check: '-4/Math.PI**2' }
+        hint: '$a_n = \frac{2((-1)^n - 1)}{n^2\pi^2}$.'
+        explain: '$a_1 = -\frac{4}{\pi^2} \approx -0.405$.'
+        sol: { method: 'Formula for $a_n$, even function.', steps: ['$a_1 = 2\int_0^1 x\cos\pi x\,dx$.', '$= 2\cdot\frac{-2}{\pi^2} = -\frac{4}{\pi^2}$.'], answer: '−4/π² ≈ −0.405' }
+        fromSource: true
+        src: e38
+      - type: numeric
+        cat: problem
+        q: 'Problem 3: $f = 1$ for $|x| < 1$, $f = 0$ for $1 \le |x| < 2$, period 4. Find $a_1$.'
+        num: { value: 0.63661977, unit: '', tolAbs: 0.0001, check: '2/Math.PI' }
+        hint: '$L = 2$, $a_n = \frac12\int_{-1}^{1}\cos\frac{n\pi x}{2}dx$.'
+        explain: '$a_1 = \frac{2}{\pi}\sin\frac\pi2 = \frac2\pi \approx 0.637$.'
+        sol: { method: 'Fourier coefficients for period $2L$.', steps: ['$a_n = \frac{2}{n\pi}\sin\frac{n\pi}{2}$.', '$n = 1$: $2/\pi$.'], answer: '2/π ≈ 0.637' }
+        fromSource: true
+        src: e40
+      - type: numeric
+        cat: problem
+        q: 'Problem 5: $f = 1 - x$ on $[-1,1]$, period 2. Find $b_1$.'
+        num: { value: -0.63661977, unit: '', tolAbs: 0.0001, check: '-2/Math.PI' }
+        hint: '$b_n = \frac{2(-1)^n}{n\pi}$.'
+        explain: '$b_1 = -\frac{2}{\pi} \approx -0.637$.'
+        sol: { method: 'Formula for $b_n$ with $L = 1$.', steps: ['$b_n = \int_{-1}^1(1-x)\sin n\pi x\,dx = -\int_{-1}^1 x\sin n\pi x\,dx$.', '$= \frac{2(-1)^n}{n\pi}$, $n = 1$: $-2/\pi$.'], answer: '−2/π' }
+        fromSource: true
+        src: e40
+      - type: single
+        cat: theory
+        q: 'For a function with period $2L$ the Fourier series uses the functions'
+        opts: ['$\cos\frac{n\pi x}{L}$, $\sin\frac{n\pi x}{L}$', '$\cos nLx$, $\sin nLx$', '$\cos\frac{nx}{2L}$, $\sin\frac{nx}{2L}$', '$\cos nx$, $\sin nx$ only']
+        ans: a
+        hint: 'Substitution $t = \pi x/L$.'
+        explain: 'Replacing $t = \pi x/L$ in $\cos nt$, $\sin nt$ gives $\cos\frac{n\pi x}{L}$, $\sin\frac{n\pi x}{L}$.'
+        src: e37

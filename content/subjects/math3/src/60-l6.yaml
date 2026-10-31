@@ -1,0 +1,424 @@
+# Lecture 6. ODEs: basic concepts, classification, general and particular solutions, IVPs (slides f01–f71).
+subsection: m3-l6
+
+topics:
+  - id: m3-ode-basics
+    title: Differential equations — definition, order, linearity
+    pages: [f01, f02, f03, f04, f07, f08, f09, f15, f17, f19, f20, f21, f26]
+    theory:
+      - kind: text
+        title: Why differential equations?
+        body: |
+          Engineering often gives us a **law governing change** rather than the quantity itself: Newton's law gives acceleration from forces; heat transfer gives temperature-change rates; fluid models give pressure and mass-flow rates; aircraft dynamics relate forces and moments to motion.
+
+          If altitude is $h = h(t)$, then $\frac{dh}{dt}$ is the vertical velocity and $\frac{d^2h}{dt^2}$ the vertical acceleration; $\frac{d^2h}{dt^2} = -g$ is a differential equation for the unknown function $h(t)$.
+        src: [f02, f04]
+      - kind: definition
+        title: Differential equation
+        body: 'A **differential equation** is an equation containing an unknown function and one or more of its derivatives. Examples: $y'' = 3x^2$, $y'''' + 4y = 0$, $\frac{dT}{dt} = -k(T - T_a)$. Not a differential equation: $x^2 + 3x - 4 = 0$ — the unknown is a number, not a function with derivatives.'
+        src: f07
+      - kind: definition
+        title: ODE versus PDE
+        body: '**ODE** (ordinary differential equation): derivatives with respect to **one** independent variable, e.g. $m\frac{dv}{dt} = T - D(v)$, $v = v(t)$. **PDE** (partial differential equation): partial derivatives with respect to **two or more** independent variables, e.g. $\frac{\partial u}{\partial t} = \alpha\frac{\partial^2u}{\partial x^2}$, $u = u(x,t)$.'
+        src: [f08, f09]
+      - kind: definition
+        title: Order of an ODE
+        body: |
+          The **order** is the order of the highest derivative appearing in the equation:
+          $y' + 2y = 0$ — first; $y'' + 5y' + 6y = 0$ — second; $y^{(3)} - (y')^4 = x$ — third; $(y'')^3 + y' = 1$ — second.
+
+          **Important:** powers of derivatives do not determine the order.
+        src: f15
+      - kind: definition
+        title: Linear and nonlinear ODEs
+        body: |
+          A **linear** ODE has the form $a_n(x)y^{(n)} + \dots + a_1(x)y' + a_0(x)y = g(x)$: the unknown and its derivatives occur only to the first power and are not multiplied together.
+
+          Linear: $y' + x^2y = \sin x$, $y'' + 3y' + 2y = 0$. Nonlinear: $y' + y^2 = 0$, $y'' + yy' = 0$.
+        src: [f19, f19, f20]
+      - kind: definition
+        title: General form, variables and parameters
+        body: |
+          An $n$th-order ODE: $F(x, y, y', \dots, y^{(n)}) = 0$; if the highest derivative can be isolated, $y^{(n)} = f(x, y, y', \dots, y^{(n-1)})$.
+
+          In $\frac{dv}{dt} + kv = g$: $t$ is the **independent** variable, $v = v(t)$ the **dependent** variable, $\frac{dv}{dt}$ describes how $v$ changes with $t$, $k$ and $g$ are parameters. In applications always identify variables, units and parameters first.
+        src: [f21, f26]
+    formulas:
+      - title: Linear ODE of order n
+        tex: 'a_n(x)y^{(n)} + \dots + a_1(x)y'' + a_0(x)y = g(x)'
+        src: f19
+      - title: Normal form of an ODE
+        tex: 'y^{(n)} = f\left(x, y, y'', \dots, y^{(n-1)}\right)'
+        src: f21
+    questions:
+      - type: matching
+        cat: theory
+        q: 'Match each equation with its order (Quick Check, slide 8).'
+        pairs:
+          - ['$\frac{dy}{dx} = x - y$', 'first']
+          - ['$\frac{d^2x}{dt^2} + \omega^2x = 0$', 'second']
+          - ['$y^{(4)} + y'''' + y = 0$', 'fourth']
+          - ['$(y'''''')^2 + y'' = \cos x$', 'third']
+        hint: 'Look at the highest derivative, not at the powers.'
+        explain: 'Answers on the slide: 1, 2, 4, 3.'
+        fromSource: true
+        src: f17
+      - type: single
+        cat: theory
+        q: 'What is the order of $(y'''')^3 + y'' = 1$?'
+        opts: ['second', 'third', 'first', 'sixth']
+        ans: a
+        hint: 'Powers of derivatives do not determine the order.'
+        explain: 'The highest derivative is $y''''$, so the order is 2.'
+        src: f15
+      - type: multiple
+        cat: theory
+        q: 'Which ODEs are linear?'
+        opts: ['$y'' + x^2y = \sin x$', '$y'''' + 3y'' + 2y = 0$', '$y'' + y^2 = 0$', '$y'''' + yy'' = 0$']
+        ans: [a, b]
+        hint: 'In a linear ODE $y$ and its derivatives appear only to the first power and are not multiplied together.'
+        explain: '$y^2$ and $yy''$ make the last two equations nonlinear. Coefficients may depend on $x$ ($x^2y$ is fine).'
+        src: f20
+      - type: single
+        cat: theory
+        q: 'The heat equation $\frac{\partial u}{\partial t} = \alpha\frac{\partial^2u}{\partial x^2}$ is'
+        opts: ['a PDE', 'an ODE of first order', 'an ODE of second order', 'not a differential equation']
+        ans: a
+        hint: 'How many independent variables does $u(x,t)$ have?'
+        explain: 'Partial derivatives with respect to two variables ⇒ PDE.'
+        src: f09
+      - type: single
+        cat: theory
+        q: 'Which of the following is NOT a differential equation?'
+        opts: ['$x^2 + 3x - 4 = 0$', '$y'' = 3x^2$', '$y'''' + 4y = 0$', '$\frac{dT}{dt} = -k(T - T_a)$']
+        ans: a
+        hint: 'Is there an unknown function with derivatives?'
+        explain: 'In $x^2 + 3x - 4 = 0$ the unknown is a number.'
+        src: f07
+      - type: single
+        cat: theory
+        q: 'In $\frac{dv}{dt} + kv = g$, the dependent variable is'
+        opts: ['$v$', '$t$', '$k$', '$g$']
+        ans: a
+        hint: 'Which quantity depends on which?'
+        explain: '$v = v(t)$ is dependent, $t$ is independent, $k$ and $g$ are parameters.'
+        src: f26
+
+  - id: m3-ode-solutions
+    title: Solutions, general and particular solutions, initial-value problems
+    pages: [f28, f29, f30, f33, f34, f38, f41, f42, f43, f44, f45, f46]
+    theory:
+      - kind: text
+        title: 'Aviation example: Newton''s law of cooling'
+        body: |
+          $\frac{dT}{dt} = -k(T - T_a)$, $k > 0$. If $T > T_a$, then $T' < 0$ — the component cools; if $T < T_a$, then $T' > 0$ — it warms. **The sign of the derivative gives qualitative information before solving the equation.**
+
+          Example: an aircraft component initially has $120^\circ$C, the ambient temperature is $20^\circ$C, $k = 0.1\ \text{min}^{-1}$. Model: $\frac{dT}{dt} = -0.1(T - 20)$, $T(0) = 120$.
+        src: [f28, f29, f30]
+      - kind: definition
+        title: Solution of an ODE
+        body: |
+          For an algebraic equation a solution is usually a number ($x^2 - 4 = 0 \Rightarrow x = \pm2$); for a differential equation a solution is a **function** ($y' = 2x \Rightarrow y = x^2 + C$).
+
+          A function $y = \varphi(x)$ defined on an interval $I$ is a **solution** if the required derivatives exist on $I$ and substitution makes the ODE true for every $x \in I$.
+
+          **Verification:** differentiate, substitute and check the identity. E.g. $y = e^{-2x}$: $y' + 2y = -2e^{-2x} + 2e^{-2x} = 0$ — a solution of $y' + 2y = 0$.
+        src: [f33, f34, f38]
+      - kind: definition
+        title: General and particular solutions
+        body: |
+          For $y' = 2x$ the one-parameter family $y = x^2 + C$ is the **general solution**; $C = 3$ gives the **particular solution** $y = x^2 + 3$.
+
+          A first-order ODE generally produces **one** arbitrary constant; an $n$th-order ODE generally produces **$n$** constants.
+        src: f41
+      - kind: definition
+        title: Explicit and implicit solutions
+        body: '**Explicit**: $y$ is isolated, $y = x^2 + C$. **Implicit**: $x$ and $y$ satisfy a relation, $x^2 + y^2 = C$. Differentiating the implicit relation: $2x + 2yy'' = 0$, hence $y'' = -x/y$ for $y \ne 0$.'
+        src: f42
+      - kind: definition
+        title: Initial-value problem (IVP)
+        body: |
+          An initial condition $y(x_0) = y_0$ specifies the function at a chosen initial point. E.g. $y' = 2x$, $y(0) = 5$ ⇒ $C = 5$, $y = x^2 + 5$.
+
+          An **IVP** is a differential equation together with enough initial conditions to select a particular solution: first order $y' = f(x,y)$, $y(x_0) = y_0$; second order $y'' = f(x,y,y')$, $y(x_0) = y_0$, $y'(x_0) = v_0$. In flight dynamics the initial conditions describe the aircraft state at the starting time.
+        src: [f43, f44]
+      - kind: text
+        title: Free vertical motion and direction fields
+        body: |
+          Ignoring air resistance, $h'' = -g$, so $h'(t) = v_0 - gt$, $h(t) = h_0 + v_0t - \frac12gt^2$. The conditions $h(0) = h_0$, $h'(0) = v_0$ select one trajectory: second-order dynamics need position and velocity as initial-state information.
+
+          For $y' = f(x,y)$ the equation specifies the **slope** of a solution curve at every point $(x,y)$; a **direction field** visualizes these slopes without solving the ODE.
+        src: [f45, f46]
+    formulas:
+      - title: Newton's law of cooling
+        tex: '\frac{dT}{dt} = -k\,(T - T_a), \quad k > 0'
+        vars:
+          - { sym: T, name: temperature of the body }
+          - { sym: 'T_a', name: ambient temperature }
+          - { sym: k, name: cooling coefficient }
+        src: f28
+      - title: Free vertical motion
+        tex: 'h'''' = -g \ \Rightarrow\ h(t) = h_0 + v_0 t - \frac{1}{2} g t^2'
+        src: f45
+    examples:
+      - title: 'Cooling of an aircraft component (problem on slide 14)'
+        given: '$\frac{dT}{dt} = -0.1(T - 20)$, $T(0) = 120$ (°C, minutes).'
+        steps:
+          - 'Separate: $\frac{dT}{T - 20} = -0.1\,dt$ ⇒ $\ln|T - 20| = -0.1t + C$ ⇒ $T = 20 + Ae^{-0.1t}$.'
+          - '$T(0) = 120$ ⇒ $A = 100$: $T(t) = 20 + 100e^{-0.1t}$.'
+          - '$T(10) = 20 + 100e^{-1} \approx 56.8^\circ$C.'
+          - 'As $t \to \infty$, $e^{-0.1t} \to 0$, so $T \to 20^\circ$C — the ambient temperature.'
+        answer: '$T(t) = 20 + 100e^{-0.1t}$; $T(10) \approx 56.8^\circ$C; $T \to 20^\circ$C'
+        src: [f29, f30]
+    questions:
+      - type: numeric
+        cat: problem
+        q: 'An aircraft component cools by $\frac{dT}{dt} = -0.1(T - 20)$, $T(0) = 120^\circ$C ($t$ in minutes). Find $T(10)$ in °C.'
+        num: { value: 56.79, unit: '°C', tolAbs: 0.05, check: '20+100*Math.exp(-1)' }
+        hint: '$T(t) = 20 + 100e^{-0.1t}$.'
+        explain: '$T(10) = 20 + 100e^{-1} \approx 56.79^\circ$C.'
+        sol: { method: 'Separable ODE + initial condition.', steps: ['$T - 20 = Ae^{-0.1t}$.', '$T(0) = 120 \Rightarrow A = 100$.', '$T(10) = 20 + 100e^{-1} \approx 56.79$.'], answer: '≈ 56.8 °C' }
+        fromSource: true
+        src: f29
+      - type: numeric
+        cat: problem
+        q: 'For the same component ($T(t) = 20 + 100e^{-0.1t}$), what temperature (°C) does it approach as $t \to \infty$?'
+        num: { value: 20, unit: '°C', check: '20' }
+        hint: '$e^{-0.1t} \to 0$.'
+        explain: 'The component approaches the ambient temperature $T_a = 20^\circ$C.'
+        sol: { method: 'Limit of the solution.', steps: ['$\lim_{t\to\infty}e^{-0.1t} = 0$.', '$T \to 20$.'], answer: '20 °C' }
+        fromSource: true
+        src: f29
+      - type: single
+        cat: theory
+        q: 'By Newton''s law of cooling $T'' = -k(T - T_a)$, $k > 0$. If $T < T_a$, then'
+        opts: ['$T'' > 0$: the body warms', '$T'' < 0$: the body cools', '$T'' = 0$', 'nothing can be said without solving']
+        ans: a
+        hint: 'Look at the sign of $-(T - T_a)$.'
+        explain: '$T - T_a < 0$ ⇒ $T'' > 0$. The sign of the derivative gives qualitative information before solving.'
+        src: f28
+      - type: single
+        cat: problem
+        q: 'Is $y = e^{-2x}$ a solution of $y'' + 2y = 0$?'
+        opts: ['Yes: $-2e^{-2x} + 2e^{-2x} = 0$', 'No: $y'' = 2e^{-2x}$', 'Only at $x = 0$', 'No: the ODE is nonlinear']
+        ans: a
+        hint: 'Differentiate, substitute, check.'
+        explain: '$y'' = -2e^{-2x}$, and $y'' + 2y = 0$ identically.'
+        src: f38
+      - type: single
+        cat: theory
+        q: 'How many arbitrary constants does the general solution of a third-order ODE generally contain?'
+        opts: ['3', '1', '2', 'none']
+        ans: a
+        hint: 'An $n$th-order ODE — $n$ constants.'
+        explain: 'Generally $n$ arbitrary constants for an $n$th-order equation.'
+        src: f41
+      - type: numeric
+        cat: problem
+        q: 'Solve the IVP $y'' = 2x$, $y(0) = 5$ and find $y(2)$.'
+        num: { value: 9, unit: '', check: '2**2+5' }
+        hint: '$y = x^2 + C$.'
+        explain: '$C = 5$, $y = x^2 + 5$, $y(2) = 9$.'
+        sol: { method: 'General solution + initial condition.', steps: ['$y = x^2 + C$.', '$y(0) = C = 5$.', '$y(2) = 4 + 5 = 9$.'], answer: '9' }
+        src: f43
+      - type: single
+        cat: theory
+        q: '$x^2 + y^2 = C$ is'
+        opts: ['an implicit solution of $y'' = -x/y$', 'an explicit solution of $y'' = -x/y$', 'a solution of $y'' = x/y$', 'not a solution of any ODE']
+        ans: a
+        hint: 'Differentiate the relation implicitly.'
+        explain: '$2x + 2yy'' = 0 \Rightarrow y'' = -x/y$ ($y \ne 0$); $y$ is not isolated — implicit.'
+        src: f42
+      - type: numeric
+        cat: problem
+        q: 'Free vertical motion: $h'''' = -g$, $h(0) = 0$, $h''(0) = 20$ m/s, $g = 9.81$ m/s². Find $h(2)$ in metres.'
+        num: { value: 20.38, unit: 'm', tolAbs: 0.01, check: '20*2-0.5*9.81*4' }
+        hint: '$h(t) = h_0 + v_0t - \frac12gt^2$.'
+        explain: '$h(2) = 40 - 19.62 = 20.38$ m.'
+        sol: { method: 'Integrate twice and use the initial conditions.', steps: ['$h(t) = 0 + 20t - 4.905t^2$.', '$h(2) = 40 - 19.62 = 20.38$.'], answer: '20.38 m' }
+        src: f45
+      - type: single
+        cat: theory
+        q: 'Why does $h'''' = -g$ need two initial conditions?'
+        opts: ['It is second order: position and velocity are needed', 'Because $g$ is unknown', 'Because the equation is nonlinear', 'One condition is enough']
+        ans: a
+        hint: 'Count the arbitrary constants.'
+        explain: 'Two constants $h_0$, $v_0$ ⇒ $h(0)$ and $h''(0)$ are needed to select one trajectory.'
+        src: f45
+
+  - id: m3-first-order-classes
+    title: Three classes of first-order ODEs
+    pages: [f47, f49, f52, f53, f56, f57, f59, f60, f61, f62, f68, f70, f71]
+    theory:
+      - kind: definition
+        title: Three important classes
+        body: |
+          | Class | Standard form | Main idea |
+          |---|---|---|
+          | Separable | $y' = g(x)h(y)$ | separate $x$ and $y$ |
+          | Homogeneous type | $y' = F(y/x)$ | substitute $y = vx$ |
+          | Linear | $y' + p(x)y = q(x)$ | integrating factor / $y = uv$ |
+
+          **Terminology:** a homogeneous first-order equation $y' = F(y/x)$ is different from a homogeneous linear equation $y' + p(x)y = 0$.
+        src: f47
+      - kind: law
+        title: Separable equations
+        body: 'A first-order ODE is **separable** if $\frac{dy}{dx} = g(x)h(y)$. When $h(y) \ne 0$, separate the variables: $\frac{dy}{h(y)} = g(x)\,dx$, $\int\frac{dy}{h(y)} = \int g(x)\,dx + C$.'
+        src: f49
+      - kind: law
+        title: Homogeneous first-order type
+        body: '$\frac{dy}{dx} = F\left(\frac yx\right)$, $x \ne 0$. Use $y = vx$, i.e. $v = \frac yx$, $\frac{dy}{dx} = v + x\frac{dv}{dx}$. Then $v + x\frac{dv}{dx} = F(v)$ — normally a separable equation for $v(x)$. If the right-hand side depends on $x$ and $y$ only through $y/x$, try $y = vx$.'
+        src: [f56, f57]
+      - kind: law
+        title: 'First-order linear ODE: method y = uv'
+        body: |
+          For $y' + p(x)y = q(x)$ look for $y = u(x)v(x)$; then $u'v + uv' + puv = q$.
+          Choose $v$ with $v' + p(x)v = 0$: $v = e^{-\int p(x)dx}$. Then $u'v = q$, $u' = q\,e^{\int p\,dx}$, $u = \int q(x)e^{\int p\,dx}dx + C$. Finally
+          $y = e^{-\int p(x)dx}\left(\int q(x)e^{\int p(x)dx}dx + C\right)$.
+        src: [f59, f60]
+      - kind: rule
+        title: How do we recognize the method?
+        body: |
+          1. Can it be rearranged as $A(y)\,dy = B(x)\,dx$? ⇒ **separable**.
+          2. Does it have the form $y' = F(y/x)$? ⇒ **homogeneous type**; use $y = vx$.
+          3. Can it be written as $y' + p(x)y = q(x)$? ⇒ **linear**.
+
+          An equation may belong to more than one class. Choose the simplest applicable method.
+        src: f68
+    formulas:
+      - title: Solution of a first-order linear ODE
+        tex: 'y = e^{-\int p(x)\,dx}\left(\int q(x)\,e^{\int p(x)\,dx}\,dx + C\right)'
+        cond: 'For $y'' + p(x)y = q(x)$ (Lecture 6, slide 32).'
+        src: f60
+      - title: Substitution for the homogeneous type
+        tex: 'y = vx, \qquad \frac{dy}{dx} = v + x\frac{dv}{dx}'
+        src: f56
+      - title: Thrust–drag model
+        tex: 'm\frac{dv}{dt} + cv = T,\quad v(0) = v_0 \ \Rightarrow\ v(t) = \frac{T}{c} + \left(v_0 - \frac{T}{c}\right)e^{-ct/m}'
+        src: f62
+      - title: Quadratic drag model
+        tex: 'm\frac{dv}{dt} = -kv^2,\quad v(0) = v_0 \ \Rightarrow\ v(t) = \frac{v_0}{1 + (kv_0/m)\,t}'
+        src: f53
+    examples:
+      - title: 'Separable: $y'' = xy$, $y(0) = 2$'
+        given: '$\frac{dy}{dx} = xy$'
+        steps:
+          - 'For $y \ne 0$: $\frac{dy}{y} = x\,dx$.'
+          - '$\ln|y| = \frac{x^2}{2} + C$, $y = Ce^{x^2/2}$.'
+          - '$y(0) = 2$ ⇒ $C = 2$.'
+          - 'Check: $y'' = x\cdot 2e^{x^2/2} = xy$, $y(0) = 2$.'
+        answer: '$y = 2e^{x^2/2}$'
+        src: f52
+      - title: 'Aviation: quadratic drag after thrust is removed'
+        given: '$m\frac{dv}{dt} = -kv^2$, $v(0) = v_0 > 0$.'
+        steps:
+          - 'Separate: $\frac{dv}{v^2} = -\frac km\,dt$.'
+          - '$-\frac1v = -\frac km t + C$, with $C = -\frac{1}{v_0}$.'
+          - '$v(t) = \frac{v_0}{1 + (kv_0/m)t}$ — speed decreases; quadratic drag gives a different decay law from the exponential decay with linear drag.'
+        answer: '$v(t) = \frac{v_0}{1 + (kv_0/m)t}$'
+        src: f53
+      - title: 'Homogeneous type: $y'' = 1 + \frac yx$, $x > 0$'
+        given: 'Set $y = vx$, $y'' = v + xv''$.'
+        steps:
+          - '$v + xv'' = 1 + v$ ⇒ $xv'' = 1$.'
+          - '$v = \ln x + C$.'
+        answer: '$y = x(\ln x + C)$'
+        src: f57
+      - title: 'Linear problems 1–3 (slide 33)'
+        given: '1) $y'' + 2y = e^x$; 2) $y'' + 2y = x$; 3) $y'' + y = \sin x$, $y(0) = 1$.'
+        steps:
+          - '1) $p = 2$, $e^{\int p} = e^{2x}$: $y = e^{-2x}\left(\int e^{3x}dx + C\right) = \frac{e^x}{3} + Ce^{-2x}$.'
+          - '2) $y = e^{-2x}\left(\int xe^{2x}dx + C\right) = \frac x2 - \frac14 + Ce^{-2x}$.'
+          - '3) $y = e^{-x}\left(\int e^x\sin x\,dx + C\right) = \frac{\sin x - \cos x}{2} + Ce^{-x}$; $y(0) = -\frac12 + C = 1$ ⇒ $C = \frac32$.'
+        answer: '1) $\frac{e^x}{3} + Ce^{-2x}$; 2) $\frac x2 - \frac14 + Ce^{-2x}$; 3) $\frac{\sin x - \cos x}{2} + \frac32e^{-x}$'
+        src: f61
+      - title: 'Aviation: linear thrust–drag model'
+        given: '$m\frac{dv}{dt} + cv = T$ (constant thrust $T$, linear drag $cv$), $v(0) = v_0$.'
+        steps:
+          - 'Divide by $m$: $v'' + \frac cm v = \frac Tm$ — linear, integrating factor $\mu = e^{ct/m}$.'
+          - '$v(t) = \frac Tc + \left(v_0 - \frac Tc\right)e^{-ct/m}$; as $t \to \infty$, $v \to \frac Tc$.'
+        answer: '$v(t) = \frac{T}{c} + \left(v_0 - \frac{T}{c}\right)e^{-ct/m}$'
+        src: f62
+    questions:
+      - type: matching
+        cat: theory
+        q: 'Which method would you try first? (Quick Practice, slide 36)'
+        pairs:
+          - ['$y'' = x(1 + y^2)$', 'separable']
+          - ['$y'' - \frac2x y = x^2$', 'linear']
+          - ['$y'' = \frac{x + y}{x}$', 'homogeneous type']
+          - ['$v'' = -kv^2$', 'separable (autonomous)']
+        hint: 'Check the forms $g(x)h(y)$, $F(y/x)$, $y'' + p(x)y = q(x)$.'
+        explain: 'Answers on the slide: separable; linear; homogeneous type (it also simplifies immediately after $y = vx$); separable.'
+        fromSource: true
+        src: f70
+      - type: numeric
+        cat: problem
+        q: 'Solve $y'' = xy$, $y(0) = 2$ and compute $y(1)$.'
+        num: { value: 3.2974425, unit: '', tolAbs: 0.001, check: '2*Math.exp(0.5)' }
+        hint: '$y = 2e^{x^2/2}$.'
+        explain: '$y(1) = 2e^{1/2} \approx 3.297$.'
+        sol: { method: 'Separation of variables.', steps: ['$\frac{dy}{y} = x\,dx$ ⇒ $y = Ce^{x^2/2}$.', '$C = 2$.', '$y(1) = 2\sqrt e \approx 3.297$.'], answer: '≈ 3.297' }
+        fromSource: true
+        src: f52
+      - type: single
+        cat: problem
+        q: 'Solve $y'' + 2y = e^x$ (Problem 1, slide 33).'
+        opts: ['$y = \frac{e^x}{3} + Ce^{-2x}$', '$y = e^x + Ce^{-2x}$', '$y = \frac{e^x}{2} + Ce^{2x}$', '$y = Ce^{-2x}$']
+        ans: a
+        hint: '$v = e^{-2x}$, $u'' = e^{3x}$.'
+        explain: '$u = \frac{e^{3x}}{3} + C$, $y = uv = \frac{e^x}{3} + Ce^{-2x}$.'
+        sol: { method: 'Method $y = uv$.', steps: ['$v'' + 2v = 0$ ⇒ $v = e^{-2x}$.', '$u''e^{-2x} = e^x$ ⇒ $u = \frac{e^{3x}}{3} + C$.', '$y = \frac{e^x}{3} + Ce^{-2x}$.'], answer: 'e^x/3 + Ce^{−2x}' }
+        fromSource: true
+        src: f61
+      - type: single
+        cat: problem
+        q: 'Solve $y'' + 2y = x$ (Problem 2, slide 33).'
+        opts: ['$y = \frac x2 - \frac14 + Ce^{-2x}$', '$y = \frac x2 + Ce^{-2x}$', '$y = x - \frac12 + Ce^{-2x}$', '$y = \frac{x^2}{4} + Ce^{-2x}$']
+        ans: a
+        hint: '$\int xe^{2x}dx = \frac{x}{2}e^{2x} - \frac14e^{2x}$.'
+        explain: 'Check: $y'' = \frac12 - 2Ce^{-2x}$, $y'' + 2y = \frac12 + x - \frac12 = x$.'
+        sol: { method: 'Method $y = uv$ / integrating factor.', steps: ['$y = e^{-2x}\left(\int xe^{2x}dx + C\right)$.', '$\int xe^{2x}dx = \left(\frac x2 - \frac14\right)e^{2x}$.'], answer: 'x/2 − 1/4 + Ce^{−2x}' }
+        fromSource: true
+        src: f61
+      - type: numeric
+        cat: problem
+        q: 'Solve the IVP $y'' + y = \sin x$, $y(0) = 1$ (Problem 3, slide 33). Find the constant $C$ in $y = \frac{\sin x - \cos x}{2} + Ce^{-x}$.'
+        num: { value: 1.5, unit: '', check: '1+1/2' }
+        hint: 'Substitute $x = 0$: $\frac{0 - 1}{2} + C = 1$.'
+        explain: '$C = \frac32$, so $y = \frac{\sin x - \cos x}{2} + \frac32e^{-x}$.'
+        sol: { method: 'General solution of a linear ODE + initial condition.', steps: ['$\int e^x\sin x\,dx = \frac{e^x(\sin x - \cos x)}{2}$.', '$y(0) = -\frac12 + C = 1$ ⇒ $C = \frac32$.'], answer: '3/2' }
+        fromSource: true
+        src: f61
+      - type: numeric
+        cat: problem
+        q: 'Thrust–drag model $m v'' + cv = T$: find the limiting (steady) speed $T/c$ for $T = 50$ kN, $c = 250$ N·s/m (in m/s).'
+        num: { value: 200, unit: 'm/s', check: '50000/250' }
+        hint: '$v(t) \to \frac Tc$ as $t \to \infty$.'
+        explain: '$\frac{50000}{250} = 200$ m/s.'
+        sol: { method: 'Limit of the solution of the linear ODE.', steps: ['$e^{-ct/m} \to 0$.', '$v_\infty = T/c = 200$ m/s.'], answer: '200 m/s' }
+        src: f62
+      - type: single
+        cat: problem
+        q: 'Solve $y'' = 1 + \frac yx$, $x > 0$.'
+        opts: ['$y = x(\ln x + C)$', '$y = x + C$', '$y = Cx$', '$y = \ln x + C$']
+        ans: a
+        hint: '$y = vx$ gives $xv'' = 1$.'
+        explain: '$v = \ln x + C$, $y = vx = x(\ln x + C)$.'
+        src: f57
+      - type: single
+        cat: theory
+        q: 'The equation $y'' + p(x)y = 0$ is called homogeneous in the sense of'
+        opts: ['linear ODE theory (zero right-hand side) — not the same as $y'' = F(y/x)$', 'homogeneous first-order type $y'' = F(y/x)$', 'homogeneous functions of degree 0', 'it is not homogeneous']
+        ans: a
+        hint: 'Terminology note on slide 25.'
+        explain: 'Two different meanings of the word "homogeneous": $q(x) = 0$ in linear theory vs. dependence only on $y/x$.'
+        src: f47
+      - type: single
+        cat: formula
+        q: 'In the method $y = uv$ for $y'' + p(x)y = q(x)$, the function $v$ is chosen so that'
+        opts: ['$v'' + p(x)v = 0$, i.e. $v = e^{-\int p\,dx}$', '$v'' = q(x)$', '$v = e^{\int q\,dx}$', '$u''v = 0$']
+        ans: a
+        hint: 'Kill the terms with $u$.'
+        explain: 'Then the equation reduces to $u''v = q$, so $u = \int q e^{\int p\,dx}dx + C$.'
+        src: f60

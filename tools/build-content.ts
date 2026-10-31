@@ -92,7 +92,7 @@ const fileByPrefix = new Map<string, Y>(sourceFilesSrc.map((s) => [s.pagePrefix,
 // ───────────── страницы-источники ─────────────
 // Материалы (notes): изображения content/subjects/<id>/pages/<ref>.webp. Учебник (book): печатные страницы (b005 …)
 // без изображений — книга защищена авторским правом, в приложении хранится только ссылка на страницу.
-const PAGE_RE = /^([a-z])(\d{2})([LR]?)\.webp$/;
+const PAGE_RE = /^([a-z])(\d{2,3})([LR]?)\.webp$/;
 const bookPages = (): PageInfo[] =>
   sourceFilesSrc.flatMap((sf: Y) => {
     const [a, b] = sf.bookPages as [number, number];

@@ -124,7 +124,7 @@ export function Flashcards() {
                   <span className="fc-kind">{card.kind === 'formula' ? 'Вспомните формулу' : TYPE_LABEL[card.q.type]}</span>
                   {card.kind === 'formula' ? (
                     <>
-                      <b className="fc-title">{card.f.title}</b>
+                      <b className="fc-title"><Rich inline text={card.f.title} /></b>
                       {card.f.conditions ? <span className="muted"><Rich inline text={card.f.conditions} /></span> : null}
                     </>
                   ) : (

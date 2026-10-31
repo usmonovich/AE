@@ -1,0 +1,441 @@
+# Lecture 7. First-order ODEs: separable, homogeneous, linear, Bernoulli (slides g01–g68).
+# Sample exam questions on slides g43–g49 and g61–g68 have no answer key in the source:
+# the answers in the app are worked out and checked (see docs/subjects/math3.md).
+subsection: m3-l7
+
+topics:
+  - id: m3-separable
+    title: Classifying first-order ODEs. Separable equations
+    pages: [g01, g02, g03, g05, g10, g11, g12, g15, g19, g20, g24, g25, g26, g27]
+    theory:
+      - kind: rule
+        title: How to recognize the equation type
+        body: |
+          | Class | Standard form | Main idea |
+          |---|---|---|
+          | Separable | $y' = g(x)h(y)$ | separate $x$ and $y$ |
+          | Homogeneous | $y' = F(y/x)$ | set $y = vx$ |
+          | Linear | $y' + p(x)y = q(x)$ | integrating factor |
+          | Bernoulli | $y' + p(x)y = q(x)y^n$ | set $v = y^{1-n}$ |
+
+          **Best habit:** classify first. Do not start integrating until you know the structure.
+
+          Fast decision process: 1) can it be rearranged as $A(y)\,dy = B(x)\,dx$? ⇒ separable; 2) does the right-hand side depend only on $y/x$? ⇒ homogeneous type; 3) can it be written as $y' + p(x)y = q(x)$? ⇒ linear; 4) does it look like $y' + p(x)y = q(x)y^n$? ⇒ Bernoulli.
+        src: [g05, g10]
+      - kind: law
+        title: Separable equations
+        body: |
+          $\frac{dy}{dx} = g(x)h(y)$. When $h(y) \ne 0$: $\frac{dy}{h(y)} = g(x)\,dx$, $\int\frac{dy}{h(y)} = \int g(x)\,dx + C$.
+
+          **Important:** division by $h(y)$ can remove **equilibrium solutions**. Always check $h(y) = 0$ separately.
+
+          Other forms: $M(x)\,dx + N(y)\,dy = 0$; $A(x)B(y)\,dx + C(x)D(y)\,dy = 0$. An equation is separable if all terms with $x$ can be grouped with $dx$ and all terms with $y$ with $dy$.
+        src: [g11, g12]
+    formulas:
+      - title: Separation of variables
+        tex: '\frac{dy}{dx} = g(x)h(y) \ \Rightarrow\ \int\frac{dy}{h(y)} = \int g(x)\,dx + C, \quad h(y)\ne 0'
+        src: g11
+    examples:
+      - title: 'Example 1: $\frac{dy}{dx} = x(1 + y^2)$'
+        given: 'Separable: $g(x) = x$, $h(y) = 1 + y^2 \ne 0$.'
+        steps:
+          - '$\frac{dy}{1 + y^2} = x\,dx$.'
+          - '$\arctan y = \frac{x^2}{2} + C$.'
+        answer: '$y = \tan\left(\frac{x^2}{2} + C\right)$'
+        src: g15
+      - title: 'Example 2: $(1 + x^2)\,dy - y\,dx = 0$'
+        given: 'Rewrite as $\frac{dy}{y} = \frac{dx}{1+x^2}$.'
+        steps:
+          - '$\ln|y| = \arctan x + C$.'
+          - '$y = Ce^{\arctan x}$ ($y = 0$, lost after division by $y$, is included with $C = 0$).'
+        answer: '$y = Ce^{\arctan x}$'
+        src: g19
+      - title: 'Newton''s law of cooling: $120^\circ$C → $80^\circ$C in 10 min, ambient $20^\circ$C'
+        given: '$\frac{dT}{dt} = -k(T - 20)$, $T(0) = 120$, $T(10) = 80$.'
+        steps:
+          - 'Separate and integrate: $T - 20 = Ce^{-kt}$; $T(0) = 120$ ⇒ $C = 100$.'
+          - '$T(10) = 80$: $e^{-10k} = \frac35$, $k = \frac{1}{10}\ln\frac53$; $T(t) = 20 + 100e^{-\frac{\ln(5/3)}{10}t}$.'
+          - '$T(20) = 20 + 100\left(\frac35\right)^2 = 20 + 36 = 56^\circ$C.'
+          - '$T = 40$: $e^{-kt} = \frac15$, $t = \frac{\ln5}{k} = \frac{10\ln5}{\ln(5/3)} \approx 31.5$ min.'
+        answer: '$T(20) = 56^\circ$C; cooling to $40^\circ$C takes $\approx 31.5$ min'
+        src: [g20, g24, g25, g26, g27]
+    questions:
+      - type: matching
+        cat: theory
+        q: 'Match each class of first-order ODE with its main idea.'
+        pairs:
+          - ['Separable $y'' = g(x)h(y)$', 'separate $x$ and $y$']
+          - ['Homogeneous $y'' = F(y/x)$', 'set $y = vx$']
+          - ['Linear $y'' + p(x)y = q(x)$', 'integrating factor / $y = uv$']
+          - ['Bernoulli $y'' + p(x)y = q(x)y^n$', 'set $v = y^{1-n}$']
+        hint: 'Table on slide 4.'
+        explain: 'Classify first, then choose the method.'
+        src: g05
+      - type: numeric
+        cat: problem
+        q: 'A component cools from $120^\circ$C to $80^\circ$C in 10 min (ambient $20^\circ$C). Find its temperature after 20 min (°C).'
+        num: { value: 56, unit: '°C', check: '20+100*(3/5)**2' }
+        hint: '$e^{-20k} = (e^{-10k})^2 = \left(\frac35\right)^2$.'
+        explain: '$T(20) = 20 + 100\cdot\frac{9}{25} = 56^\circ$C.'
+        sol: { method: 'Newton''s law of cooling, two conditions.', steps: ['$T = 20 + 100e^{-kt}$.', '$e^{-10k} = 3/5$.', '$T(20) = 20 + 100\cdot 9/25 = 56$.'], answer: '56 °C' }
+        fromSource: true
+        src: g26
+      - type: numeric
+        cat: problem
+        q: 'For the same component, how many minutes does it take to cool to $40^\circ$C?'
+        num: { value: 31.5, unit: 'min', tolAbs: 0.1, check: '10*Math.log(5)/Math.log(5/3)' }
+        hint: '$e^{-kt} = \frac15$, $k = \frac{\ln(5/3)}{10}$.'
+        explain: '$t = \frac{10\ln5}{\ln(5/3)} \approx 31.5$ min.'
+        sol: { method: 'Solve $T(t) = 40$ for $t$.', steps: ['$40 = 20 + 100e^{-kt}$ ⇒ $e^{-kt} = 1/5$.', '$t = \ln5/k = 10\ln5/\ln(5/3) \approx 31.5$.'], answer: '≈ 31.5 min' }
+        fromSource: true
+        src: g27
+      - type: numeric
+        cat: problem
+        q: 'For the same component, find the cooling coefficient $k$ (min⁻¹).'
+        num: { value: 0.0510826, unit: 'min⁻¹', tolAbs: 0.0001, check: 'Math.log(5/3)/10' }
+        hint: '$80 = 20 + 100e^{-10k}$.'
+        explain: '$k = \frac{1}{10}\ln\frac53 \approx 0.0511$ min⁻¹.'
+        sol: { method: 'Use the measurement $T(10) = 80$.', steps: ['$e^{-10k} = 3/5$.', '$k = \ln(5/3)/10 \approx 0.0511$.'], answer: '≈ 0.0511 min⁻¹' }
+        fromSource: true
+        src: g25
+      - type: single
+        cat: problem
+        q: 'Solve $\frac{dy}{dx} = x(1 + y^2)$.'
+        opts: ['$y = \tan\left(\frac{x^2}{2} + C\right)$', '$y = \arctan\frac{x^2}{2} + C$', '$y = Ce^{x^2/2}$', '$y = \frac{x^2}{2} + C$']
+        ans: a
+        hint: '$\int\frac{dy}{1+y^2} = \arctan y$.'
+        explain: '$\arctan y = \frac{x^2}{2} + C$ ⇒ $y = \tan\left(\frac{x^2}{2} + C\right)$.'
+        src: g15
+      - type: single
+        cat: problem
+        q: 'Solve $(1 + x^2)\,dy - y\,dx = 0$.'
+        opts: ['$y = Ce^{\arctan x}$', '$y = C(1 + x^2)$', '$y = \arctan x + C$', '$y = Ce^{-\arctan x}$']
+        ans: a
+        hint: '$\frac{dy}{y} = \frac{dx}{1+x^2}$.'
+        explain: '$\ln|y| = \arctan x + C$ ⇒ $y = Ce^{\arctan x}$.'
+        src: g19
+      - type: single
+        cat: theory
+        q: 'Why must $h(y) = 0$ be checked separately when solving $y'' = g(x)h(y)$?'
+        opts: ['Division by $h(y)$ can remove equilibrium solutions', 'Because $h(y)$ is always zero', 'Because the integral of $1/h$ does not exist', 'It need not be checked']
+        ans: a
+        hint: 'If $h(y_0) = 0$, then $y \equiv y_0$ satisfies the equation.'
+        explain: 'Constant solutions $y = y_0$ with $h(y_0) = 0$ are lost when dividing by $h(y)$.'
+        src: g11
+
+  - id: m3-homogeneous
+    title: Homogeneous functions and homogeneous ODEs
+    pages: [g29, g31, g32, g33, g34, g35, g36, g37, g41, g42, g43, g44, g45, g46, g47, g48, g49]
+    theory:
+      - kind: definition
+        title: Homogeneous function of degree n
+        body: |
+          $f(x,y)$ is **homogeneous of degree $n$** if $f(tx, ty) = t^nf(x,y)$ for every admissible $t$.
+
+          Example: $f = x^2 + y^2 - xy$: $f(tx,ty) = t^2(x^2 + y^2 - xy)$ — degree 2.
+
+          **Degree zero:** $f(tx,ty) = f(x,y)$ — scaling both variables does not change the value. Example: $\frac{x^2 - y^2}{x^2 + y^2}$.
+        src: [g29, g31]
+      - kind: law
+        title: Degree zero ⇔ function of y/x
+        body: |
+          If $f$ is homogeneous of degree 0, choose $t = \frac1x$ ($x \ne 0$): $f(x,y) = f\left(1, \frac yx\right) = F\left(\frac yx\right)$ with $F(u) = f(1,u)$. Conversely, $F\left(\frac{ty}{tx}\right) = F\left(\frac yx\right)$.
+
+          **Key idea:** a homogeneous function of degree zero depends only on the ratio of its arguments, not on their common scale.
+        src: [g32, g33]
+      - kind: law
+        title: From homogeneous functions to homogeneous ODEs
+        body: 'If $M(x,y)\,dx + N(x,y)\,dy = 0$ with $M$, $N$ homogeneous of the **same degree**, then $\frac{dy}{dx} = -\frac{M}{N}$ is homogeneous of degree zero, i.e. $\frac{dy}{dx} = F\left(\frac yx\right)$, and the substitution $y = vx$ reduces it to a separable equation.'
+        src: g34
+    examples:
+      - title: '$\frac{dy}{dx} = \frac{x^2 + y^2}{xy}$'
+        given: 'Rewrite: $\frac{x^2 + y^2}{xy} = \frac xy + \frac yx$ — depends only on $y/x$.'
+        steps:
+          - '$y = vx$: $v + x\frac{dv}{dx} = \frac1v + v$ ⇒ $x\frac{dv}{dx} = \frac1v$.'
+          - 'Separate: $v\,dv = \frac{dx}{x}$ ⇒ $\frac{v^2}{2} = \ln|x| + C$, i.e. $v^2 = 2\ln|x| + C$.'
+        answer: '$\left(\frac yx\right)^2 = 2\ln|x| + C$'
+        src: [g41, g42]
+    questions:
+      - type: matching
+        cat: problem
+        q: 'Practice (slide 20): match each function with its degree of homogeneity.'
+        pairs:
+          - ['$x^3 + 2x^2y + xy^2$', '3']
+          - ['$\frac{x^3 - y^3}{x^2 + xy + y^2}$', '1']
+          - ['$\frac{x^2 - y^2}{x^2 + y^2}$', '0']
+          - ['$x^{1/2}y^{3/2}$', '2']
+        hint: 'Replace $x \to tx$, $y \to ty$ and factor out $t$.'
+        explain: 'Degrees: 3, $3 - 2 = 1$, 0, $\frac12 + \frac32 = 2$. Also $\frac{x^2 + y^2}{x - y}$ has degree $2 - 1 = 1$.'
+        fromSource: true
+        src: g35
+      - type: matching
+        cat: problem
+        q: 'Practice (slide 21): match each function with its degree of homogeneity.'
+        pairs:
+          - ['$x^4 + 3x^2y^2 + y^4$', '4']
+          - ['$\frac{x^2y^3}{(x^2 + y^2)^2}$', '1']
+          - ['$\sqrt{x^2 + y^2}$', '1 (for $t > 0$)']
+          - ['$\ln\frac{x}{y}$', '0']
+        hint: '$\ln\frac{tx}{ty} = \ln\frac xy$.'
+        explain: 'Degrees: 4; $5 - 4 = 1$; $\sqrt{t^2(x^2+y^2)} = |t|\sqrt{x^2+y^2}$ — degree 1 for $t > 0$; 0. Also $\frac{x^3 + 2x^2y + xy^2}{x^2 + y^2}$ has degree 1.'
+        fromSource: true
+        src: g36
+      - type: single
+        cat: problem
+        q: 'Practice (slide 22): rewrite $(x^2 + y^2)\,dx - 2xy\,dy = 0$ in the form $\frac{dy}{dx} = F\left(\frac yx\right)$.'
+        opts: ['$F(v) = \frac{1 + v^2}{2v}$', '$F(v) = \frac{2v}{1 + v^2}$', '$F(v) = 1 + v^2$', 'the equation is not homogeneous']
+        ans: a
+        hint: 'Divide numerator and denominator by $x^2$.'
+        explain: '$\frac{dy}{dx} = \frac{x^2 + y^2}{2xy} = \frac{1 + v^2}{2v}$, $v = \frac yx$.'
+        fromSource: true
+        src: g37
+      - type: single
+        cat: problem
+        q: 'Practice (slide 22): rewrite $\frac{dy}{dx} = \frac{2x + y}{x - y}$ in the form $F\left(\frac yx\right)$.'
+        opts: ['$F(v) = \frac{2 + v}{1 - v}$', '$F(v) = \frac{2 - v}{1 + v}$', '$F(v) = 2 + v$', 'the equation is not homogeneous']
+        ans: a
+        hint: 'Divide by $x$.'
+        explain: 'All six equations on slide 22 are homogeneous; e.g. $(x+y)dx + (x-y)dy = 0$ gives $F(v) = \frac{1+v}{v-1}$.'
+        fromSource: true
+        src: g37
+      - type: single
+        cat: theory
+        q: 'Sample exam question 1: which of the following differential equations is separable?'
+        opts: ['$y'' + xy = x^2$', '$\frac{dy}{dx} = x(1 + y^2)$', '$\frac{dy}{dx} = x + y$', '$y'' + y = \sin x$']
+        ans: b
+        hint: 'Look for the form $g(x)h(y)$.'
+        explain: '$x(1+y^2) = g(x)h(y)$. The other three are linear but not separable. (The slide gives no answer key.)'
+        fromSource: true
+        src: g43
+      - type: single
+        cat: theory
+        q: 'Sample exam question 2: which of the following equations is homogeneous?'
+        opts: ['$\frac{dy}{dx} = \frac{x + y}{x}$', '$\frac{dy}{dx} = x + y + 1$', '$\frac{dy}{dx} = \frac{x^2 + y}{x}$', '$\frac{dy}{dx} = x(1 + y)$']
+        ans: a
+        hint: 'Does the right-hand side depend only on $y/x$?'
+        explain: '$\frac{x+y}{x} = 1 + \frac yx$. In C the numerator mixes degrees 2 and 1.'
+        fromSource: true
+        src: g44
+      - type: single
+        cat: theory
+        q: 'Sample exam question 3: for $\frac{dy}{dx} = \frac{x^2 + y^2}{xy}$, which substitution should be used?'
+        opts: ['$y = u + x$', '$y = ux$', '$y = u^2$', '$x = uy$']
+        ans: b
+        hint: 'Homogeneous type.'
+        explain: 'Homogeneous equation ⇒ $y = ux$ ($y = vx$ in the lecture).'
+        fromSource: true
+        src: g45
+      - type: single
+        cat: formula
+        q: 'Sample exam question 4: if $y = vx$ with $v = v(x)$, then $\frac{dy}{dx} = $'
+        opts: ['$v + \frac{dv}{dx}$', '$xv$', '$v + x\frac{dv}{dx}$', '$x\frac{dv}{dx}$']
+        ans: c
+        hint: 'Product rule.'
+        explain: '$(vx)'' = v''x + v$.'
+        fromSource: true
+        src: g46
+      - type: single
+        cat: theory
+        q: 'Sample exam question 5: which function is homogeneous of degree zero?'
+        opts: ['$x^2 + y^2$', '$\frac{x^2 - y^2}{x^2 + y^2}$', '$x + y$', '$x^2y$']
+        ans: b
+        hint: 'Degree zero ⇔ depends only on $y/x$.'
+        explain: 'Numerator and denominator have the same degree 2. The others have degrees 2, 1, 3.'
+        fromSource: true
+        src: g47
+      - type: single
+        cat: theory
+        q: 'Sample exam question 6: which equation is both separable and homogeneous?'
+        opts: ['$\frac{dy}{dx} = \frac yx$', '$\frac{dy}{dx} = x + y$', '$\frac{dy}{dx} = x(1 + y)$', '$\frac{dy}{dx} = \frac{x + y + 1}{x}$']
+        ans: a
+        hint: '$\frac yx = \frac1x\cdot y$.'
+        explain: '$\frac yx = g(x)h(y)$ with $g = \frac1x$, $h = y$, and it is a function of $y/x$. C is separable but not homogeneous.'
+        fromSource: true
+        src: g48
+      - type: single
+        cat: problem
+        q: 'Sample exam question 7: an aircraft component is initially at $120^\circ$C in a room at $20^\circ$C. Which IVP describes the cooling?'
+        opts: ['$\frac{dT}{dt} = -k(T - 20)$, $T(0) = 120$', '$\frac{dT}{dt} = k(T - 20)$, $T(0) = 120$', '$\frac{dT}{dt} = -k(T - 120)$, $T(0) = 20$', '$\frac{dT}{dt} = -kT$, $T(0) = 20$']
+        ans: a
+        hint: 'Ambient temperature inside the bracket, initial temperature in the condition.'
+        explain: 'Newton''s law $T'' = -k(T - T_a)$ with $k > 0$, $T_a = 20$, $T(0) = 120$.'
+        fromSource: true
+        src: g49
+      - type: single
+        cat: problem
+        q: 'Solve $\frac{dy}{dx} = \frac{x^2 + y^2}{xy}$.'
+        opts: ['$\left(\frac yx\right)^2 = 2\ln|x| + C$', '$\frac yx = \ln|x| + C$', '$y^2 = x^2 + C$', '$y = Cx$']
+        ans: a
+        hint: '$x\frac{dv}{dx} = \frac1v$.'
+        explain: '$v\,dv = \frac{dx}{x}$ ⇒ $v^2 = 2\ln|x| + C$, $v = y/x$.'
+        src: g42
+
+  - id: m3-linear-first
+    title: First-order linear equations (method y = uv)
+    pages: [g50, g51, g52, g53, g54, g55]
+    theory:
+      - kind: definition
+        title: First-order linear ODE
+        body: 'An equation $a_1(x)\frac{dy}{dx} + a_0(x)y = g(x)$, $a_1(x) \ne 0$, is **linear**. Dividing by $a_1$ gives the standard form $\frac{dy}{dx} + P(x)y = Q(x)$ with $P = \frac{a_0}{a_1}$, $Q = \frac{g}{a_1}$.'
+        src: g50
+      - kind: law
+        title: Method y = uv
+        body: |
+          Put $y = u(x)v(x)$, $y' = u'v + uv'$: $u'v + u\left(v' + P(x)v\right) = Q(x)$.
+          Choose $v$ with $v' + P(x)v = 0$: $\frac{dv}{v} = -P\,dx$, $v = e^{-\int P\,dx}$.
+          Then $u'v = Q$, $u' = Qe^{\int P\,dx}$, $u = \int Qe^{\int P\,dx}dx + C$, and
+          $y = e^{-\int P(x)dx}\left[\int Q(x)e^{\int P(x)dx}dx + C\right]$.
+        src: [g51, g52, g53]
+    examples:
+      - title: '$y'' + 2y = e^x$'
+        given: '$P = 2$, $Q = e^x$; $y = uv$.'
+        steps:
+          - '$u''v + u(v'' + 2v) = e^x$; choose $v'' + 2v = 0$ ⇒ $v = e^{-2x}$.'
+          - '$u''e^{-2x} = e^x$ ⇒ $u'' = e^{3x}$ ⇒ $u = \frac13e^{3x} + C$.'
+          - '$y = uv = \left(\frac13e^{3x} + C\right)e^{-2x}$.'
+        answer: '$y = \frac13e^x + Ce^{-2x}$'
+        src: [g54, g55]
+    questions:
+      - type: single
+        cat: theory
+        q: 'Sample exam question (linear/Bernoulli) 1: which is a first-order linear differential equation?'
+        opts: ['$y'' + y^2 = x$', '$y'' + xy = \sin x$', '$yy'' + y = x$', '$y'' + \sin y = x$']
+        ans: b
+        hint: '$y$ and $y''$ only to the first power, not multiplied together, no functions of $y$.'
+        explain: '$y'' + xy = \sin x$ has the form $y'' + P(x)y = Q(x)$. The others contain $y^2$, $yy''$, $\sin y$.'
+        fromSource: true
+        src: g61
+      - type: single
+        cat: theory
+        q: 'Sample exam question 3: for $y'' + P(x)y = Q(x)$ with $y = uv$, which equation should $v$ satisfy?'
+        opts: ['$v'' + Q(x)v = 0$', '$v'' + P(x)v = 0$', '$v'' = P(x)$', '$v'' = Q(x)$']
+        ans: b
+        hint: 'The bracket multiplying $u$ must vanish.'
+        explain: 'Then $u''v = Q$.'
+        fromSource: true
+        src: g63
+      - type: single
+        cat: theory
+        q: 'Sample exam question 5: which equation is NOT linear?'
+        opts: ['$y'' + x^2y = e^x$', '$xy'' + 2y = x^3$', '$y'' + y^2 = x$', '$y'' - \frac2x y = x^2$']
+        ans: c
+        hint: 'Look for a nonlinear term in $y$.'
+        explain: '$y^2$ makes C nonlinear.'
+        fromSource: true
+        src: g65
+      - type: single
+        cat: theory
+        q: 'Sample exam question 8: which equation can be solved both as a separable and as a linear equation?'
+        opts: ['$y'' = xy$', '$y'' + y = x$', '$y'' + xy = x^2$', '$y'' + y^2 = 0$']
+        ans: a
+        hint: 'Separable: $g(x)h(y)$; linear: $y'' + P(x)y = Q(x)$.'
+        explain: '$y'' = xy$ is separable ($g = x$, $h = y$) and linear ($y'' - xy = 0$). D is separable but nonlinear; B and C are linear but not separable.'
+        fromSource: true
+        src: g68
+      - type: numeric
+        cat: problem
+        q: 'Solve $y'' + 2y = e^x$, $y(0) = 1$, and find $y(1)$.'
+        num: { value: 0.9963, unit: '', tolAbs: 0.001, check: 'Math.E/3+(2/3)*Math.exp(-2)' }
+        hint: '$y = \frac{e^x}{3} + Ce^{-2x}$, $C = 1 - \frac13$.'
+        explain: '$C = \frac23$; $y(1) = \frac e3 + \frac23e^{-2} \approx 0.906 + 0.090 = 0.996$.'
+        sol: { method: 'General solution + initial condition.', steps: ['$y = \frac{e^x}{3} + Ce^{-2x}$.', '$y(0) = \frac13 + C = 1$ ⇒ $C = \frac23$.', '$y(1) = e/3 + \frac23e^{-2} \approx 0.996$.'], answer: '≈ 0.996' }
+        src: g55
+      - type: single
+        cat: formula
+        q: 'Bring $x\,y'' + 2y = x^3$ ($x \ne 0$) to standard form $y'' + P(x)y = Q(x)$.'
+        opts: ['$P = \frac2x$, $Q = x^2$', '$P = 2x$, $Q = x^3$', '$P = 2$, $Q = x^2$', '$P = \frac2x$, $Q = x^3$']
+        ans: a
+        hint: 'Divide by $a_1(x) = x$.'
+        explain: '$y'' + \frac2x y = x^2$.'
+        src: g50
+
+  - id: m3-bernoulli
+    title: Bernoulli equations
+    pages: [g57, g58, g59, g60, g61, g62, g63, g64, g65, g66, g67, g68]
+    theory:
+      - kind: definition
+        title: Bernoulli equation
+        body: '$y'' + p(x)y = q(x)y^n$, $n \ne 0, 1$. It is **nonlinear** because of $y^n$. Use $v = y^{1-n}$; then $v'' = (1-n)y^{-n}y''$ and the equation becomes **linear** in $v$.'
+        src: g57
+      - kind: law
+        title: Bernoulli transformation
+        body: |
+          Divide $y' + p(x)y = q(x)y^n$ by $y^n$: $y^{-n}y' + p(x)y^{1-n} = q(x)$.
+          With $v = y^{1-n}$: $y^{-n}y' = \frac{v'}{1-n}$, so $\frac{v'}{1-n} + p(x)v = q(x)$.
+          Multiply by $1 - n$: $v' + (1-n)p(x)v = (1-n)q(x)$ — a first-order linear equation.
+        src: g58
+    formulas:
+      - title: Bernoulli → linear
+        tex: 'y'' + p y = q y^n,\ \ v = y^{1-n}\ \Rightarrow\ v'' + (1-n)p(x)v = (1-n)q(x)'
+        src: g58
+    examples:
+      - title: '$y'' + y = xy^2$'
+        given: '$n = 2$, $v = y^{-1}$, $v'' = -y^{-2}y''$.'
+        steps:
+          - 'Divide by $y^2$: $y^{-2}y'' + y^{-1} = x$ ⇒ $-v'' + v = x$ ⇒ $v'' - v = -x$.'
+          - 'Integrating factor $\mu = e^{-x}$: $(e^{-x}v)'' = -xe^{-x}$.'
+          - '$e^{-x}v = (x + 1)e^{-x} + C$ ⇒ $v = x + 1 + Ce^x$.'
+        answer: '$y = \dfrac{1}{x + 1 + Ce^x}$'
+        src: [g59, g60]
+    questions:
+      - type: single
+        cat: theory
+        q: 'Sample exam question 2: which equation is a Bernoulli equation?'
+        opts: ['$y'' + 2y = x$', '$y'' + xy = x^2y^3$', '$y'' = x + y$', '$y'' = xy$']
+        ans: b
+        hint: 'Form $y'' + p(x)y = q(x)y^n$, $n \ne 0, 1$.'
+        explain: '$n = 3$. The others are linear.'
+        fromSource: true
+        src: g62
+      - type: single
+        cat: formula
+        q: 'Sample exam question 4: for $y'' + P(x)y = Q(x)y^n$, which substitution is used?'
+        opts: ['$v = y^n$', '$v = y^{n-1}$', '$v = y^{1-n}$', '$v = xy$']
+        ans: c
+        hint: 'Slide 38.'
+        explain: '$v = y^{1-n}$ turns the equation into a linear one.'
+        fromSource: true
+        src: g64
+      - type: single
+        cat: theory
+        q: 'Sample exam question 6: $y'' + \frac1x y = xy^4$ is a Bernoulli equation with'
+        opts: ['$n = 1$', '$n = 2$', '$n = 3$', '$n = 4$']
+        ans: d
+        hint: 'Exponent of $y$ on the right-hand side.'
+        explain: '$y^4$ ⇒ $n = 4$, substitution $v = y^{-3}$.'
+        fromSource: true
+        src: g66
+      - type: single
+        cat: theory
+        q: 'Sample exam question 7: after the substitution $v = y^{1-n}$ a Bernoulli equation becomes'
+        opts: ['a separable equation only', 'a second-order equation', 'a first-order linear equation', 'a homogeneous equation']
+        ans: c
+        hint: 'Bernoulli transformation.'
+        explain: '$v'' + (1-n)pv = (1-n)q$ — linear in $v$.'
+        fromSource: true
+        src: g67
+      - type: single
+        cat: problem
+        q: 'Solve $y'' + y = xy^2$.'
+        opts: ['$y = \frac{1}{x + 1 + Ce^x}$', '$y = x + 1 + Ce^x$', '$y = \frac{1}{x - 1 + Ce^{-x}}$', '$y = Ce^{-x} + x$']
+        ans: a
+        hint: '$v = 1/y$ satisfies $v'' - v = -x$.'
+        explain: '$v = x + 1 + Ce^x$, $y = 1/v$.'
+        sol: { method: 'Bernoulli substitution $v = y^{-1}$.', steps: ['$v'' - v = -x$.', '$(e^{-x}v)'' = -xe^{-x}$ ⇒ $e^{-x}v = (x+1)e^{-x} + C$.', '$y = 1/(x + 1 + Ce^x)$.'], answer: '1/(x + 1 + Ce^x)' }
+        src: g60
+      - type: numeric
+        cat: problem
+        q: 'Solve $y'' + y = xy^2$ with $y(0) = 1$ and find $y(1)$.'
+        num: { value: 0.5, unit: '', check: '1/(1+1+0*Math.E)' }
+        hint: '$y(0) = \frac{1}{1 + C} = 1$.'
+        explain: '$C = 0$, $y = \frac{1}{x+1}$, $y(1) = \frac12$.'
+        sol: { method: 'General solution of the Bernoulli equation + initial condition.', steps: ['$y = 1/(x + 1 + Ce^x)$.', '$y(0) = 1/(1 + C) = 1$ ⇒ $C = 0$.', '$y(1) = 1/2$.'], answer: '0.5' }
+        src: g60
+      - type: single
+        cat: formula
+        q: 'For $y'' + \frac1x y = xy^4$ the substitution $v = y^{-3}$ leads to'
+        opts: ['$v'' - \frac3x v = -3x$', '$v'' + \frac3x v = 3x$', '$v'' - 3v = x$', '$v'' + \frac1x v = x$']
+        ans: a
+        hint: '$v'' + (1-n)pv = (1-n)q$ with $n = 4$.'
+        explain: '$1 - n = -3$: $v'' - \frac3x v = -3x$.'
+        src: g58

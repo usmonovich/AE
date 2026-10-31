@@ -1,22 +1,62 @@
-# 📐 Mathematics III
-# Структура курса, файлы-источники, словарь обозначений, замечания к источнику.
-# Предмет создан пустым: разделы, темы и записи добавляются только по присланным материалам.
-# ID разделов, подразделов, тем и записей начинаются с «m3-».
-# Как добавлять материалы — docs/07-adding-materials.md; журнал предмета — docs/subjects/math3.md.
+# 📐 Mathematics III — course structure, source files, errata.
+# Source: 8 lecture presentations by Dr. Azizbek Mamanazarov (AE-25, autumn 2026), in English.
+# A page = a slide (PDF page) of a lecture; animation steps of one slide (overlays) are merged into the last step:
+# a — Lecture 1, b — Lecture 2 (file "Lecture_2_3"), c — Lecture 3, … h — Lecture 8. Example: b49 = Lecture 2, PDF page 49.
+# Theory is written in English by the slides (as the owner asked), with the same definitions and notation.
+# IDs start with «m3-».
 
 course:
   id: math3
-  title: "Mathematics III"
+  title: Mathematics III
   owner: Husniddin
-  language: ru
+  language: en
 
-# файлы-источники (PDF, фото, презентации): id, title, fileName, kind, pdfPages, sha256, pagePrefix, notes
-sourceFiles: []
+sourceFiles:
+  - { id: m3-lec1, title: 'Lecture 1. Sequences of functions. Functional series. Uniform convergence', fileName: Presentation_AE_25_Lecture_1.pdf, kind: pdf, pdfPages: 21, sha256: 7e269a9481dd5d3f, pagePrefix: a, pageLabel: 'L1·', notes: ['Beamer slides, 21 pages, text layer present.'] }
+  - { id: m3-lec2, title: 'Lecture 2. Numerical series and functional series', fileName: Presentation_AE_25_Lecture_2_3.pdf, kind: pdf, pdfPages: 109, sha256: a1501c0f5c68b6c0, pagePrefix: b, pageLabel: 'L2·', notes: ['109 PDF pages = 32 slides (step-by-step overlays merged).'] }
+  - { id: m3-lec3, title: 'Lecture 3. Functional series, uniform convergence, power series, Taylor expansion', fileName: Presentation_AE_25_Lecture_3.pdf, kind: pdf, pdfPages: 86, sha256: 3229cd221145b154, pagePrefix: c, pageLabel: 'L3·', notes: ['86 PDF pages = 58 slides.'] }
+  - { id: m3-lec4, title: 'Lecture 4. Power series. Radius of convergence. Expanding functions', fileName: Presentation_AE_25_Lecture_4.pdf, kind: pdf, pdfPages: 74, sha256: 0922f3934540c71c, pagePrefix: d, pageLabel: 'L4·', notes: ['74 PDF pages = 28 slides.'] }
+  - { id: m3-lec5, title: 'Lecture 5. Fourier series', fileName: Presentation_AE_25_Lecture_5.pdf, kind: pdf, pdfPages: 42, sha256: ad8e3a6b03ef32ce, pagePrefix: e, pageLabel: 'L5·', notes: ['42 PDF pages = 30 slides; several slides are pictures (history, square-wave approximation).'] }
+  - { id: m3-lec6, title: 'Lecture 6. ODEs: basic concepts, classification, solutions, IVPs', fileName: Presenattion_6_AE_1.pdf, kind: pdf, pdfPages: 71, sha256: d70ce54b8241e6d2, pagePrefix: f, pageLabel: 'L6·', notes: ['71 PDF pages = 38 slides.'] }
+  - { id: m3-lec7, title: 'Lecture 7. First-order ODEs: separable, homogeneous, linear, Bernoulli', fileName: Lecture_7_AI_1.pdf, kind: pdf, pdfPages: 68, sha256: ca746c3ee0f826d6, pagePrefix: g, pageLabel: 'L7·', notes: ['68 PDF pages = 49 slides; sample exam questions without an answer key (answers in the app are worked out and checked).'] }
+  - { id: m3-lec8, title: 'Lecture 8. Higher-order linear ODEs with constant coefficients', fileName: Lecture_AE_8_2.pdf, kind: pdf, pdfPages: 66, sha256: 789b568fcd2b7867, pagePrefix: h, pageLabel: 'L8·', notes: ['66 PDF pages = 54 slides; review quiz of 20 questions with an answer key (checked, all correct).'] }
 
-sections: []
+sections:
+  - { id: m3-sec-series, title: 'Series', status: active }
+  - { id: m3-sec-ode, title: 'Ordinary differential equations', status: active }
 
-subsections: []
+subsections:
+  - { id: m3-l1, sectionId: m3-sec-series, title: 'Lecture 1. Sequences of functions, uniform convergence' }
+  - { id: m3-l2, sectionId: m3-sec-series, title: 'Lecture 2. Numerical and functional series' }
+  - { id: m3-l3, sectionId: m3-sec-series, title: 'Lecture 3. Uniform convergence of series, power series' }
+  - { id: m3-l4, sectionId: m3-sec-series, title: 'Lecture 4. Radius of convergence, Taylor and Maclaurin series' }
+  - { id: m3-l5, sectionId: m3-sec-series, title: 'Lecture 5. Fourier series' }
+  - { id: m3-l6, sectionId: m3-sec-ode, title: 'Lecture 6. Differential equations: basic concepts' }
+  - { id: m3-l7, sectionId: m3-sec-ode, title: 'Lecture 7. First-order differential equations' }
+  - { id: m3-l8, sectionId: m3-sec-ode, title: 'Lecture 8. Higher-order linear ODEs with constant coefficients' }
 
 symbols: {}
 
-errata: []
+errata:
+  - id: m3-e01
+    page: e38
+    severity: typo
+    target: answer to the triangular-wave example
+    original: 'Answer: $f(x)=\frac12-\sum \frac{4}{(2k-1)^2\pi^2}\cos((2k-1)\pi x)$ with the summation index written as $n=1$.'
+    issue: 'The sum runs over k, but the lower limit is written as n = 1.'
+    suggestion: 'Write the lower limit as $k=1$.'
+  - id: m3-e02
+    page: c67
+    severity: typo
+    target: titles of the radius-of-convergence example
+    original: 'Slide c64 «Example 1: Finding the Radius of Convergence», slide c67 «Example 2: Studying the Endpoints», slide c68 «Example 1: Final Answer».'
+    issue: 'Slides c64–c68 are one example (the series with n²xⁿ/3ⁿ), but the middle slide is titled «Example 2».'
+    suggestion: 'Title slide c67 «Example 1: Studying the Endpoints». In the app it is shown as one example.'
+  - id: m3-e03
+    page: f61
+    severity: unclear
+    target: list of problems on first-order linear ODEs
+    original: 'Problems 1–3 are stated, then «4.» with no text.'
+    issue: 'Problem 4 has no statement on the slide.'
+    suggestion: 'Ask the lecturer for problem 4. The app includes problems 1–3 only.'
+    todo: 'Clarify problem 4 with the lecturer.'

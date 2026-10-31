@@ -203,7 +203,7 @@ export function SearchScreen() {
                   <li key={h.kind + h.id}>
                     <Link to={h.kind === 'topic' ? `topic/${h.id}` : h.kind === 'formula' ? `topic/${h.topicId}/formulas` : h.kind === 'question' ? `topic/${h.topicId}/check` : `topic/${h.topicId}`} className="row">
                       <span className="row-main">
-                        <b>{h.kind === 'question' ? <Rich inline text={h.title} /> : h.title}</b>
+                        <b><Rich inline text={h.title} /></b>
                         {h.kind === 'formula' ? <Tex tex={h.snippet} /> : <span className="muted"><Rich inline text={h.snippet} /></span>}
                       </span>
                       <Icon name="next" />
