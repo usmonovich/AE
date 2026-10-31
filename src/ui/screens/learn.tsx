@@ -317,7 +317,7 @@ export function PageViewer({ refId }: { refId: string }) {
     <div className="screen">
       <Topbar
         title={`Страница ${pageLabel(refId)}`}
-        sub={`${idx.pack.sourceFiles.find((f) => f.id === page.file)?.[page.image ? 'fileName' : 'title'] ?? ''} · лист PDF ${page.pdfPage}${page.side ? page.side === 'L' ? ', левая' : ', правая' : ''}${page.date ? ` · ${page.date}` : ''}`}
+        sub={`${idx.pack.sourceFiles.find((f) => f.id === page.file)?.[page.image ? 'fileName' : 'title'] ?? ''} · ${idx.pack.sourceFiles.find((f) => f.id === page.file)?.kind === 'pptx' ? 'слайд' : 'лист PDF'} ${page.pdfPage}${page.side ? page.side === 'L' ? ', левая' : ', правая' : ''}${page.date ? ` · ${page.date}` : ''}`}
         backTo=""
         actions={page.image ? (
           <>

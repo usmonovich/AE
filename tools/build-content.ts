@@ -156,6 +156,8 @@ function checkTex(tex: string, where: string, display = false) {
 function md(text: unknown, where: string): string {
   if (text == null) return '';
   const s = normalizeMarkdownMath(String(text).trim());
+  // интерфейс понимает только **жирный**; одиночные звёздочки (курсив) показались бы как есть
+  if (/(^|[^*\\$])\*[^*\s][^*\n]*?\*(?!\*)/.test(s.replace(/\$[^$]*\$/g, ''))) warn(`${where}: одиночные * (курсив) не поддерживаются — уберите или замените на **жирный**`);
   for (const m of extractMath(s)) checkTex(m, where);
   return s;
 }

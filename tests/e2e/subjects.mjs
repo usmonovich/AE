@@ -51,6 +51,33 @@ await step('Нет горизонтальной прокрутки на 320/360/
     }
   }
 });
+for (const s of cfg.subjects.filter((x) => packs[x.id].topics.length)) {
+  const pack = packs[s.id];
+  await step(`${s.emoji} ${s.short}: все ${pack.topics.length} тем открываются без горизонтальной прокрутки на 320 px, вкладки и рисунки на месте`, async () => {
+    await page.setViewportSize({ width: 320, height: 800 });
+    for (const t of pack.topics) {
+      for (const tab of ['', '/formulas', '/examples', '/check']) {
+        await page.goto(`${BASE}#/${s.prefix}/topic/${t.id}${tab}`); await page.waitForTimeout(120);
+        const over = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+        assert.ok(over <= 1, `#/${s.prefix}/topic/${t.id}${tab}: +${over}px`);
+      }
+      assert.ok(await page.getByRole('heading', { name: t.title }).first().isVisible(), t.title);
+    }
+    const withFig = pack.theory.filter((x) => x.figure);
+    for (const th of withFig) {
+      await page.goto(`${BASE}#/${s.prefix}/topic/${th.topicId}/theory`); await page.waitForTimeout(150);
+      assert.ok(await page.locator('.anim-fig').count() > 0, `${th.figure}: рисунок показан`);
+    }
+    await page.setViewportSize({ width: 360, height: 780 });
+  });
+  await step(`${s.emoji} ${s.short}: страница источника открывается (изображение или пояснение)`, async () => {
+    const pg = pack.pages[0];
+    await page.goto(`${BASE}#/${s.prefix}/page/${pg.ref}`); await page.waitForTimeout(600);
+    const hasImg = fs.existsSync(new URL(`../../content/subjects/${s.id}/${pg.image.replace(`pages/${s.id}/`, 'pages/')}`, import.meta.url));
+    if (hasImg) assert.ok(await page.locator('.page-frame img').evaluate((i) => i.complete && i.naturalWidth > 0), 'изображение страницы загрузилось');
+    else assert.ok(await page.getByText(/не публикуются/).isVisible(), 'вместо изображения — пояснение');
+  });
+}
 await step('Нет ошибок JavaScript', async () => { assert.deepEqual(errors, []); });
 
 await browser.close();
