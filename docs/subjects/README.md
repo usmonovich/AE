@@ -5,7 +5,7 @@
 
 | | Предмет | id | Адрес и префикс ID | Стиль | Статус | Документы |
 |---|---|---|---|---|---|---|
-| 🧠 | Aviation Psychology and Crew Resource Management (CRM) | `crm` | `#/crm` · ID `crm-…` | notes | темы 1–8 из 14 (22 темы, 136 вопросов), на проверке | [журнал](crm.md) · [отчёт](crm-report.md) |
+| 🧠 | Aviation Psychology and Crew Resource Management (CRM) | `crm` | `#/crm` · ID `crm-…` | notes | темы 1–8 из 14 (22 темы, 136 вопросов), утверждено и опубликовано | [журнал](crm.md) · [отчёт](crm-report.md) |
 | ⚡ | Circuit Theory | `circuits` | `#/ct` · ID `ct-…` | notes | курс готовится | [журнал](circuits.md) · [отчёт](circuits-report.md) |
 | 💰 | Cost Engineering | `cost` | `#/ce` · ID `ce-…` | notes | курс готовится | [журнал](cost.md) · [отчёт](cost-report.md) |
 | 🩺 | Human Performance and Medicine | `hpm` | `#/hpm` · ID `hpm-…` | notes | курс готовится | [журнал](hpm.md) · [отчёт](hpm-report.md) |

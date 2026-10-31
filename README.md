@@ -26,7 +26,7 @@ AE — приложение с тем же интерфейсом, что и [UT
 
 | | Предмет | Состояние |
 |---|---|---|
-| 🧠 | Aviation Psychology and Crew Resource Management (CRM) | темы 1–8 из 14: 22 темы, 136 вопросов, 3 анимации — на проверке у владельца |
+| 🧠 | Aviation Psychology and Crew Resource Management (CRM) | темы 1–8 из 14: 22 темы, 136 вопросов, 3 анимации — утверждено и опубликовано |
 | ⚡ | Circuit Theory | курс готовится |
 | 💰 | Cost Engineering | курс готовится |
 | 🩺 | Human Performance and Medicine | курс готовится |
@@ -40,7 +40,7 @@ AE — приложение с тем же интерфейсом, что и [UT
 
 <p align="center">
   <img src="docs/screenshots/start-light.png" width="24%" alt="Выбор предмета">
-  <img src="docs/screenshots/subject-light.png" width="24%" alt="Главная предмета">
+  <img src="docs/screenshots/subject-light.png" width="24%" alt="Главная CRM">
   <img src="docs/screenshots/start-dark.png" width="24%" alt="Выбор предмета, тёмная тема">
   <img src="docs/screenshots/subject-dark.png" width="24%" alt="Главная предмета, тёмная тема">
 </p>
@@ -146,7 +146,7 @@ store/                       значки, тексты для магазино�
 
 ## Статус
 
-Версия 1.0: CRM наполнен по лекциям 1–8 (материалы на проверке у владельца, в версию для студентов попадут после утверждения), остальные шесть предметов ждут материалов. Веб-версия собирается автоматически при каждом обновлении ветки `main` (GitHub Actions → GitHub Pages) — после того как в настройках репозитория включён GitHub Pages. В Google Play и App Store приложение **не опубликовано**; сборка Android для AE ещё не проверялась на телефоне. Синхронизация через Supabase написана, но на живом сервере не проверена.
+Версия 1.0: CRM наполнен по лекциям 1–8, утверждён владельцем и опубликован; остальные шесть предметов ждут материалов. Веб-версия собирается автоматически при каждом обновлении ветки `main` (GitHub Actions → GitHub Pages) — после того как в настройках репозитория включён GitHub Pages. В Google Play и App Store приложение **не опубликовано**; сборка Android для AE ещё не проверялась на телефоне. Синхронизация через Supabase написана, но на живом сервере не проверена.
 
 ## Автор
 
