@@ -2,11 +2,11 @@
   "sourcePack": "content/subjects/math3/pack.json",
   "sourceSha256": "48d618ce3f0a6110d6e3d83286433e90ba6badf4ea3076cb168b8953e36cdecc",
   "overlay": "content/release/overlays/math3",
-  "createdAt": "2026-10-31T19:21:56.038Z",
+  "createdAt": "2026-11-01T14:18:25.097Z",
   "kept": {
-    "theory": 0,
-    "formulas": 0,
-    "examples": 0,
-    "questions": 0
+    "theory": 104,
+    "formulas": 45,
+    "examples": 56,
+    "questions": 206
   }
 }
