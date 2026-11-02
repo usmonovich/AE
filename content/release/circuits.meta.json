@@ -2,11 +2,11 @@
   "sourcePack": "content/subjects/circuits/pack.json",
   "sourceSha256": "a970ec357edd946dd315f4a83794fbbe057ce57ee1a0f51bc6188e98accdd8c1",
   "overlay": "content/release/overlays/circuits",
-  "createdAt": "2026-11-02T05:22:30.092Z",
+  "createdAt": "2026-11-02T08:05:07.100Z",
   "kept": {
-    "theory": 0,
-    "formulas": 0,
-    "examples": 0,
-    "questions": 0
+    "theory": 113,
+    "formulas": 52,
+    "examples": 44,
+    "questions": 181
   }
 }
