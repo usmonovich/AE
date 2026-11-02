@@ -1,0 +1,343 @@
+# Lecture 5. The operational amplifier (slides e01–e23) + PS05 (v06–v08 repeat exercises of the lecture).
+subsection: ct-l5
+
+topics:
+  - id: ct-l5-model
+    title: The op-amp, its terminals and the experimental model
+    pages: [e01, e02, e03, e04, e05, e06, e07, e08]
+    theory:
+      - kind: definition
+        title: The operational amplifier
+        body: 'The **op-amp** is an electronic device composed of a large number of electronic elements (e.g. the μA741 in an 8-pin package: inverting input, non-inverting input, output, supply pins $\pm V_{dc}$, offset null). It is useful for real applications (amplifiers). In this course we analyse circuits with op-amps using **idealized models**, defined by the behaviour at the external terminals, not by the internal structure.'
+        src: [e01, e02]
+      - kind: definition
+        title: External terminals
+        body: 'Non-inverting input ($v^+$, current $i^+$), inverting input ($v^-$, current $i^-$), output ($v_o$, current $i_o$), and the reference terminal («ground»). The **differential input voltage** is $v_d = v^+ - v^-$. Usually the ground terminal is not part of the symbol: it is provided externally by the power-supply network (the midpoint of the $\pm V_{dc}$ supplies).'
+        src: [e02, e03]
+      - kind: law
+        title: Experimental model
+        body: |
+          Model: input resistance $R_i$ between the inputs, output resistance $R_o$ in series with a dependent source $Av_d = A(v^+ - v^-)$. Typical values (μA741): $R_i = 2$ MΩ, $R_o = 75\ \Omega$, open-loop gain $A = 200\,000$ (between $10^5$ and $10^6$).
+
+          Simplified: $v_o = Av_d$, $i^+ = i^- = 0$. The transfer characteristic is linear only for $|v_d| < v_{d\max} = V_{sat}/A$; outside, the output **saturates** at $\pm V_{sat}$ (slightly below $\pm V_{dc}$).
+        src: [e04, e05]
+      - kind: text
+        title: 'Inverting amplifier with the experimental model'
+        body: |
+          With $R_i$ (input resistor) and $R_f$ (feedback resistor), solving the circuit with $\hat e = Av_d$:
+          $v_d = -v_i\frac{R_f}{R_f + (1+A)R_i}$, $\quad G = \frac{v_o}{v_i} = -\frac{AR_f}{R_f + (1+A)R_i}$.
+        src: [e06, e07]
+      - kind: law
+        title: The ideal op-amp
+        body: |
+          For $A \to \infty$: $v_d \to 0$ and $G \to -\frac{R_f}{R_i}$ (gain of the inverting amplifier). **Ideal op-amp characteristic:**
+          $i^+ = 0$, $i^- = 0$, $v_d = 0$ (the inputs are at the same potential — «virtual short»).
+          Validity conditions: $|v_o| < V_{sat}$ and $|i_o| < I_{sat}$.
+        src: e08
+    formulas:
+      - title: Open-loop model
+        tex: 'v_o = A\,v_d = A\,(v^+ - v^-), \qquad i^+ = i^- = 0'
+        src: e05
+      - title: Ideal op-amp
+        tex: 'i^+ = i^- = 0, \qquad v_d = v^+ - v^- = 0'
+        cond: 'Valid while $|v_o| < V_{sat}$ and $|i_o| < I_{sat}$.'
+        src: e08
+      - title: Inverting amplifier with finite gain
+        tex: 'G = -\frac{A R_f}{R_f + (1 + A) R_i} \;\xrightarrow{A\to\infty}\; -\frac{R_f}{R_i}'
+        src: [e07, e08]
+    questions:
+      - type: single
+        cat: theory
+        q: 'The three ideal op-amp relations are'
+        opts: ['$i^+ = 0$, $i^- = 0$, $v_d = 0$', '$v_o = 0$, $i_o = 0$, $v_d = 0$', '$i^+ = i^- = i_o$', '$v^+ = 0$, $v^- = 0$, $i_o = 0$']
+        ans: a
+        hint: 'Slide L5·8.'
+        explain: 'No input currents and zero differential voltage. The output current $i_o$ is NOT zero.'
+        src: e08
+      - type: numeric
+        cat: problem
+        q: 'An op-amp with $A = 2\times10^5$ saturates at $V_{sat} = 12$ V. Find $v_{d\max}$ in μV.'
+        num: { value: 60, unit: 'μV', check: '12/2e5*1e6' }
+        hint: '$v_{d\max} = V_{sat}/A$.'
+        explain: '$12/200\,000 = 60\ \mu$V: the linear region is extremely narrow, so $v_d \approx 0$.'
+        sol: { method: 'Edge of the linear region.', steps: ['$v_{d\max} = 12/2\times10^5 = 6\times10^{-5}$ V'], answer: '60 μV' }
+        src: e05
+      - type: numeric
+        cat: problem
+        q: 'Inverting amplifier, $R_i = 2\ \text{k}\Omega$, $R_f = 50\ \text{k}\Omega$, $A = 2\times10^5$. Find the gain $G$ (experimental model).'
+        num: { value: -24.9969, unit: '', tolAbs: 0.0005, check: '-2e5*50e3/(50e3 + (1+2e5)*2e3)' }
+        hint: '$G = -\frac{AR_f}{R_f + (1+A)R_i}$.'
+        explain: '$G \approx -24.997$, practically the ideal value $-R_f/R_i = -25$.'
+        sol: { method: 'Formula of slide L5·7.', steps: ['numerator $AR_f = 10^{10}$', 'denominator $50\times10^3 + 200001\times2\times10^3 \approx 4.0005\times10^8$', '$G \approx -24.997$'], answer: '≈ −24.997' }
+        src: e07
+      - type: matching
+        cat: theory
+        q: 'Match the typical μA741 parameter with its value (slide L5·5).'
+        pairs:
+          - ['input resistance $R_i$', '2 MΩ']
+          - ['output resistance $R_o$', '75 Ω']
+          - ['open-loop gain $A$', '200 000']
+        hint: 'Large input resistance, small output resistance, huge gain.'
+        explain: '$R_i = 2$ MΩ, $R_o = 75\ \Omega$, $A = 2\times10^5$ (written «200.000» on the slide).'
+        src: e05
+      - type: single
+        cat: theory
+        q: 'Outside the linear region the op-amp output'
+        opts: ['saturates at about $\pm V_{sat}$', 'grows without limit', 'becomes zero', 'follows $v^-$']
+        ans: a
+        hint: 'Transfer characteristic on slide L5·5.'
+        explain: 'The output cannot exceed the supply-related limits $\pm V_{sat}$.'
+        src: e05
+
+  - id: ct-l5-ideal-analysis
+    title: Circuit analysis with the ideal op-amp
+    pages: [e09, e10, e21, e22, e23]
+    theory:
+      - kind: rule
+        title: General method
+        body: 'Write KVL/KCL together with the ideal op-amp constitutive relations $i^+ = i^- = 0$, $v_d = 0$.'
+        src: e09
+      - kind: text
+        title: 'Inverting amplifier with the ideal model'
+        body: |
+          - KCL at the inverting input: $I - I_f - i^- = 0 \Rightarrow I_f = I$.
+          - KVL around the input loop: $v_i - R_iI + v_d = 0 \Rightarrow I = \frac{v_i}{R_i}$.
+          - KVL around the output loop: $v_o + R_fI + v_d = 0 \Rightarrow v_o = -R_fI = -\frac{R_f}{R_i}v_i$.
+        src: e09
+      - kind: rule
+        title: Remarks
+        body: |
+          - The output voltage does not depend on the load: the op-amp stage behaves as an **independent voltage source**.
+          - The op-amp output current is found a posteriori by KCL at the output node: $I_o = I_L - I_f = \frac{v_o}{R_L} - \frac{v_i}{R_i}$. **The output current $I_o$ is NOT zero.**
+        src: e10
+      - kind: rule
+        title: Nodal analysis with an ideal op-amp
+        body: |
+          - Only two of the three op-amp node voltages are independent: $e_+ - e_- = 0$ and the output $e_k$ — the number of unknowns drops from 3 to 2.
+          - The output behaves as a VCVS and gives no information on its current: **do not write KCL at the output node of the op-amp.**
+        src: e21
+    examples:
+      - title: 'Negative impedance converter (slide L5·23)'
+        given: 'Op-amp with $R$ from the inverting input to ground, $R_1$ from the output to the inverting input, $R$ from the output to the input terminal (which is also the non-inverting input).'
+        steps:
+          - 'Ideal op-amp: $v^- = v^+ = v$ (the terminal voltage).'
+          - 'KCL at the inverting input: $\frac{v}{R} = \frac{v_o - v}{R_1} \Rightarrow v_o = v\left(1 + \frac{R_1}{R}\right)$.'
+          - 'Input current through the lower $R$: $i = \frac{v - v_o}{R} = -\frac{R_1}{R^2}v$.'
+        answer: '$R_{eq} = \frac{v}{i} = -\frac{R^2}{R_1}$ — a negative resistance'
+        src: [e19, e23]
+    questions:
+      - type: single
+        cat: theory
+        q: 'In nodal analysis with an ideal op-amp you should NOT write KCL at'
+        opts: ['the output node of the op-amp', 'the inverting input', 'the non-inverting input', 'any node connected to a resistor']
+        ans: a
+        hint: 'Slide L5·21.'
+        explain: 'The output current of the op-amp is unknown and unconstrained (VCVS behaviour).'
+        src: e21
+      - type: numeric
+        cat: problem
+        q: 'Inverting amplifier: $R_i = 2\ \text{k}\Omega$, $R_f = 50\ \text{k}\Omega$, $v_i = 0.4$ V. Find $v_o$ (V) with the ideal model.'
+        num: { value: -10, unit: 'V', check: '-50/2*0.4' }
+        hint: '$v_o = -\frac{R_f}{R_i}v_i$.'
+        explain: '$v_o = -25\cdot0.4 = -10$ V.'
+        sol: { method: 'Ideal inverting amplifier.', steps: ['$G = -50/2 = -25$', '$v_o = -10$ V'], answer: '−10 V' }
+        src: e09
+      - type: numeric
+        cat: problem
+        q: 'Same amplifier with $R_L = 10\ \text{k}\Omega$ and $v_i = 0.4$ V: find the op-amp output current $I_o$ (mA).'
+        num: { value: -1.2, unit: 'mA', check: '(-10/10e3 - 0.4/2e3)*1000' }
+        hint: '$I_o = \frac{v_o}{R_L} - \frac{v_i}{R_i}$.'
+        explain: '$I_o = -1 - 0.2 = -1.2$ mA (it flows into the op-amp output). It is not zero!'
+        sol: { method: 'KCL at the output node (a posteriori).', steps: ['$I_L = -10/10\text{k} = -1$ mA', '$I_f = 0.4/2\text{k} = 0.2$ mA', '$I_o = I_L - I_f = -1.2$ mA'], answer: '−1.2 mA' }
+        src: e10
+      - type: single
+        cat: problem
+        q: 'Negative impedance converter (L5·19/23): $R_{eq} = $'
+        opts: ['$-\dfrac{R^2}{R_1}$', '$-\dfrac{R_1}{R}$', '$\dfrac{R^2}{R_1}$', '$R + R_1$']
+        ans: a
+        hint: '$v_o = v(1 + R_1/R)$, $i = (v - v_o)/R$.'
+        explain: '$i = -\frac{R_1}{R^2}v \Rightarrow R_{eq} = -R^2/R_1$ (answer on the slide).'
+        fromSource: true
+        src: e19
+      - type: numeric
+        cat: problem
+        q: 'NIC with $R = 1\ \text{k}\Omega$ and $R_1 = 2\ \text{k}\Omega$: find $R_{eq}$ (Ω).'
+        num: { value: -500, unit: 'Ω', check: '-((1e3)**2)/2e3' }
+        hint: '$R_{eq} = -R^2/R_1$.'
+        explain: '$-10^6/2000 = -500\ \Omega$.'
+        sol: { method: 'NIC formula.', steps: ['$R_{eq} = -(1000)^2/2000 = -500\ \Omega$'], answer: '−500 Ω' }
+        src: e23
+      - type: single
+        cat: theory
+        q: 'The output voltage of an ideal inverting amplifier'
+        opts: ['does not depend on the load $R_L$', 'is proportional to $R_L$', 'is zero when $R_L$ is large', 'depends on the op-amp output current']
+        ans: a
+        hint: 'Remark on slide L5·10.'
+        explain: 'The stage behaves as an independent voltage source with respect to the load.'
+        src: e10
+
+  - id: ct-l5-stages
+    title: 'Basic op-amp stages: inverting, non-inverting, differential, summer, buffer, cascade'
+    pages: [e11, e12, e13, e14, e15, e16, e17, e18, e19, e20, v06, v07, v08]
+    theory:
+      - kind: law
+        title: Inverting stage
+        body: '$v_o = -\frac{R_f}{R_i}v_i$. The non-inverting input is grounded; the inverting input is a «virtual ground».'
+        src: [e11, e12]
+      - kind: law
+        title: Non-inverting stage
+        body: 'The input goes to the non-inverting terminal; $R$ connects the inverting input to ground and $R_f$ goes from the output to the inverting input: $\frac{v_o}{v_i} = \frac{R + R_f}{R} = 1 + \frac{R_f}{R}$. Input resistance $R_{in} = \infty$, output resistance $R_{out} = 0$.'
+        src: e13
+      - kind: law
+        title: Differential stage
+        body: 'With $R_3 = R_1$ and $R_4 = R_2$: $v_o = \frac{R_2}{R_1}(v_2 - v_1)$ — the stage amplifies the difference of the two inputs.'
+        src: e15
+      - kind: law
+        title: Inverting summer
+        body: '$v_o = -\left(\frac{R_f}{R_1}v_1 + \frac{R_f}{R_2}v_2 + \dots + \frac{R_f}{R_n}v_n\right)$ — obtained by superposition and the result for the inverting stage (the input currents add at the virtual ground).'
+        src: e16
+      - kind: law
+        title: Buffer (voltage follower)
+        body: 'Output connected directly to the inverting input: $v_o = v_i$, $R_{in} = \infty$. It isolates a source with internal resistance $R_S$ from the load: no current is drawn from the source, so $v_L = v_S$.'
+        src: e17
+      - kind: rule
+        title: Cascaded stages
+        body: 'Because an ideal stage behaves as a voltage source, stages can be cascaded: the output of one stage is the input of the next, and the overall gain is the product of the stage gains (the output does not depend on the load).'
+        src: e18
+    formulas:
+      - title: Inverting stage
+        tex: 'v_o = -\frac{R_f}{R_i}\,v_i'
+        src: e09
+      - title: Non-inverting stage
+        tex: 'v_o = \left(1 + \frac{R_f}{R}\right) v_i'
+        src: e13
+      - title: Differential stage
+        tex: 'v_o = \frac{R_2}{R_1}\,(v_2 - v_1)'
+        cond: 'For $R_3 = R_1$, $R_4 = R_2$.'
+        src: e15
+      - title: Inverting summer
+        tex: 'v_o = -\left(\frac{R_f}{R_1}v_1 + \frac{R_f}{R_2}v_2 + \dots + \frac{R_f}{R_n}v_n\right)'
+        src: e16
+      - title: Buffer
+        tex: 'v_o = v_i'
+        src: e17
+    examples:
+      - title: 'Inverting stage, Exercise problem 1 (slide L5·11)'
+        given: '$v_i = 0.5\sin\omega t$ V, $R_i = 2\ \text{k}\Omega$, $R_f = 50\ \text{k}\Omega$, $R_L = 10\ \text{k}\Omega$.'
+        steps:
+          - 'Gain $-50/2 = -25$: $v_o = -12.5\sin\omega t$ V, peak $12.5$ V.'
+          - 'Peak load current $12.5/10\ \text{k} = 1.25$ mA; peak feedback current $12.5/50\ \text{k} = 0.25$ mA.'
+          - 'KCL at the output: $|i_o|_{\max} = 1.25 + 0.25 = 1.5$ mA.'
+        answer: '$12.5$ V, $1.5$ mA (answer on the slide)'
+        src: e11
+      - title: 'Non-inverting stage, Exercise problem 2 (slide L5·14)'
+        given: '$10\sin\omega t$ V, divider $4\ \text{k}\Omega$ / $1\ \text{k}\Omega$, $R = 10\ \text{k}\Omega$, $R_f = 50\ \text{k}\Omega$, $R_L = 10\ \text{k}\Omega$; $V_{sat} = 14$ V, $I_{sat} = 2$ mA.'
+        steps:
+          - 'Non-inverting input: $v^+ = 10\cdot\frac{1}{4+1} = 2\sin\omega t$ V.'
+          - 'Gain $1 + 50/10 = 6$: peak $v_o = 12$ V $< 14$ V.'
+          - 'Peak output current: $12/10\ \text{k} + 12/60\ \text{k} = 1.2 + 0.2 = 1.4$ mA $< 2$ mA.'
+        answer: 'Peak output $12$ V; the op-amp does not saturate (as on the slide)'
+        src: [e14, v08]
+      - title: 'Cascaded stages (slide L5·18)'
+        given: 'Stage 1: inverting, $10\ \text{k}\Omega$ in, $20\ \text{k}\Omega$ feedback, input $v_1$. Stage 2: summer with $10\ \text{k}\Omega$ from stage 1 and $10\ \text{k}\Omega$ from $v_2$, $20\ \text{k}\Omega$ feedback.'
+        steps:
+          - 'Stage 1: $v_a = -2v_1$.'
+          - 'Stage 2: $v_o = -(2v_a + 2v_2) = 4v_1 - 2v_2$.'
+        answer: '$v_o = 4v_1 - 2v_2$'
+        src: e18
+    questions:
+      - type: numeric
+        cat: problem
+        q: 'Exercise problem 1 (L5·11): peak output voltage (V).'
+        num: { value: 12.5, unit: 'V', check: '0.5*50/2' }
+        hint: 'Gain $= -R_f/R_i$.'
+        explain: '$0.5\cdot25 = 12.5$ V.'
+        sol: { method: 'Inverting stage.', steps: ['$|G| = 50/2 = 25$', '$0.5\cdot25 = 12.5$ V'], answer: '12.5 V' }
+        fromSource: true
+        src: [e11, v06]
+      - type: numeric
+        cat: problem
+        q: 'Exercise problem 1 (L5·11): maximum op-amp output current (mA).'
+        num: { value: 1.5, unit: 'mA', check: '12.5/10 + 12.5/50' }
+        hint: 'Load current + feedback current.'
+        explain: '$1.25 + 0.25 = 1.5$ mA.'
+        sol: { method: 'KCL at the output node.', steps: ['$12.5/10\text{k} = 1.25$ mA', '$12.5/50\text{k} = 0.25$ mA', '$1.5$ mA'], answer: '1.5 mA' }
+        fromSource: true
+        src: [e11, v06]
+      - type: single
+        cat: problem
+        q: 'Inverting stage, Exercise problem 2 (L5·12): a current source $a(t)$ with $R_1$ in parallel feeds the inverting input; feedback $R_2$. $v_o(t) = $'
+        opts: ['$-R_2\,a(t)$', '$-\frac{R_2}{R_1}a(t)$', '$R_1 a(t)$', '$(R_1 + R_2)a(t)$']
+        ans: a
+        hint: 'The inverting input is at 0 V, so no current flows in $R_1$.'
+        explain: 'All of $a(t)$ flows through $R_2$: $v_o = -R_2a(t)$ (answer on the slide).'
+        fromSource: true
+        src: [e12, v07]
+      - type: numeric
+        cat: problem
+        q: 'Non-inverting stage: $R = 10\ \text{k}\Omega$, $R_f = 50\ \text{k}\Omega$. Find the gain $v_o/v_i$.'
+        num: { value: 6, unit: '', check: '1+50/10' }
+        hint: '$1 + R_f/R$.'
+        explain: '$1 + 5 = 6$.'
+        sol: { method: 'Non-inverting formula.', steps: ['$1 + 50/10 = 6$'], answer: '6' }
+        fromSource: true
+        src: e14
+      - type: numeric
+        cat: problem
+        q: 'Exercise problem 2 (L5·14): peak op-amp output current (mA).'
+        num: { value: 1.4, unit: 'mA', check: '12/10 + 12/60' }
+        hint: 'Load $10\ \text{k}\Omega$, feedback path $50 + 10 = 60\ \text{k}\Omega$.'
+        explain: '$1.2 + 0.2 = 1.4$ mA $< I_{sat} = 2$ mA — no current saturation.'
+        sol: { method: 'KCL at the output node.', steps: ['$12/10\text{k} = 1.2$ mA', '$12/60\text{k} = 0.2$ mA', '$1.4$ mA'], answer: '1.4 mA' }
+        fromSource: true
+        src: [e14, v08]
+      - type: numeric
+        cat: problem
+        q: 'Cascaded stages (L5·18): $v_1 = 1$ V, $v_2 = 0.5$ V. Find $v_o$ (V).'
+        num: { value: 3, unit: 'V', check: '4*1-2*0.5' }
+        hint: '$v_o = 4v_1 - 2v_2$.'
+        explain: '$4 - 1 = 3$ V.'
+        sol: { method: 'Cascade of an inverting stage and a summer.', steps: ['$v_a = -2v_1 = -2$ V', '$v_o = -(2v_a + 2v_2) = 4 - 1 = 3$ V'], answer: '3 V' }
+        fromSource: true
+        src: e18
+      - type: numeric
+        cat: problem
+        q: 'Differential stage with $R_1 = R_3 = 10\ \text{k}\Omega$, $R_2 = R_4 = 30\ \text{k}\Omega$, $v_1 = 1$ V, $v_2 = 1.5$ V. Find $v_o$ (V).'
+        num: { value: 1.5, unit: 'V', check: '3*(1.5-1)' }
+        hint: '$v_o = \frac{R_2}{R_1}(v_2 - v_1)$.'
+        explain: '$3\cdot0.5 = 1.5$ V.'
+        sol: { method: 'Differential stage formula.', steps: ['$R_2/R_1 = 3$', '$v_o = 3(1.5 - 1) = 1.5$ V'], answer: '1.5 V' }
+        src: e15
+      - type: numeric
+        cat: problem
+        q: 'Inverting summer: $R_f = 10\ \text{k}\Omega$, $R_1 = 5\ \text{k}\Omega$, $R_2 = 10\ \text{k}\Omega$, $v_1 = 1$ V, $v_2 = 2$ V. Find $v_o$ (V).'
+        num: { value: -4, unit: 'V', check: '-(10/5*1 + 10/10*2)' }
+        hint: 'Sum the inverted, scaled inputs.'
+        explain: '$v_o = -(2\cdot1 + 1\cdot2) = -4$ V.'
+        sol: { method: 'Summer formula.', steps: ['$-(R_f/R_1)v_1 = -2$ V', '$-(R_f/R_2)v_2 = -2$ V', '$v_o = -4$ V'], answer: '−4 V' }
+        src: e16
+      - type: single
+        cat: problem
+        q: 'Additional exercise #2 (L5·20): the voltage gain of the inverting stage with a T-network ($R_2$, $R_3$, $R_4$) in the feedback is'
+        opts: ['$-\dfrac{R_2R_3 + R_4R_3 + R_2R_4}{R_1R_3}$', '$-\dfrac{R_2 + R_4}{R_1}$', '$-\dfrac{R_2R_4}{R_1R_3}$', '$1 + \dfrac{R_2 + R_4}{R_1}$']
+        ans: a
+        hint: 'The T-network makes a large gain with moderate resistors.'
+        explain: 'Answer on the slide: $A = -(R_2R_3 + R_4R_3 + R_2R_4)/(R_1R_3)$. Check: for $R_3 \to \infty$ it reduces to $-(R_2 + R_4)/R_1$.'
+        fromSource: true
+        src: e20
+      - type: single
+        cat: theory
+        q: 'Why is a buffer (voltage follower) used?'
+        opts: ['It draws no current from the source, so the load gets the full source voltage', 'It doubles the voltage', 'It inverts the signal', 'It reduces the input resistance to zero']
+        ans: a
+        hint: '$R_{in} = \infty$, $v_o = v_i$.'
+        explain: 'The buffer isolates the source (with internal resistance $R_S$) from the load.'
+        src: e17
+      - type: single
+        cat: theory
+        q: 'The input resistance of the ideal non-inverting stage is'
+        opts: ['infinite', 'zero', '$R$', '$R + R_f$']
+        ans: a
+        hint: 'The input goes straight into the op-amp, where $i^+ = 0$.'
+        explain: '$R_{in} = \infty$, $R_{out} = 0$ (slide L5·13).'
+        src: e13

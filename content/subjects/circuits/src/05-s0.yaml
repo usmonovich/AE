@@ -1,0 +1,266 @@
+# Foundations — NOT from the presentations. Short beginner lessons added before Lecture 1 (the owner asked
+# to add only the really necessary basics). Every theory record carries web sources; questions are marked «generated».
+subsection: ct-s0
+
+refs:
+  - &nist { title: 'Metric (SI) Prefixes', url: 'https://www.nist.gov/pml/owm/metric-si-prefixes', org: NIST, checked: '2026-11-02' }
+  - &os91 { title: 'University Physics Volume 2, §9.1 Electrical Current', url: 'https://openstax.org/books/university-physics-volume-2/pages/9-1-electrical-current', org: OpenStax, checked: '2026-11-02' }
+  - &os101 { title: 'University Physics Volume 2, §10.1 Electromotive Force', url: 'https://openstax.org/books/university-physics-volume-2/pages/10-1-electromotive-force', org: OpenStax, checked: '2026-11-02' }
+  - &os103 { title: 'University Physics Volume 2, §10.3 Kirchhoff''s Rules', url: 'https://openstax.org/books/university-physics-volume-2/pages/10-3-kirchhoffs-rules', org: OpenStax, checked: '2026-11-02' }
+  - &cramer { title: 'Algebra and Trigonometry 2e, §11.8 Solving Systems with Cramer''s Rule', url: 'https://openstax.org/books/algebra-and-trigonometry-2e/pages/11-8-solving-systems-with-cramers-rule', org: OpenStax, checked: '2026-11-02' }
+  - &deriv { title: 'Calculus Volume 1, §3.1 Defining the Derivative', url: 'https://openstax.org/books/calculus-volume-1/pages/3-1-defining-the-derivative', org: OpenStax, checked: '2026-11-02' }
+
+topics:
+  - id: ct-intro-units
+    title: Units, prefixes and scientific notation
+    pages: [a15]
+    theory:
+      - kind: text
+        title: Why this lesson?
+        body: 'Circuit problems mix very large and very small numbers: a resistor of $5\ \text{k}\Omega$, a current of $6\ \text{mA}$, a capacitor of $10\ \mu\text{F}$. Before Lecture 1 you should be able to convert such values quickly and without mistakes. **This lesson is an addition for beginners — it is not part of the course presentations.**'
+        src: a15
+        web: [*nist]
+      - kind: definition
+        title: The main electrical quantities and their SI units
+        body: |
+          | Quantity | Symbol | Unit | Unit symbol |
+          |---|---|---|---|
+          | charge | $q$, $Q$ | coulomb | C |
+          | current | $i$, $I$ | ampere | A |
+          | voltage | $v$, $V$ | volt | V |
+          | resistance | $R$ | ohm | Ω |
+          | conductance | $G$ | siemens | S |
+          | power | $p$, $P$ | watt | W |
+          | energy | $w$, $W$ | joule | J |
+          | capacitance | $C$ | farad | F |
+          | inductance | $L$ | henry | H |
+
+          Lower-case letters ($v$, $i$, $p$) usually denote quantities that may change with time; capitals ($V$, $I$) denote constant (DC) values.
+        src: a15
+        web: [*nist]
+      - kind: law
+        title: SI prefixes used most often in circuits
+        body: |
+          giga G $=10^{9}$, mega M $=10^{6}$, kilo k $=10^{3}$, milli m $=10^{-3}$, micro μ $=10^{-6}$, nano n $=10^{-9}$, pico p $=10^{-12}$.
+
+          **How to convert:** replace the prefix by its power of ten. $4.7\ \text{k}\Omega = 4.7\times10^{3}\ \Omega = 4700\ \Omega$; $250\ \text{mA} = 250\times10^{-3}\ \text{A} = 0.25\ \text{A}$.
+
+          **Watch out:** «m» (milli, $10^{-3}$) and «M» (mega, $10^{6}$) differ only in the letter case.
+        src: a15
+        web: [*nist]
+      - kind: rule
+        title: Working with powers of ten
+        body: |
+          - Multiplication adds exponents: $10^{3}\cdot10^{-3} = 10^{0} = 1$. So $V = IR = (2\ \text{mA})(5\ \text{k}\Omega) = 10\ \text{V}$ — milli and kilo cancel.
+          - Division subtracts exponents: $\frac{30\ \text{V}}{5\ \text{k}\Omega} = 6\times10^{-3}\ \text{A} = 6\ \text{mA}$.
+          - Squaring doubles the exponent: $(6\ \text{mA})^2 = 36\times10^{-6}\ \text{A}^2$.
+        src: a15
+        web: [*nist]
+    questions:
+      - type: numeric
+        cat: formula
+        q: 'Convert $4.7\ \text{k}\Omega$ to ohms.'
+        num: { value: 4700, unit: 'Ω', check: '4.7e3' }
+        hint: 'kilo = $10^3$.'
+        explain: '$4.7\times10^3 = 4700\ \Omega$.'
+        sol: { method: 'Replace the prefix by its power of ten.', steps: ['$\text{k} = 10^3$', '$4.7\times10^3 = 4700$'], answer: '4700 Ω' }
+        src: a15
+      - type: numeric
+        cat: formula
+        q: 'Convert $250\ \text{mA}$ to amperes.'
+        num: { value: 0.25, unit: 'A', check: '250e-3' }
+        hint: 'milli = $10^{-3}$.'
+        explain: '$250\times10^{-3} = 0.25$ A.'
+        sol: { method: 'Replace the prefix by its power of ten.', steps: ['$\text{m} = 10^{-3}$', '$250\times10^{-3} = 0.25$'], answer: '0.25 A' }
+        src: a15
+      - type: numeric
+        cat: problem
+        q: 'A current of $2\ \text{mA}$ flows through a $5\ \text{k}\Omega$ resistor. Find $V = IR$ in volts.'
+        num: { value: 10, unit: 'V', check: '2e-3*5e3' }
+        hint: 'milli × kilo = $10^{-3}\cdot10^{3} = 1$.'
+        explain: '$V = (2\times10^{-3})(5\times10^{3}) = 10$ V.'
+        sol: { method: 'Multiply the numbers and add the exponents.', steps: ['$2\cdot5 = 10$', '$10^{-3}\cdot10^{3} = 1$', '$V = 10$ V'], answer: '10 V' }
+        src: a15
+      - type: matching
+        cat: theory
+        q: 'Match each prefix with its factor.'
+        pairs:
+          - ['mega (M)', '$10^{6}$']
+          - ['kilo (k)', '$10^{3}$']
+          - ['milli (m)', '$10^{-3}$']
+          - ['micro (μ)', '$10^{-6}$']
+          - ['nano (n)', '$10^{-9}$']
+        hint: 'Positive powers make bigger units, negative powers — smaller ones.'
+        explain: 'M $=10^6$, k $=10^3$, m $=10^{-3}$, μ $=10^{-6}$, n $=10^{-9}$.'
+        src: a15
+      - type: single
+        cat: theory
+        q: 'Which unit is used for conductance?'
+        opts: ['siemens (S)', 'ohm (Ω)', 'henry (H)', 'farad (F)']
+        ans: a
+        hint: 'Conductance is the reciprocal of resistance.'
+        explain: '$G = 1/R$, measured in siemens (also called mho, ℧).'
+        src: a15
+      - type: numeric
+        cat: problem
+        q: 'Express $0.000\,047\ \text{F}$ in microfarads.'
+        num: { value: 47, unit: 'μF', check: '0.000047/1e-6' }
+        hint: '$1\ \mu\text{F} = 10^{-6}$ F.'
+        explain: '$0.000047 = 47\times10^{-6}$ F $= 47\ \mu$F.'
+        sol: { method: 'Divide by the value of the prefix.', steps: ['$0.000047 / 10^{-6} = 47$'], answer: '47 μF' }
+        src: a15
+
+  - id: ct-intro-symbols
+    title: Reading a circuit diagram
+    pages: [a07, b04, b05]
+    theory:
+      - kind: text
+        title: Why this lesson?
+        body: 'Every problem in this course starts with a schematic. You must recognise each symbol and understand what the «+», «−» signs and the arrows mean before you can write a single equation. **This lesson is an addition for beginners — it is not part of the course presentations.**'
+        src: a07
+        web: [*os101]
+      - kind: definition
+        title: Common symbols
+        body: |
+          | Symbol in the lectures | Element |
+          |---|---|
+          | zig-zag line | resistor $R$ |
+          | circle with «+» and «−» | independent voltage source (the «+» terminal is at the higher potential) |
+          | circle with an arrow | independent current source (the arrow shows the direction of its current) |
+          | diamond with «+», «−» | dependent (controlled) voltage source |
+          | diamond with an arrow | dependent (controlled) current source |
+          | long and short parallel lines | battery: **the longer line is the positive terminal** |
+          | horizontal lines / downward arrow at a node | reference node (ground), $v = 0$ |
+          | two parallel plates | capacitor $C$ |
+          | coil | inductor $L$ |
+          | triangle with «+» and «−» inputs | operational amplifier |
+        src: [b04, b05]
+        web: [*os101]
+      - kind: rule
+        title: Reference directions and polarities
+        body: |
+          - A current arrow is only a **reference direction**. You may choose it freely; if the calculated current is negative, the real current flows the other way (Lecture 3 uses this, e.g. $i_2 = -1.67$ A).
+          - A pair «+ / −» next to an element is the **reference polarity** of its voltage: $v$ is the potential of the «+» end minus the potential of the «−» end.
+          - Some exercise sheets (PS04, PS05) mark a voltage with a curved arrow instead of «+ / −»; the arrow points towards the terminal taken as «+».
+          - Conventional current flows from higher to lower potential through a resistor, i.e. opposite to the motion of electrons in a wire.
+        src: [b04, a07]
+        web: [*os91, *os101]
+      - kind: rule
+        title: Nodes are wires, not dots
+        body: 'All points joined by ideal wires (zero resistance) form **one node** and have the same potential, even if the drawing places them far apart or bends the wire. Before analysing a circuit, colour each node: this immediately shows which elements are in parallel (same pair of nodes) and which are in series (a node shared by only two elements).'
+        src: b04
+        web: [*os103]
+    questions:
+      - type: single
+        cat: theory
+        q: 'In the battery symbol (one long and one short line), the positive terminal is'
+        opts: ['the longer line', 'the shorter line', 'the left terminal', 'it depends on the current direction']
+        ans: a
+        hint: 'Standard schematic convention.'
+        explain: 'The longer line marks the positive terminal (higher potential).'
+        src: a07
+      - type: single
+        cat: theory
+        q: 'A calculated branch current comes out as $-2$ A. What does it mean?'
+        opts: ['The real current is 2 A in the direction opposite to the chosen arrow', 'The calculation is wrong', 'The element supplies 2 W', 'The current is zero']
+        ans: a
+        hint: 'The arrow is only a reference direction.'
+        explain: 'A negative result simply means the actual current flows opposite to the assumed reference direction.'
+        src: a07
+      - type: single
+        cat: theory
+        q: 'A diamond-shaped source in a schematic denotes'
+        opts: ['a dependent (controlled) source', 'an independent source', 'a battery', 'a capacitor']
+        ans: a
+        hint: 'Compare with the circle symbol.'
+        explain: 'Circles are independent sources; diamonds are sources controlled by another voltage or current.'
+        src: a07
+      - type: single
+        cat: theory
+        q: 'Two points of a circuit are joined by an ideal wire. Then'
+        opts: ['they belong to the same node and have the same potential', 'there is always a voltage drop between them', 'they are in series', 'a current cannot flow between them']
+        ans: a
+        hint: 'An ideal wire has zero resistance.'
+        explain: 'Points connected by ideal wires form one node: $v = Ri = 0$ along the wire.'
+        src: a07
+      - type: single
+        cat: theory
+        q: 'A voltage source is marked «+» at terminal $a$ and «−» at terminal $b$, value $9$ V. Which statement is true?'
+        opts: ['$v_a - v_b = 9$ V', '$v_b - v_a = 9$ V', '$v_a = v_b$', 'the current flows from $b$ to $a$ inside the source in every circuit']
+        ans: a
+        hint: 'Polarity marks define the voltage.'
+        explain: 'The voltage is the potential of the «+» terminal minus that of the «−» terminal.'
+        src: a07
+
+  - id: ct-intro-math
+    title: 'Maths toolkit: linear systems, rates of change and areas'
+    pages: [c10, f04]
+    theory:
+      - kind: text
+        title: Why this lesson?
+        body: 'Lecture 3 turns a circuit into a system of linear equations; Lecture 6 uses derivatives ($i = C\,dv/dt$) and integrals ($v = \frac1C\int i\,dt$). This lesson recalls only what is needed. **It is an addition for beginners — not part of the presentations.**'
+        src: c10
+        web: [*cramer, *deriv]
+      - kind: rule
+        title: Solving two linear equations by substitution
+        body: |
+          Example: $3v_1 - v_2 = 20$ and $-3v_1 + 5v_2 = 60$.
+          1. Add the equations: $4v_2 = 80 \Rightarrow v_2 = 20$.
+          2. Substitute back: $3v_1 = 20 + 20 \Rightarrow v_1 = 13.33$.
+          Always check: $-3(13.33) + 5(20) = 60$ ✓. (Lecture 3 solves the same system with Cramer's rule — the result is identical.)
+        src: c10
+        web: [*cramer]
+      - kind: law
+        title: Determinant of a 2×2 matrix and Cramer's rule
+        body: 'For $\begin{cases}ax + by = e\\ cx + dy = f\end{cases}$: $\Delta = ad - bc$. If $\Delta \ne 0$: $x = \frac{ed - bf}{\Delta}$, $y = \frac{af - ec}{\Delta}$. For the example above: $\Delta = 3\cdot5 - (-1)(-3) = 12$, $v_1 = \frac{20\cdot5 - (-1)\cdot60}{12} = \frac{160}{12} = 13.33$.'
+        src: c10
+        web: [*cramer]
+      - kind: definition
+        title: Derivative = rate of change, integral = accumulated area
+        body: |
+          - $\frac{dv}{dt}$ is the **slope** of the graph $v(t)$: how fast $v$ changes. If $v$ rises linearly by $10$ V in $2$ s, $\frac{dv}{dt} = 5$ V/s. If $v$ is constant, $\frac{dv}{dt} = 0$.
+          - $\int_{t_1}^{t_2} i\,dt$ is the **area** under the graph $i(t)$ between $t_1$ and $t_2$. A constant current of $3$ A during $4$ s carries $Q = 3\cdot4 = 12$ C.
+          These two ideas are enough for the capacitor and inductor problems of Lecture 6, where the graphs are made of straight-line pieces.
+        src: f04
+        web: [*deriv]
+    questions:
+      - type: numeric
+        cat: problem
+        q: 'Solve $2x + y = 7$, $x - y = 2$. Find $x$.'
+        num: { value: 3, unit: '', check: '3' }
+        hint: 'Add the equations to eliminate $y$.'
+        explain: '$3x = 9 \Rightarrow x = 3$, $y = 1$.'
+        sol: { method: 'Elimination.', steps: ['Add: $3x = 9$.', '$x = 3$, then $y = 7 - 6 = 1$.'], answer: 'x = 3' }
+        src: c10
+      - type: numeric
+        cat: formula
+        q: 'Compute $\det\begin{bmatrix}3 & -1\\ -3 & 5\end{bmatrix}$.'
+        num: { value: 12, unit: '', check: '3*5-(-1)*(-3)' }
+        hint: '$ad - bc$.'
+        explain: '$15 - 3 = 12$.'
+        sol: { method: '2×2 determinant.', steps: ['$ad = 15$, $bc = 3$.', '$\Delta = 12$.'], answer: '12' }
+        src: c10
+      - type: numeric
+        cat: problem
+        q: 'A voltage rises linearly from $0$ V to $10$ V in $2$ s. Find $\frac{dv}{dt}$ in V/s.'
+        num: { value: 5, unit: 'V/s', check: '10/2' }
+        hint: 'Slope = rise / run.'
+        explain: '$10/2 = 5$ V/s.'
+        sol: { method: 'Slope of a straight line.', steps: ['$\Delta v = 10$ V, $\Delta t = 2$ s.', '$dv/dt = 5$ V/s.'], answer: '5 V/s' }
+        src: f04
+      - type: numeric
+        cat: problem
+        q: 'A constant current of $3$ A flows for $4$ s. How much charge (C) passes?'
+        num: { value: 12, unit: 'C', check: '3*4' }
+        hint: 'Area under a constant graph = height × width.'
+        explain: '$Q = \int i\,dt = 3\cdot4 = 12$ C.'
+        sol: { method: 'Integral as area.', steps: ['Rectangle $3\ \text{A} \times 4\ \text{s}$.', '$Q = 12$ C.'], answer: '12 C' }
+        src: f04
+      - type: single
+        cat: theory
+        q: 'If a voltage $v(t)$ is constant, its derivative $\frac{dv}{dt}$ is'
+        opts: ['zero', 'equal to $v$', 'infinite', 'negative']
+        ans: a
+        hint: 'A horizontal line has zero slope.'
+        explain: 'Constant ⇒ zero rate of change. This is why a capacitor carries no current at DC (Lecture 6).'
+        src: f04

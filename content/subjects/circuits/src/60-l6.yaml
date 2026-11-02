@@ -1,0 +1,307 @@
+# Lecture 6. Dynamic circuit elements: capacitors and inductors (slides f01–f22, read from images — no text layer).
+subsection: ct-l6
+
+topics:
+  - id: ct-l6-capacitor
+    title: The capacitor
+    pages: [f01, f02, f03, f04, f05, f06, f07, f08, f09, f10, f11]
+    theory:
+      - kind: definition
+        title: Capacitor
+        body: 'An ideal two-terminal element that stores **charge**: $q(t) = Cv(t)$. The **capacitance** $C$ is measured in farads (F), $1\ \text{F} = 1\ \text{C/V}$. With the passive sign convention, $i(t) = \frac{dq}{dt} = C\frac{dv}{dt}$.'
+        src: f02
+      - kind: law
+        title: Parallel-plate capacitor
+        body: |
+          $C = \varepsilon\frac{A}{d}$ — plate area $A$, separation $d$, permittivity $\varepsilon$ (in free space $\varepsilon_0 \approx 8.854\times10^{-12}$ F/m).
+          - A 1-F capacitor with plates 1 m apart would need plates of about $336\ \text{km}\times336\ \text{km}$ — real capacitors are μF, nF, pF ($1\ \mu\text{F} = 10^{-6}$ F, $1$ nF $= 10^{-9}$ F, $1$ pF $= 10^{-12}$ F, $1$ fF $= 10^{-15}$ F).
+          - Scaled values (1 F, 2 F, ½ F) are often used for demonstration.
+        src: f03
+      - kind: law
+        title: Memory
+        fig: ct-cap-memory
+        body: '$v(t) = \frac1C\int_{-\infty}^{t}i(\tau)\,d\tau$: the voltage depends on the whole history of the current. **The voltage $v$ is the state variable of the capacitor**; initial conditions are needed: $v(t) = v(t_0) + \frac1C\int_{t_0}^{t}i\,d\tau$.'
+        src: [f04, f05]
+      - kind: law
+        title: Continuity
+        body: '**The voltage of a capacitor cannot change instantaneously.** If the current remains bounded in a closed interval $[t_1, t_2]$, the voltage is a continuous function in $(t_1, t_2)$. Example: a $\pm10$ A square-wave current into $5$ F gives a continuous triangular voltage between $0$ and $2$ V.'
+        src: f06
+      - kind: law
+        title: Energy
+        body: |
+          $p = vi = Cv\frac{dv}{dt}$; energy absorbed in $[t_1, t_2]$: $w = C\int_{t_1}^{t_2}v\frac{dv}{d\tau}d\tau = \frac12Cv^2(t_2) - \frac12Cv^2(t_1)$.
+          **Stored energy:** $E_C(t) = \frac12Cv^2(t)$ — it depends on the present voltage only and is always $\ge 0$; the energy follows the state variable $v$.
+        src: [f07, f08]
+      - kind: law
+        title: Series and parallel capacitors
+        body: '**Parallel:** $C_{eq} = C_1 + C_2 + \dots + C_n$ — capacitors in parallel combine like resistors in series. **Series:** $\frac{1}{C_{eq}} = \frac{1}{C_1} + \dots + \frac{1}{C_n}$ (with $v(t_0) = v_1(t_0) + \dots + v_n(t_0)$) — capacitors in series combine like resistors in parallel.'
+        src: [f10, f11]
+    formulas:
+      - title: Capacitor law
+        tex: 'q = Cv, \qquad i = C\,\frac{dv}{dt}'
+        src: f02
+      - title: Capacitor voltage (memory)
+        tex: 'v(t) = \frac{1}{C}\int_{-\infty}^{t} i(\tau)\,d\tau = v(t_0) + \frac{1}{C}\int_{t_0}^{t} i(\tau)\,d\tau'
+        src: f04
+      - title: Parallel-plate capacitor
+        tex: 'C = \varepsilon\,\frac{A}{d}'
+        src: f03
+      - title: Energy stored in a capacitor
+        tex: 'E_C = \frac{1}{2}\,C v^2'
+        src: f08
+      - title: Capacitors in parallel / in series
+        tex: 'C_{eq} = C_1 + \dots + C_n, \qquad \frac{1}{C_{eq}} = \frac{1}{C_1} + \dots + \frac{1}{C_n}'
+        src: [f10, f11]
+    examples:
+      - title: 'Memory example (slide L6·5)'
+        given: '$i_S$ into $5$ F rises linearly from $0$ ($t = -1$ s) to $10$ A ($t = 1$ s), stays $10$ A until $t = 2$ s, falls to $0$ at $t = 3$ s.'
+        steps:
+          - '$v = \frac15\int i\,dt$ = area under $i(t)$ divided by 5.'
+          - 'At $t = 1$: area $= \frac12\cdot2\cdot10 = 10$ C ⇒ $v = 2$ V.'
+          - 'At $t = 2$: area $10 + 10 = 20$ C ⇒ $v = 4$ V; at $t = 3$: $20 + 5 = 25$ C ⇒ $v = 5$ V, then it stays at $5$ V.'
+        answer: '$v(1) = 2$ V, $v(2) = 4$ V, $v(t \ge 3) = 5$ V'
+        src: f05
+      - title: 'Energy example (slide L6·9)'
+        given: '$v_S$ across $5$ F rises from $0$ ($t = -1$) to $10$ V ($t = 1$), stays until $t = 2$, falls to $0$ at $t = 3$.'
+        steps:
+          - '$i = C\frac{dv}{dt}$: $5\cdot\frac{10}{2} = 25$ A for $-1 < t < 1$; $0$ for $1 < t < 2$; $5\cdot(-10) = -50$ A for $2 < t < 3$.'
+          - '$w = \frac12Cv^2$: maximum $\frac12\cdot5\cdot10^2 = 250$ J for $1 \le t \le 2$; back to $0$ at $t = 3$ (the energy is returned to the source).'
+        answer: '$i = 25$ A, $0$, $-50$ A; $w_{\max} = 250$ J'
+        src: f09
+    questions:
+      - type: numeric
+        cat: problem
+        q: 'Memory example (L6·5): find $v(2)$ (V).'
+        num: { value: 4, unit: 'V', check: '(10+10)/5' }
+        hint: 'Area under $i(t)$ from $-1$ to $2$ s, divided by $C = 5$ F.'
+        explain: 'Area $= 10 + 10 = 20$ C ⇒ $v = 4$ V.'
+        sol: { method: 'Integral as area.', steps: ['triangle $-1..1$: $10$ C', 'rectangle $1..2$: $10$ C', '$v = 20/5 = 4$ V'], answer: '4 V' }
+        fromSource: true
+        src: f05
+      - type: numeric
+        cat: problem
+        q: 'Energy example (L6·9): the current for $2 < t < 3$ s (A).'
+        num: { value: -50, unit: 'A', check: '5*(-10)/1' }
+        hint: '$i = C\,dv/dt$; the voltage falls by $10$ V in $1$ s.'
+        explain: '$5\cdot(-10) = -50$ A.'
+        sol: { method: 'Capacitor law.', steps: ['$dv/dt = -10$ V/s', '$i = 5\cdot(-10) = -50$ A'], answer: '−50 A' }
+        fromSource: true
+        src: f09
+      - type: numeric
+        cat: problem
+        q: 'Energy stored in a $5$ F capacitor at $10$ V (J).'
+        num: { value: 250, unit: 'J', check: '0.5*5*100' }
+        hint: '$E = \frac12Cv^2$.'
+        explain: '$0.5\cdot5\cdot100 = 250$ J.'
+        sol: { method: 'Stored energy.', steps: ['$E = \frac12\cdot5\cdot10^2 = 250$ J'], answer: '250 J' }
+        fromSource: true
+        src: f09
+      - type: numeric
+        cat: problem
+        q: 'Continuity example (L6·6): a constant current of $10$ A charges $5$ F for $1$ s starting from $0$ V. Find the final voltage (V).'
+        num: { value: 2, unit: 'V', check: '10*1/5' }
+        hint: '$\Delta v = I\Delta t/C$.'
+        explain: '$10\cdot1/5 = 2$ V: the peak of the triangular wave.'
+        sol: { method: 'Memory equation.', steps: ['$\Delta v = 10/5 = 2$ V'], answer: '2 V' }
+        fromSource: true
+        src: f06
+      - type: single
+        cat: theory
+        q: 'Which quantity of a capacitor cannot change instantaneously (with bounded current)?'
+        opts: ['its voltage', 'its current', 'its charge rate $dq/dt$', 'its power']
+        ans: a
+        hint: 'The state variable.'
+        explain: 'An instantaneous jump of $v$ would require infinite current $C\,dv/dt$.'
+        src: f06
+      - type: numeric
+        cat: problem
+        q: 'Find the capacitance (pF) of a parallel-plate capacitor in air with $A = 1\ \text{cm}^2$ and $d = 0.1$ mm ($\varepsilon \approx \varepsilon_0$).'
+        num: { value: 8.854, unit: 'pF', tolAbs: 0.01, check: '8.854e-12*1e-4/1e-4*1e12' }
+        hint: '$1\ \text{cm}^2 = 10^{-4}\ \text{m}^2$, $0.1$ mm $= 10^{-4}$ m.'
+        explain: '$C = \varepsilon_0A/d = 8.854\times10^{-12}\cdot10^{-4}/10^{-4} = 8.854$ pF.'
+        sol: { method: 'Parallel-plate formula.', steps: ['$A/d = 1$ m', '$C = 8.854\times10^{-12}$ F'], answer: '≈ 8.85 pF' }
+        src: f03
+      - type: numeric
+        cat: problem
+        q: 'Capacitors $4\ \mu$F and $12\ \mu$F are in series. Find $C_{eq}$ (μF).'
+        num: { value: 3, unit: 'μF', check: '4*12/16' }
+        hint: 'Series capacitors combine like parallel resistors.'
+        explain: '$4\cdot12/16 = 3\ \mu$F.'
+        sol: { method: 'Series capacitors.', steps: ['$1/C_{eq} = 1/4 + 1/12 = 1/3$', '$C_{eq} = 3\ \mu$F'], answer: '3 μF' }
+        src: f11
+      - type: single
+        cat: theory
+        q: 'Capacitors in parallel combine like'
+        opts: ['resistors in series', 'resistors in parallel', 'inductors in parallel', 'conductances in series']
+        ans: a
+        hint: 'Slide L6·10.'
+        explain: '$C_{eq} = C_1 + C_2 + \dots$ — a plain sum, like series resistors.'
+        src: f10
+
+  - id: ct-l6-inductor
+    title: The inductor
+    pages: [f12, f13, f14, f15, f16, f17, f18, f19]
+    theory:
+      - kind: definition
+        title: Inductor
+        body: 'An ideal two-terminal element that stores **magnetic flux**: $\psi(t) = Li(t)$, flux in webers (Wb). The **inductance** $L$ is measured in henries (H), $1\ \text{H} = 1\ \text{Wb/A}$. Then $v(t) = \frac{d\psi}{dt} = L\frac{di}{dt}$.'
+        src: f12
+      - kind: law
+        title: Toroidal inductor
+        body: 'From Faraday''s and Ampère''s laws, for $N$ turns on a toroid of cross-section $A$, mean circumference $l$ and relative permeability $\mu_r$: $L \simeq 4\pi\times10^{-7}\mu_r\frac{N^2A}{l}$ H. Orders of magnitude: mH, μH, nH; scaled values (1 H, 2 H, ½ H) for demonstration.'
+        src: f13
+      - kind: law
+        title: Memory and continuity
+        body: '$i(t) = \frac1L\int_{-\infty}^{t}v(\tau)\,d\tau$: **the current $i$ is the state variable of the inductor**; initial conditions are needed. **The current through an inductor cannot change instantaneously**: if the voltage remains bounded in $[t_1, t_2]$, the current is continuous in $(t_1, t_2)$.'
+        src: [f14, f15]
+      - kind: law
+        title: Energy
+        body: '$p = vi = Li\frac{di}{dt}$; $w = \frac12Li^2(t_2) - \frac12Li^2(t_1)$. **Stored energy:** $E_L(t) = \frac12Li^2(t)$ — depends on the present current only, always $\ge 0$ (passivity).'
+        src: f16
+      - kind: law
+        title: Series and parallel inductors
+        body: '**Series:** $L_{eq} = L_1 + L_2 + \dots + L_n$ — like resistors in series. **Parallel:** $\frac{1}{L_{eq}} = \frac{1}{L_1} + \dots + \frac{1}{L_n}$ (with $i(t_0) = i_1(t_0) + \dots + i_n(t_0)$) — like resistors in parallel.'
+        src: [f18, f19]
+    formulas:
+      - title: Inductor law
+        tex: '\psi = L i, \qquad v = L\,\frac{di}{dt}'
+        src: f12
+      - title: Inductor current (memory)
+        tex: 'i(t) = \frac{1}{L}\int_{-\infty}^{t} v(\tau)\,d\tau'
+        src: f14
+      - title: Toroidal inductor
+        tex: 'L \simeq 4\pi\times10^{-7}\,\mu_r\,\frac{N^2 A}{l}'
+        src: f13
+      - title: Energy stored in an inductor
+        tex: 'E_L = \frac{1}{2}\,L i^2'
+        src: f16
+      - title: Inductors in series / in parallel
+        tex: 'L_{eq} = L_1 + \dots + L_n, \qquad \frac{1}{L_{eq}} = \frac{1}{L_1} + \dots + \frac{1}{L_n}'
+        src: [f18, f19]
+    examples:
+      - title: 'Energy example (slide L6·17)'
+        given: '$i_S$ through $5$ H rises from $0$ to $10$ A in $2$ s, stays until $t = 3$ s, falls to $0$ at $t = 4$ s.'
+        steps:
+          - '$v = L\frac{di}{dt}$: $5\cdot5 = 25$ V for $0 < t < 2$; $0$ for $2 < t < 3$; $5\cdot(-10) = -50$ V for $3 < t < 4$.'
+          - '$w = \frac12Li^2$: maximum $\frac12\cdot5\cdot10^2 = 250$ J for $2 \le t \le 3$.'
+        answer: '$v = 25$ V, $0$, $-50$ V; $w_{\max} = 250$ J'
+        src: f17
+    questions:
+      - type: numeric
+        cat: problem
+        q: 'Energy example (L6·17): find $v$ for $0 < t < 2$ s (V).'
+        num: { value: 25, unit: 'V', check: '5*10/2' }
+        hint: '$v = L\,di/dt$.'
+        explain: '$di/dt = 5$ A/s, $v = 25$ V.'
+        sol: { method: 'Inductor law.', steps: ['$di/dt = 10/2 = 5$ A/s', '$v = 5\cdot5 = 25$ V'], answer: '25 V' }
+        fromSource: true
+        src: f17
+      - type: numeric
+        cat: problem
+        q: 'Energy stored in a $5$ H inductor carrying $10$ A (J).'
+        num: { value: 250, unit: 'J', check: '0.5*5*100' }
+        hint: '$E = \frac12Li^2$.'
+        explain: '$0.5\cdot5\cdot100 = 250$ J.'
+        sol: { method: 'Stored energy.', steps: ['$E = \frac12\cdot5\cdot10^2 = 250$ J'], answer: '250 J' }
+        fromSource: true
+        src: f17
+      - type: single
+        cat: theory
+        q: 'The state variable of an inductor is'
+        opts: ['its current', 'its voltage', 'its charge', 'its power']
+        ans: a
+        hint: 'Slide L6·14.'
+        explain: 'The current cannot change instantaneously; the stored energy depends on it.'
+        src: f14
+      - type: numeric
+        cat: problem
+        q: 'Inductors of $3$ H and $6$ H are in parallel. Find $L_{eq}$ (H).'
+        num: { value: 2, unit: 'H', check: '3*6/9' }
+        hint: 'Like resistors in parallel.'
+        explain: '$3\cdot6/9 = 2$ H.'
+        sol: { method: 'Parallel inductors.', steps: ['$L_{eq} = 18/9 = 2$ H'], answer: '2 H' }
+        src: f19
+      - type: numeric
+        cat: problem
+        q: 'Continuity example (L6·15): $+10$ V is applied to $5$ H for $1$ s, starting from $0$ A. Find the current at the end (A).'
+        num: { value: 2, unit: 'A', check: '10*1/5' }
+        hint: '$\Delta i = V\Delta t/L$.'
+        explain: '$10\cdot1/5 = 2$ A: the peak of the triangular current.'
+        sol: { method: 'Memory equation of the inductor.', steps: ['$\Delta i = 10/5 = 2$ A'], answer: '2 A' }
+        fromSource: true
+        src: f15
+      - type: matching
+        cat: theory
+        q: 'Match each element with its stored energy.'
+        pairs:
+          - ['capacitor', '$\frac12Cv^2$']
+          - ['inductor', '$\frac12Li^2$']
+          - ['resistor', 'stores no energy (dissipates $i^2R$)']
+        hint: 'Energy follows the state variable.'
+        explain: 'Capacitor — voltage, inductor — current; the resistor only dissipates.'
+        src: f16
+
+  - id: ct-l6-dc
+    title: Response to DC sources; combining capacitors and inductors
+    pages: [f20, f21, f22]
+    theory:
+      - kind: law
+        title: DC steady state
+        body: |
+          With constant (DC) quantities the derivatives are zero:
+          - **Capacitor:** $i = C\frac{dV_C}{dt} = 0$ — it behaves as an **open circuit**.
+          - **Inductor:** $v = L\frac{dI_L}{dt} = 0$ — it behaves as a **short circuit**.
+        src: f20
+    examples:
+      - title: 'Exercise problem 1 (slide L6·21)'
+        given: 'Capacitors $3$ F and $2$ F in series (left path), $2$ F and $1$ F in series (right path), both paths between $a$ and $b$.'
+        steps:
+          - '$3$ F in series with $2$ F: $\frac{3\cdot2}{5} = \frac65$ F.'
+          - '$2$ F in series with $1$ F: $\frac{2\cdot1}{3} = \frac23$ F.'
+          - 'The two paths are in parallel: $\frac65 + \frac23 = \frac{28}{15}$ F.'
+        answer: '$C_{eq} = \frac{28}{15}$ F (answer on the slide)'
+        src: f21
+      - title: 'Exercise problem 2 (slide L6·22)'
+        given: '$1$ H + $1$ H in series, in parallel with $3$ H + $2$ H in series, then $2$ H in series.'
+        steps:
+          - '$1 + 1 = 2$ H; $3 + 2 = 5$ H.'
+          - '$2\parallel5 = \frac{10}{7}$ H.'
+          - '$\frac{10}{7} + 2 = \frac{24}{7}$ H.'
+        answer: '$L_{eq} = \frac{24}{7}$ H (answer on the slide)'
+        src: f22
+    questions:
+      - type: numeric
+        cat: problem
+        q: 'Exercise problem 1 (L6·21): find $C_{eq}$ (F).'
+        num: { value: 1.8667, unit: 'F', tolAbs: 0.001, check: '28/15' }
+        hint: 'Two series pairs in parallel.'
+        explain: '$6/5 + 2/3 = 28/15 \approx 1.867$ F.'
+        sol: { method: 'Series then parallel.', steps: ['$3$ F series $2$ F $= 6/5$ F', '$2$ F series $1$ F $= 2/3$ F', 'sum $= 28/15$ F'], answer: '28/15 F' }
+        fromSource: true
+        src: f21
+      - type: numeric
+        cat: problem
+        q: 'Exercise problem 2 (L6·22): find $L_{eq}$ (H).'
+        num: { value: 3.4286, unit: 'H', tolAbs: 0.001, check: '24/7' }
+        hint: '$(1+1)\parallel(3+2) + 2$.'
+        explain: '$10/7 + 2 = 24/7 \approx 3.43$ H.'
+        sol: { method: 'Like resistors.', steps: ['$2\parallel5 = 10/7$ H', '$+2 = 24/7$ H'], answer: '24/7 H' }
+        fromSource: true
+        src: f22
+      - type: matching
+        cat: theory
+        q: 'In DC steady state, each element behaves as'
+        pairs:
+          - ['capacitor', 'open circuit']
+          - ['inductor', 'short circuit']
+        hint: 'Derivatives of constants are zero.'
+        explain: '$i_C = C\,dV/dt = 0$; $v_L = L\,dI/dt = 0$.'
+        src: f20
+      - type: numeric
+        cat: problem
+        q: 'A $12$ V DC source feeds $R_1 = 2\ \Omega$ in series with an inductor, which is in series with $R_2 = 4\ \Omega$; a capacitor is connected across $R_2$. Find the DC steady-state current (A).'
+        num: { value: 2, unit: 'A', check: '12/6' }
+        hint: 'Inductor → short, capacitor → open.'
+        explain: 'Only $R_1 + R_2 = 6\ \Omega$ remain: $I = 2$ A; the capacitor voltage equals $v_{R_2} = 8$ V.'
+        sol: { method: 'DC equivalents.', steps: ['$L$ → wire, $C$ → removed', '$I = 12/(2+4) = 2$ A'], answer: '2 A' }
+        src: f20

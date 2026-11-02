@@ -1,0 +1,710 @@
+# Lecture 2. Electrical components and basic laws (slides b01–b54; worked examples are on slides b32–b54)
+# + practice: PS01 (p), PS02 (q), PS03 exercises 1–9 (r), PS05 (v).
+subsection: ct-l2
+
+topics:
+  - id: ct-l2-elements
+    title: Active and passive elements, independent and dependent sources
+    pages: [b01, b02, b03, b04, b05]
+    theory:
+      - kind: definition
+        title: Passive and active elements
+        body: 'Elements of electric circuits are **passive** or **active**. An active element can generate energy, a passive element cannot. Passive: resistors, capacitors, inductors. Active: generators, batteries, operational amplifiers.'
+        src: b03
+      - kind: definition
+        title: Independent source
+        body: 'An ideal **independent source** is an active element that provides a specified voltage or current that is completely independent of other circuit elements. It is drawn as a circle: with «+ / −» for a voltage source, with an arrow for a current source.'
+        src: b04
+      - kind: definition
+        title: Dependent (controlled) source
+        body: |
+          An ideal **dependent source** is an active element whose source quantity is controlled by another voltage or current in the circuit. It is drawn as a diamond. Four types:
+          1. voltage-controlled voltage source (**VCVS**), e.g. $0.8\,v_{ab}$;
+          2. current-controlled voltage source (**CCVS**), e.g. $0.5\,i_x$;
+          3. voltage-controlled current source (**VCCS**), e.g. $b\,v_x$;
+          4. current-controlled current source (**CCCS**).
+        src: b05
+    questions:
+      - type: multiple
+        cat: theory
+        q: 'Which of these are active elements?'
+        opts: ['battery', 'operational amplifier', 'generator', 'resistor', 'inductor']
+        ans: [a, b, c]
+        hint: 'Active elements can generate energy.'
+        explain: 'Batteries, generators and op-amps are active; resistors, capacitors and inductors are passive.'
+        src: b03
+      - type: matching
+        cat: theory
+        q: 'Match each dependent source with its type.'
+        pairs:
+          - ['voltage source whose value is $0.8\,v_{ab}$', 'VCVS']
+          - ['voltage source whose value is $0.5\,i_x$', 'CCVS']
+          - ['current source whose value is $b\,v_x$', 'VCCS']
+          - ['current source whose value is $3\,i_o$', 'CCCS']
+        hint: 'First letter pair: what controls it; second: what it produces.'
+        explain: 'Controlled by a voltage → V…, by a current → C…; produces a voltage → …VS, a current → …CS.'
+        src: b05
+      - type: single
+        cat: theory
+        q: 'A dependent source is drawn as'
+        opts: ['a diamond', 'a circle', 'a zig-zag line', 'two plates']
+        ans: a
+        hint: 'Slide L2·5.'
+        explain: 'Diamond = dependent (controlled) source; circle = independent source.'
+        src: b05
+      - type: single
+        cat: theory
+        q: 'The value of an ideal independent voltage source'
+        opts: ['does not depend on the rest of the circuit', 'depends on the load current', 'is always zero when no current flows', 'is controlled by another voltage']
+        ans: a
+        hint: 'Definition on slide L2·4.'
+        explain: 'An ideal independent source provides a specified voltage regardless of the other elements.'
+        src: b04
+
+  - id: ct-l2-ohm
+    title: Resistance, Ohm's law and conductance
+    pages: [b06, b07, b08, b09, b10, b11, b12, b13, b32, b33, b34, b35]
+    theory:
+      - kind: definition
+        title: Resistance and resistivity
+        body: |
+          **Resistance** is the ability of a material to resist current, symbol $R$, measured in ohms (Ω). For a uniform conductor of length $L$ and cross-sectional area $A$:
+          $R = \rho\frac{L}{A}$,
+          where $\rho$ is the **resistivity** in Ω·m. Good conductors (copper $1.72\times10^{-8}$, aluminium $2.8\times10^{-8}$ Ω·m) have low resistivity; insulators (paper $10^{10}$, glass $10^{12}$ Ω·m) have high resistivity; semiconductors (carbon, germanium, silicon) are in between.
+        src: [b06, b07]
+      - kind: definition
+        title: Fixed and variable, linear and nonlinear resistors
+        body: 'Resistors can be fixed or variable (potentiometer). A **linear** resistor obeys Ohm''s law: constant resistance, the $i$–$v$ graph is a straight line through the origin. A **nonlinear** resistor does not obey Ohm''s law: its resistance varies with the current.'
+        src: [b08, b09]
+      - kind: law
+        title: Ohm's law
+        body: 'The voltage $v$ across a resistor is directly proportional to the current $i$ flowing through it: $v = iR$ (current entering the «+» terminal). The constant of proportionality $R$ is the resistance.'
+        src: b12
+      - kind: definition
+        title: Short circuit and open circuit
+        body: 'A **short circuit** is an element with resistance approaching zero ($v = 0$ for any current). An **open circuit** is an element with resistance approaching infinity ($i = 0$ for any voltage).'
+        src: b13
+      - kind: definition
+        title: Conductance
+        body: '**Conductance** is the ability of an element to conduct current, the reciprocal of resistance: $G = \frac1R = \frac iv$, measured in siemens (S) or mho (℧). The power dissipated by a resistor: $p = vi = i^2R = \frac{v^2}{R} = v^2G = \frac{i^2}{G}$.'
+        src: b10
+    formulas:
+      - title: Resistance of a uniform conductor
+        tex: 'R = \rho\,\frac{L}{A}'
+        vars:
+          - { sym: '\rho', name: resistivity, unit: 'Ω·m' }
+          - { sym: L, name: length, unit: m }
+          - { sym: A, name: cross-sectional area, unit: 'm²' }
+        src: b06
+      - title: Ohm's law
+        tex: 'v = i\,R'
+        src: b12
+      - title: Conductance
+        tex: 'G = \frac{1}{R} = \frac{i}{v}'
+        src: b10
+      - title: Power dissipated by a resistor
+        tex: 'p = v\,i = i^2 R = \frac{v^2}{R} = v^2 G'
+        src: b10
+    examples:
+      - title: 'Electric iron (Example 1, slide L2·10)'
+        given: 'An electric iron draws $2$ A at $120$ V.'
+        steps:
+          - 'Ohm''s law: $R = v/i = 120/2$.'
+        answer: '$R = 60\ \Omega$'
+        src: b34
+      - title: 'Current, conductance and power (Example 2, slide L2·11)'
+        given: '$30$ V source across a $5\ \text{k}\Omega$ resistor.'
+        steps:
+          - '$i = v/R = 30/(5\times10^3) = 6$ mA.'
+          - '$G = 1/R = 0.2$ mS.'
+          - '$p = vi = 30\times6\times10^{-3} = 180$ mW (also $i^2R$ and $v^2G$ give 180 mW).'
+        answer: '$i = 6$ mA, $G = 0.2$ mS, $p = 180$ mW'
+        src: b32
+      - title: 'Sinusoidal source (Example 3, slide L2·12)'
+        given: 'A voltage source $20\sin\pi t$ V across a $5\ \text{k}\Omega$ resistor.'
+        steps:
+          - '$i = v/R = 20\sin\pi t/(5\times10^3) = 4\sin\pi t$ mA.'
+          - '$p = vi = 80\sin^2\pi t$ mW.'
+        answer: '$i = 4\sin\pi t$ mA, $p = 80\sin^2\pi t$ mW'
+        src: b35
+      - title: 'Power of each element (Example 1, slide L2·33)'
+        given: '$20$ V source supplies $I = 5$ A; element 2 has $12$ V and $5$ A; element 3 has $8$ V and $6$ A; the dependent current source $0.2I$ has $8$ V.'
+        steps:
+          - '$p_1 = 20(-5) = -100$ W (supplied); $p_2 = 12(5) = 60$ W (absorbed); $p_3 = 8(6) = 48$ W (absorbed).'
+          - '$p_4 = 8(-0.2I) = 8(-0.2\times5) = -8$ W (supplied).'
+          - 'Check: $-100 + 60 + 48 - 8 = 0$ — total power supplied equals total power absorbed.'
+        answer: '$p_1 = -100$ W, $p_2 = 60$ W, $p_3 = 48$ W, $p_4 = -8$ W'
+        src: b33
+    questions:
+      - type: numeric
+        cat: problem
+        q: 'PS03, Exercise 1: how much current (A) is drawn by a toaster with a resistance of $15\ \Omega$ at $110$ V?'
+        num: { value: 7.333, unit: 'A', tolAbs: 0.005, check: '110/15' }
+        hint: '$i = v/R$.'
+        explain: '$i = 110/15 \approx 7.33$ A.'
+        sol: { method: 'Ohm''s law.', steps: ['$i = v/R = 110/15$', '$i \approx 7.33$ A'], answer: '≈ 7.33 A' }
+        fromSource: true
+        src: r01
+      - type: numeric
+        cat: problem
+        q: 'PS03, Exercise 2: a $3$ mA current source drives a $10\ \text{k}\Omega$ resistor. Find the voltage $V$ (in volts).'
+        num: { value: 30, unit: 'V', check: '3e-3*10e3' }
+        hint: '$V = IR$.'
+        explain: '$V = 3\ \text{mA}\times10\ \text{k}\Omega = 30$ V; $G = 0.1$ mS; $P = VI = 90$ mW.'
+        sol: { method: 'Ohm''s law.', steps: ['$V = (3\times10^{-3})(10\times10^3) = 30$ V'], answer: '30 V' }
+        fromSource: true
+        src: r01
+      - type: numeric
+        cat: problem
+        q: 'PS03, Exercise 2 (same circuit): find the power $P$ absorbed by the $10\ \text{k}\Omega$ resistor, in mW.'
+        num: { value: 90, unit: 'mW', check: '(3e-3)**2*10e3*1000' }
+        hint: '$P = I^2R$.'
+        explain: '$P = (3\times10^{-3})^2(10^4) = 0.09$ W $= 90$ mW. Conductance $G = 1/R = 0.1$ mS.'
+        sol: { method: 'Power of a resistor.', steps: ['$P = I^2R = 9\times10^{-6}\times10^4$', '$P = 0.09$ W'], answer: '90 mW' }
+        fromSource: true
+        src: r01
+      - type: numeric
+        cat: problem
+        q: 'PS03, Exercise 3: a resistor must dissipate no more than $18$ W when connected to a $12$ V supply. Find the minimum allowable resistance (Ω).'
+        num: { value: 8, unit: 'Ω', check: '12**2/18' }
+        hint: '$P = V^2/R$: smaller $R$ ⇒ larger power.'
+        explain: '$R_{\min} = V^2/P_{\max} = 144/18 = 8\ \Omega$.'
+        sol: { method: 'Power formula $P = V^2/R$.', steps: ['$P \le 18$ ⇒ $144/R \le 18$', '$R \ge 8\ \Omega$'], answer: '8 Ω' }
+        fromSource: true
+        src: r02
+      - type: numeric
+        cat: problem
+        q: 'An electric iron draws $2$ A at $120$ V. Find its resistance (Ω).'
+        num: { value: 60, unit: 'Ω', check: '120/2' }
+        hint: '$R = v/i$.'
+        explain: '$R = 120/2 = 60\ \Omega$.'
+        sol: { method: 'Ohm''s law.', steps: ['$R = 120/2 = 60\ \Omega$'], answer: '60 Ω' }
+        fromSource: true
+        src: b34
+      - type: numeric
+        cat: problem
+        q: 'Find the resistance (Ω) of a copper wire $100$ m long with a cross-section of $1\ \text{mm}^2$ ($\rho = 1.72\times10^{-8}$ Ω·m).'
+        num: { value: 1.72, unit: 'Ω', check: '1.72e-8*100/1e-6' }
+        hint: '$1\ \text{mm}^2 = 10^{-6}\ \text{m}^2$.'
+        explain: '$R = \rho L/A = 1.72\times10^{-8}\times100/10^{-6} = 1.72\ \Omega$.'
+        sol: { method: 'Resistance from resistivity.', steps: ['$A = 10^{-6}$ m²', '$R = 1.72\times10^{-8}\cdot10^{2}/10^{-6} = 1.72\ \Omega$'], answer: '1.72 Ω' }
+        src: b06
+      - type: single
+        cat: theory
+        q: 'A short circuit is an element whose resistance'
+        opts: ['approaches zero', 'approaches infinity', 'equals 1 Ω', 'depends on the current']
+        ans: a
+        hint: 'Slide L2·13.'
+        explain: 'Short circuit: $R \to 0$ ($v = 0$). Open circuit: $R \to \infty$ ($i = 0$).'
+        src: b13
+      - type: single
+        cat: theory
+        q: 'The $i$–$v$ graph of a linear resistor is'
+        opts: ['a straight line through the origin', 'a parabola', 'a horizontal line', 'a curve whose slope changes with current']
+        ans: a
+        hint: 'A linear resistor obeys Ohm''s law.'
+        explain: 'Constant $R$ ⇒ $i = v/R$ is a straight line through the origin; a nonlinear resistor gives a curve.'
+        src: b09
+      - type: numeric
+        cat: problem
+        q: 'A voltage $20\sin\pi t$ V is applied to a $5\ \text{k}\Omega$ resistor. Find the peak power (mW).'
+        num: { value: 80, unit: 'mW', check: '20*20/5e3*1000' }
+        hint: '$p = 80\sin^2\pi t$ mW.'
+        explain: 'Peak when $\sin^2\pi t = 1$: $p_{\max} = 20^2/5000 = 80$ mW.'
+        sol: { method: 'Power of a resistor.', steps: ['$p = v^2/R = 400\sin^2\pi t/5000$ W', 'Peak value $0.08$ W'], answer: '80 mW' }
+        fromSource: true
+        src: b35
+
+  - id: ct-l2-kirchhoff
+    title: Nodes, branches, loops and Kirchhoff's laws
+    pages: [b14, b15, b16, b17, b18, b19, b36, b37, b38, b39]
+    theory:
+      - kind: definition
+        title: Branch, node, loop
+        body: 'A **branch** represents a single element (a voltage source, a resistor…). A **node** is the point of connection between two or more branches. A **loop** is any closed path in a circuit.'
+        src: b14
+      - kind: definition
+        title: Series and parallel connection
+        body: 'Two or more elements are in **series** if they exclusively share a single node and consequently carry the **same current**. They are in **parallel** if they are connected to the same two nodes and consequently have the **same voltage** across them.'
+        src: b15
+      - kind: law
+        title: Kirchhoff's current law (KCL)
+        fig: ct-kcl-node
+        body: |
+          KCL is based on the conservation of charge: the algebraic sum of the currents entering a node (or a closed boundary) is zero. Equivalently, **the sum of the currents entering a node equals the sum of the currents leaving it**.
+
+          Example (slide L2·16): three current sources $I_1$ (up), $I_2$ (down), $I_3$ (up) feed node $a$, from which $I_T$ leaves: $I_T + I_2 = I_1 + I_3$, i.e. $I_T = I_1 - I_2 + I_3$.
+        src: [b16, b17]
+      - kind: law
+        title: Kirchhoff's voltage law (KVL)
+        body: |
+          The algebraic sum of all voltages around a closed path (loop) is zero: **sum of voltage drops = sum of voltage rises**.
+
+          A voltage **drop** means the potential decreases as you move across the element; a **rise** means it increases. They are not different types of voltage — the same voltage described with a direction.
+        src: b18
+      - kind: rule
+        title: How to write KVL (sign rule used in the examples)
+        body: 'Go around the loop in a chosen direction. For each element write $+v$ if you enter it at its «+» terminal and $-v$ if you enter at its «−» terminal. Example (L2·18): $-20 + v_1 - v_2 = 0$.'
+        src: b19
+    formulas:
+      - title: KCL
+        tex: '\sum_{n=1}^{N} i_n = 0 \quad\Longleftrightarrow\quad \sum i_{\text{in}} = \sum i_{\text{out}}'
+        src: b16
+      - title: KVL
+        tex: '\sum_{m=1}^{M} v_m = 0 \quad\Longleftrightarrow\quad \sum v_{\text{drops}} = \sum v_{\text{rises}}'
+        src: b18
+    examples:
+      - title: 'KVL in a single loop (Example 1, slide L2·18)'
+        given: '$20$ V source, $2\ \Omega$ ($v_1$) and $3\ \Omega$ ($v_2$, «+» at the bottom) in one loop.'
+        steps:
+          - 'Ohm''s law with loop current $i$: $v_1 = 2i$, $v_2 = -3i$.'
+          - 'KVL: $-20 + v_1 - v_2 = 0 \Rightarrow -20 + 2i + 3i = 0 \Rightarrow i = 4$ A.'
+        answer: '$v_1 = 8$ V, $v_2 = -12$ V'
+        src: b19
+      - title: 'Loop with a dependent source (Example 2, slide L2·19)'
+        given: '$12$ V source, $4\ \Omega$, dependent voltage source $2v_o$, $4$ V source, $6\ \Omega$ with voltage $v_o$.'
+        steps:
+          - 'KVL: $-12 + 4i + 2v_o - 4 + 6i = 0$.'
+          - 'Ohm''s law for the 6-Ω resistor: $v_o = -6i$.'
+          - '$-16 + 10i - 12i = 0 \Rightarrow i = -8$ A.'
+        answer: '$i = -8$ A, $v_o = 48$ V'
+        src: b37
+      - title: 'Node with a dependent source (Example 3, slide L2·20)'
+        given: 'Current sources $0.5i_o$ and $3$ A feed node $a$; $i_o$ flows down through $4\ \Omega$.'
+        steps:
+          - 'KCL at $a$: $3 + 0.5i_o = i_o \Rightarrow i_o = 6$ A.'
+          - 'Ohm''s law: $v_o = 4i_o = 24$ V.'
+        answer: '$i_o = 6$ A, $v_o = 24$ V'
+        src: b39
+    questions:
+      - type: single
+        cat: theory
+        q: 'Kirchhoff''s current law is a consequence of'
+        opts: ['conservation of charge', 'conservation of energy', 'Ohm''s law', 'Newton''s second law']
+        ans: a
+        hint: 'Slide L2·16.'
+        explain: 'Charge cannot accumulate at a node. (KVL follows from conservation of energy.)'
+        src: b16
+      - type: numeric
+        cat: problem
+        q: 'At a node, currents $I_1 = 5$ A and $I_3 = 3$ A enter, $I_2 = 2$ A and $I_T$ leave. Find $I_T$ (A).'
+        num: { value: 6, unit: 'A', check: '5+3-2' }
+        hint: 'Sum in = sum out.'
+        explain: '$I_T + 2 = 5 + 3 \Rightarrow I_T = 6$ A.'
+        sol: { method: 'KCL.', steps: ['$I_T + I_2 = I_1 + I_3$', '$I_T = 6$ A'], answer: '6 A' }
+        src: b17
+      - type: numeric
+        cat: problem
+        q: 'Example 1 (L2·18): find $v_2$ (V).'
+        num: { value: -12, unit: 'V', check: '-3*4' }
+        hint: '$i = 4$ A, $v_2 = -3i$.'
+        explain: 'KVL gives $i = 4$ A, so $v_2 = -12$ V (and $v_1 = 8$ V).'
+        sol: { method: 'KVL + Ohm''s law.', steps: ['$-20 + 2i + 3i = 0 \Rightarrow i = 4$', '$v_2 = -3i = -12$ V'], answer: '−12 V' }
+        fromSource: true
+        src: b19
+      - type: numeric
+        cat: problem
+        q: 'PS03, Exercise 6: a $70$ V source, $10\ \Omega$ ($v_x$), a dependent voltage source $2v_x$ and $5\ \Omega$ ($v_o$) form one loop. Find $v_x$ (V).'
+        num: { value: 20, unit: 'V', check: '10*70/35' }
+        hint: 'KVL: $-70 + 10i + 2v_x + 5i = 0$ with $v_x = 10i$.'
+        explain: '$-70 + 35i = 0 \Rightarrow i = 2$ A, $v_x = 20$ V; with the polarity of the drawing $v_o = -5i = -10$ V.'
+        sol: { method: 'KVL with a dependent source.', steps: ['$v_x = 10i$', '$-70 + 10i + 20i + 5i = 0$', '$i = 2$ A ⇒ $v_x = 20$ V, $v_o = -10$ V'], answer: 'v_x = 20 V' }
+        fromSource: true
+        src: r04
+      - type: numeric
+        cat: problem
+        q: 'PS03, Exercise 7: a $9$ A source, $2\ \Omega$ (current $i_o$), a dependent current source $0.25i_o$ (pointing down) and $8\ \Omega$ ($v_o$) are all in parallel. Find $i_o$ (A).'
+        num: { value: 6, unit: 'A', check: '9/1.5' }
+        hint: 'All elements share $v_o = 2i_o$. KCL: $9 = i_o + 0.25i_o + v_o/8$.'
+        explain: '$9 = i_o(1 + 0.25 + 0.25) = 1.5i_o \Rightarrow i_o = 6$ A, $v_o = 12$ V.'
+        sol: { method: 'KCL at the top node.', steps: ['$v_o = 2i_o$ ⇒ current in 8 Ω: $0.25i_o$', '$9 = 1.5i_o$', '$i_o = 6$ A, $v_o = 12$ V'], answer: 'i_o = 6 A, v_o = 12 V' }
+        fromSource: true
+        src: r05
+      - type: numeric
+        cat: problem
+        q: 'PS03, Exercise 5: a $32$ V source, $4\ \Omega$ ($v_1$), a $-8$ V source and $2\ \Omega$ ($v_2$) form one loop. Find the loop current through the $4\ \Omega$ resistor (A).'
+        num: { value: 4, unit: 'A', check: '16/4' }
+        hint: 'Ohm''s law on the 4-Ω resistor.'
+        explain: '$i = v_1/4 = 4$ A; the same current gives $|v_2| = 8$ V across the 2-Ω resistor ($v_2 = -8$ V with the drawn polarity).'
+        sol: { method: 'KVL around the loop (clockwise), using the drawn polarities.', steps: ['$v_1 = 4i$, $v_2 = -2i$ (the current enters $v_2$ at its «−» end)', 'the source marked $-8$ V is entered at its «−» terminal: term $-(-8) = +8$', 'KVL: $-32 + v_1 + 8 - v_2 = 0 \Rightarrow -32 + 6i + 8 = 0$', '$i = 4$ A, $v_1 = 16$ V, $v_2 = -8$ V'], answer: '4 A' }
+        fromSource: true
+        src: r03
+      - type: single
+        cat: problem
+        q: 'PS03, Exercise 4: a circuit has $1\ \Omega$ and $2\ \Omega$ between node 1 and ground, $5\ \Omega$ between node 1 and node 2, and a $10$ V source and $4\ \Omega$ between node 2 and ground. How many branches and nodes?'
+        opts: ['5 branches, 3 nodes', '5 branches, 4 nodes', '4 branches, 3 nodes', '6 branches, 3 nodes']
+        ans: a
+        hint: 'Each element is a branch; count distinct nodes (ground included).'
+        explain: '5 elements = 5 branches; nodes: 1, 2 and ground. $1\ \Omega \parallel 2\ \Omega$; $10\ \text{V} \parallel 4\ \Omega$; no elements are in series.'
+        fromSource: true
+        src: r02
+      - type: numeric
+        cat: problem
+        q: 'Example 2 (L2·19): find $v_o$ (V).'
+        num: { value: 48, unit: 'V', check: '-6*(-8)' }
+        hint: '$i = -8$ A, $v_o = -6i$.'
+        explain: '$-16 + 10i - 12i = 0 \Rightarrow i = -8$ A; $v_o = 48$ V.'
+        sol: { method: 'KVL with a dependent source.', steps: ['$v_o = -6i$', '$-16 - 2i = 0 \Rightarrow i = -8$', '$v_o = 48$ V'], answer: '48 V' }
+        fromSource: true
+        src: b37
+      - type: numeric
+        cat: problem
+        q: 'PS05 (controlled sources): a loop contains $1\ \Omega$ (voltage $v_1$), a dependent source $\alpha v_1$ with $\alpha = 1$, a $4$ V source and two $2\ \Omega$ resistors in parallel. With the polarities of the drawing, KVL gives $v_1(2 - \alpha) = -4$. Find $v_1$ (V).'
+        num: { value: -4, unit: 'V', check: '-4/(2-1)' }
+        hint: 'Substitute $\alpha = 1$.'
+        explain: '$v_1 = -4/(2-1) = -4$ V: the current is $4$ A, flowing opposite to the reference of $v_1$.'
+        sol: { method: 'KVL with a controlled source.', steps: ['$2\ \Omega \parallel 2\ \Omega = 1\ \Omega$', 'loop current $i = -v_1/1$', 'KVL: $v_1 - \alpha v_1 - 4 + v_1 = 0$ ⇒ $v_1(2-\alpha) = -4$', '$v_1 = -4$ V'], answer: '−4 V' }
+        fromSource: true
+        src: v05
+      - type: single
+        cat: theory
+        q: 'Elements in parallel always have'
+        opts: ['the same voltage', 'the same current', 'the same resistance', 'the same power']
+        ans: a
+        hint: 'They are connected to the same two nodes.'
+        explain: 'Parallel ⇒ same voltage; series ⇒ same current.'
+        src: b15
+
+  - id: ct-l2-series-parallel
+    title: Series and parallel resistors, voltage and current division
+    pages: [b20, b21, b22, b23, b24, b25, b26, b40, b41, b42, b43, b44, p01, p02, p03, p04, q01, q02, q03, q04, r06, r07, r08, v01, v02, v03]
+    theory:
+      - kind: law
+        title: Series resistors and voltage division
+        body: |
+          The equivalent resistance of resistors in series is the sum: $R_{eq} = R_1 + R_2 + \dots + R_N$.
+
+          **Voltage divider:** a voltage $v$ across series resistors divides in proportion to the resistances: $v_n = \frac{R_n}{R_1 + R_2 + \dots + R_N}\,v$; for two resistors $v_1 = \frac{R_1}{R_1+R_2}v$, $v_2 = \frac{R_2}{R_1+R_2}v$.
+        src: [b20, b21]
+      - kind: law
+        title: Parallel resistors and current division
+        body: |
+          For two resistors in parallel: $R_{eq} = \frac{R_1R_2}{R_1 + R_2}$ (product over sum). For $N$ resistors: $\frac{1}{R_{eq}} = \frac{1}{R_1} + \dots + \frac{1}{R_N}$. $R_{eq}$ is always smaller than the smallest resistor; for $N$ equal resistors $R_{eq} = R/N$.
+
+          **Current divider:** $i_1 = \frac{R_2}{R_1+R_2}\,i$, $i_2 = \frac{R_1}{R_1+R_2}\,i$ — the larger current flows through the smaller resistor.
+        src: [b22, b23, b24]
+      - kind: law
+        title: Conductance form
+        body: 'With conductances the roles swap: parallel — $G_{eq} = G_1 + G_2 + \dots + G_N$; series — $\frac{1}{G_{eq}} = \frac{1}{G_1} + \dots + \frac{1}{G_N}$; current division $i_1 = \frac{G_1}{G_1+G_2}\,i$.'
+        src: b25
+      - kind: rule
+        title: Shorted and open resistors
+        body: 'A resistor in parallel with a short circuit ($R_2 = 0$) carries no current: all current goes through the short. A resistor in series with an open circuit ($R_2 = \infty$) carries no current either; in parallel with an open circuit it takes the whole current.'
+        src: b26
+      - kind: rule
+        title: Reduction step by step
+        body: '«Solution by reduction»: combine the resistors that are clearly in series or in parallel, redraw, and repeat until one equivalent resistor remains. Then go back through the drawings using voltage and current division to find the requested quantities.'
+        src: [b41, p01]
+    formulas:
+      - title: Series resistors
+        tex: 'R_{eq} = R_1 + R_2 + \dots + R_N'
+        src: b20
+      - title: Voltage division
+        tex: 'v_n = \frac{R_n}{R_1 + R_2 + \dots + R_N}\, v'
+        src: b21
+      - title: Two resistors in parallel
+        tex: 'R_{eq} = \frac{R_1 R_2}{R_1 + R_2}'
+        src: b22
+      - title: N resistors in parallel
+        tex: '\frac{1}{R_{eq}} = \frac{1}{R_1} + \frac{1}{R_2} + \dots + \frac{1}{R_N}'
+        src: b23
+      - title: Current division
+        tex: 'i_1 = \frac{R_2}{R_1 + R_2}\, i, \qquad i_2 = \frac{R_1}{R_1 + R_2}\, i'
+        src: b24
+    examples:
+      - title: 'Equivalent resistance (Example 1, slides L2·28)'
+        given: '$4\ \Omega$, $1\ \Omega$, $2\ \Omega$, $6\ \Omega$, $3\ \Omega$, $5\ \Omega$, $8\ \Omega$ network.'
+        steps:
+          - '$6 \parallel 3 = 2\ \Omega$; $1 + 5 = 6\ \Omega$.'
+          - 'The two $2\ \Omega$ in series: $4\ \Omega$; $4 \parallel 6 = 2.4\ \Omega$.'
+          - '$R_{eq} = 4 + 2.4 + 8$.'
+        answer: '$R_{eq} = 14.4\ \Omega$'
+        src: [b40, b41, b42]
+      - title: 'Equivalent resistance $R_{ab}$ (Example 2, slide L2·29)'
+        given: 'Network with $10, 1, 1, 6, 3, 4, 12, 5\ \Omega$.'
+        steps:
+          - '$3 \parallel 6 = 2\ \Omega$ (nodes $c$ and $b$); $12 \parallel 4 = 3\ \Omega$ (nodes $d$ and $b$); $1 + 5 = 6\ \Omega$.'
+          - '$3 \parallel 6 = 2\ \Omega$; $1 + 2 = 3\ \Omega$; $2 \parallel 3 = 1.2\ \Omega$.'
+          - '$R_{ab} = 10 + 1.2$.'
+        answer: '$R_{ab} = 11.2\ \Omega$'
+        src: [b43, b44]
+      - title: 'PS02: voltage $v_1$ by reduction'
+        given: '$100$ V source, $50\ \Omega$ series, $100\ \Omega$ shunt, $60\ \Omega$ series, $40\ \Omega$ shunt; $v_1$ across $40\ \Omega$.'
+        steps:
+          - '$60 + 40 = 100\ \Omega$; $100 \parallel 100 = 50\ \Omega$.'
+          - 'Voltage division with the $50\ \Omega$: node voltage $= 100\cdot\frac{50}{50+50} = 50$ V.'
+          - 'Second division: $v_1 = 50\cdot\frac{40}{60+40}$.'
+        answer: '$v_1 = 20$ V (matches the answer on the sheet)'
+        src: q03
+      - title: 'PS03, Exercise 8: currents and voltages'
+        given: '$30$ V source, $8\ \Omega$ ($v_1$), then $3\ \Omega$ ($v_2$) and $6\ \Omega$ ($v_3$) in parallel.'
+        steps:
+          - '$3 \parallel 6 = 2\ \Omega$; $R_{eq} = 8 + 2 = 10\ \Omega$; $i_1 = 30/10 = 3$ A.'
+          - '$v_1 = 8\cdot3 = 24$ V; $v_2 = v_3 = 2\cdot3 = 6$ V.'
+          - '$i_2 = 6/3 = 2$ A, $i_3 = 6/6 = 1$ A (check: $2 + 1 = 3$ A ✓).'
+        answer: '$v_1 = 24$ V, $v_2 = v_3 = 6$ V, $i_1 = 3$ A, $i_2 = 2$ A, $i_3 = 1$ A'
+        src: r06
+    questions:
+      - type: numeric
+        cat: problem
+        q: 'Example 1 (L2·28): find $R_{eq}$ (Ω).'
+        num: { value: 14.4, unit: 'Ω', check: '4+ (2+2)*6/(4+6+0) + 8' }
+        hint: '$6\parallel3$, $1+5$, then $4 \parallel 6$.'
+        explain: '$R_{eq} = 4 + 2.4 + 8 = 14.4\ \Omega$.'
+        sol: { method: 'Series–parallel reduction.', steps: ['$6\parallel3 = 2$, $1+5 = 6$', '$2+2 = 4$, $4\parallel6 = 2.4$', '$4 + 2.4 + 8 = 14.4\ \Omega$'], answer: '14.4 Ω' }
+        fromSource: true
+        src: b42
+      - type: numeric
+        cat: problem
+        q: 'Example 2 (L2·29): find $R_{ab}$ (Ω).'
+        num: { value: 11.2, unit: 'Ω', check: '10 + 2*3/(2+3)' }
+        hint: 'End with $10 + (2\parallel3)$.'
+        explain: '$R_{ab} = 10 + 1.2 = 11.2\ \Omega$.'
+        fromSource: true
+        src: b44
+        sol: { method: 'Worked solution.', steps: ['$R_{ab} = 10 + 1.2 = 11.2\ \Omega$.'], answer: '11.2 Ω' }
+      - type: numeric
+        cat: problem
+        q: 'PS01: all resistors of the network are $1000\ \Omega$. Find the equivalent resistance between A and B (Ω).'
+        num: { value: 631.6, unit: 'Ω', tolAbs: 1, check: '1/(1/1000 + 1/(1000 + 1/(1/1000 + 1/2500)))' }
+        hint: 'The two lower-left resistors are in parallel (500 Ω); the path B–D–E–R (2500 Ω) is in parallel with the B–R resistor.'
+        explain: '$2500 \parallel 1000 = 714.3$; $1000 + 714.3 = 1714.3$; $1714.3 \parallel 1000 = 631.6\ \Omega$ — the sheet gives «~631 Ohm».'
+        sol: { method: 'Name the nodes, then reduce.', steps: ['$1000\parallel1000 = 500$; $500 + 1000 + 1000 = 2500$', '$2500 \parallel 1000 = 714.3$', '$(1000 + 714.3)\parallel1000 = 631.6\ \Omega$'], answer: '≈ 631.6 Ω' }
+        fromSource: true
+        src: p02
+      - type: numeric
+        cat: problem
+        q: 'PS01: $R_1 = 15\ \Omega$, $R_2 = R_3 = 100\ \Omega$, $R_4 = 5\ \Omega$. Find the equivalent resistance (Ω).'
+        num: { value: 15, unit: 'Ω', check: '15' }
+        hint: 'Find the nodes first: points $c$, $d$, $e$, $f$ are joined by wires.'
+        explain: '$c$, $d$, $e$, $f$ and B form one node, so $R_2$, $R_3$ and $R_4$ are shorted; $R_{eq} = R_1 = 15\ \Omega$ (answer on the sheet: 15 Ω).'
+        sol: { method: 'Identify nodes joined by wires.', steps: ['$c$–$d$, $d$–$e$, $e$–$f$ are wires ⇒ one node, connected to B.', 'Both ends of $R_2$, $R_3$, $R_4$ are on that node ⇒ no current.', '$R_{eq} = R_1 = 15\ \Omega$'], answer: '15 Ω' }
+        fromSource: true
+        src: p03
+      - type: numeric
+        cat: problem
+        q: 'PS01, Exercise 2.6: find $R_{eq}$ (Ω) of the network with resistors $1/2, 3, 7, 6, 10, 3, 5, 1/4, 2, 1\ \Omega$.'
+        num: { value: 0.4452, unit: 'Ω', tolAbs: 0.001, check: '1/(1/0.5 + 1/10 + 1/(6 + 1/(1/10 + 1/(1/(1/8+4) + 2/3))))' }
+        hint: 'Right part: $2\parallel1$, $(3+5)\parallel\frac14$, then add and combine with $10$; finally $6 + \dots$ in parallel with $3+7$ and $\frac12$.'
+        explain: '$2\parallel1 = \frac23$; $8\parallel\frac14 = 0.2424$; $0.2424 + 0.6667 = 0.909$; $0.909\parallel10 = 0.833$; $6 + 0.833 = 6.833$; $6.833 \parallel 10 \parallel 0.5 = 0.445\ \Omega$. (No answer on the sheet; computed here.)'
+        sol: { method: 'Series–parallel reduction from the far end.', steps: ['$2\parallel1 = 2/3$', '$(3+5)\parallel(1/4) = 2/8.25 = 0.242$', '$(0.242 + 0.667)\parallel10 = 0.833$', '$6 + 0.833 = 6.833$', '$6.833\parallel(3+7)\parallel0.5 = 410/921 \approx 0.445\ \Omega$'], answer: '≈ 0.445 Ω' }
+        fromSource: true
+        src: p04
+      - type: numeric
+        cat: problem
+        q: 'PS02: a $10$ V source feeds two branches: $2\ \Omega$ above $1\ \Omega$ (node A between them) and $1\ \Omega$ above $2\ \Omega$ (node B between them). Find $v_{AB}$ (V).'
+        num: { value: -3.333, unit: 'V', tolAbs: 0.01, check: '10*1/3 - 10*2/3' }
+        hint: 'Voltage division in each branch, measured from the bottom node.'
+        explain: '$v_A = 10\cdot\frac13 = 3.33$ V, $v_B = 10\cdot\frac23 = 6.67$ V; $v_{AB} = -3.33$ V (sheet: −3.3 V).'
+        sol: { method: 'Voltage divider.', steps: ['$v_A = 10\cdot1/(2+1)$', '$v_B = 10\cdot2/(1+2)$', '$v_{AB} = v_A - v_B = -3.33$ V'], answer: '≈ −3.33 V' }
+        fromSource: true
+        src: q02
+      - type: numeric
+        cat: problem
+        q: 'PS02: $100$ V source, $50\ \Omega$ series, $100\ \Omega$ shunt, $60\ \Omega$ series, $40\ \Omega$ shunt. Find $v_1$ across the $40\ \Omega$ (V).'
+        num: { value: 20, unit: 'V', check: '100*0.5*40/100' }
+        hint: '$(60 + 40)\parallel100 = 50\ \Omega$.'
+        explain: 'Node voltage $50$ V, then $v_1 = 50\cdot40/100 = 20$ V.'
+        fromSource: true
+        src: q03
+        sol: { method: 'Worked solution.', steps: ['Node voltage $50$ V, then $v_1 = 50\cdot40/100 = 20$ V.'], answer: '20 V' }
+      - type: numeric
+        cat: problem
+        q: 'PS02: a $20$ A source feeds $60\ \Omega$ in parallel with a branch of $32\ \Omega$ in series with ($10\ \Omega \parallel 40\ \Omega$). Find the current $i_1$ through the $10\ \Omega$ (A).'
+        num: { value: 9.6, unit: 'A', check: '20*60/100*40/50' }
+        hint: '$32 + 10\parallel40 = 40\ \Omega$; then two current divisions.'
+        explain: 'Branch current $20\cdot\frac{60}{60+40} = 12$ A; $i_1 = 12\cdot\frac{40}{10+40} = 9.6$ A (sheet: 9.6 A).'
+        sol: { method: 'Current division twice.', steps: ['$10\parallel40 = 8$; $32 + 8 = 40\ \Omega$', '$i_{40} = 20\cdot60/100 = 12$ A', '$i_1 = 12\cdot40/50 = 9.6$ A'], answer: '9.6 A' }
+        fromSource: true
+        src: q04
+      - type: numeric
+        cat: problem
+        q: 'PS03, Exercise 9: $10$ V source, $2\ \Omega$ ($v_1$), $8\ \Omega$ ($v_2$) to ground, $4\ \Omega$ ($v_3$) to a $6$ V source. The answer sheet gives $v_2 = 4$ V. Find $i_1$ through the $2\ \Omega$ (A).'
+        num: { value: 3, unit: 'A', check: '(10-4)/2' }
+        hint: '$v_1 = 10 - v_2$.'
+        explain: '$v_1 = 6$ V, $i_1 = 3$ A; $i_2 = 4/8 = 0.5$ A, $i_3 = i_1 - i_2 = 2.5$ A, $v_3 = 10$ V — as on the sheet.'
+        sol: { method: 'KVL in the left loop + KCL.', steps: ['$v_1 = 10 - 4 = 6$ V', '$i_1 = 6/2 = 3$ A', '$i_2 = 0.5$ A, $i_3 = 2.5$ A'], answer: '3 A' }
+        fromSource: true
+        src: [r07, r08]
+      - type: numeric
+        cat: problem
+        q: 'PS05: find the equivalent resistance between A and B of the network with $3\ \Omega$ (top), $1\ \Omega$ (middle), $3\ \Omega$ (right), $2\ \Omega$ and $1\ \Omega$ (vertical).'
+        num: { value: 0.857, unit: 'Ω', tolAbs: 0.002, check: '1/(1/2 + 1/(0.75+0.75))' }
+        hint: 'The top $3\ \Omega$ and the middle $1\ \Omega$ join the same two nodes; so do the right $3\ \Omega$ and the vertical $1\ \Omega$.'
+        explain: '$3\parallel1 = 0.75$ twice; $0.75 + 0.75 = 1.5\ \Omega$; $1.5\parallel2 = 6/7 \approx 0.857\ \Omega$. (No answer on the sheet.)'
+        sol: { method: 'Identify nodes, then reduce.', steps: ['$3\parallel1 = 0.75$ (between A-node and right node)', '$3\parallel1 = 0.75$ (right node to B)', '$(0.75+0.75)\parallel2 = 6/7\ \Omega$'], answer: '6/7 ≈ 0.857 Ω' }
+        fromSource: true
+        src: v02
+      - type: numeric
+        cat: problem
+        q: 'PS05: in the network with the $2$ V battery, the battery drives a loop made of $3\ \Omega$ and two $2\ \Omega$ resistors in parallel (the left $2\ \Omega$ is directly across the battery). Find the magnitude of $v_2$ across the top $2\ \Omega$ resistor (V).'
+        num: { value: 0.5, unit: 'V', check: '2/(3+1)*1' }
+        hint: '$2\parallel2 = 1\ \Omega$; loop current $= 2/(3+1)$.'
+        explain: 'Loop current $0.5$ A; the voltage across the parallel pair (and across the top resistor) is $0.5\cdot1 = 0.5$ V; $|v_1| = 1.5$ V across $3\ \Omega$. The sign of $v_2$ follows the arrow of the drawing (the right end is $0.5$ V above the left one). (No answer on the sheet.)'
+        sol: { method: 'Ignore the resistor that is directly across the ideal source; reduce the rest.', steps: ['$2\parallel2 = 1\ \Omega$', '$i = 2/(3+1) = 0.5$ A', '$|v_2| = 0.5$ V, $|v_1| = 1.5$ V'], answer: '0.5 V' }
+        fromSource: true
+        src: v03
+      - type: single
+        cat: theory
+        q: 'The equivalent resistance of resistors in parallel is'
+        opts: ['smaller than the smallest of them', 'larger than the largest of them', 'equal to their average', 'equal to their sum']
+        ans: a
+        hint: 'Slide L2·24.'
+        explain: '$R_{eq}$ of a parallel combination is always smaller than the smallest resistor; for $N$ equal resistors $R/N$.'
+        src: b23
+      - type: numeric
+        cat: problem
+        q: 'A current of $6$ A divides between $R_1 = 2\ \Omega$ and $R_2 = 4\ \Omega$ in parallel. Find $i_1$ (A).'
+        num: { value: 4, unit: 'A', check: '6*4/6' }
+        hint: '$i_1 = \frac{R_2}{R_1+R_2}i$.'
+        explain: '$i_1 = 6\cdot4/6 = 4$ A, $i_2 = 2$ A: the smaller resistor takes the larger current.'
+        sol: { method: 'Current divider.', steps: ['$i_1 = \frac{4}{2+4}\cdot6 = 4$ A'], answer: '4 A' }
+        src: b24
+
+  - id: ct-l2-delta-wye
+    title: Delta–wye (Δ–Y) transformations
+    pages: [b27, b28, b29, b30, b45, b46, b47, b48, b49]
+    theory:
+      - kind: definition
+        title: Wye and delta connections
+        body: 'Sometimes resistors are neither in series nor in parallel. Three resistors joined at a common node $n$ form a **wye (Y, star, T)** network; three resistors forming a triangle between three terminals form a **delta (Δ, pi)** network.'
+        src: b27
+      - kind: law
+        title: Delta → wye
+        body: '$R_1 = \frac{R_bR_c}{R_a+R_b+R_c}$, $R_2 = \frac{R_cR_a}{R_a+R_b+R_c}$, $R_3 = \frac{R_aR_b}{R_a+R_b+R_c}$. Each Y resistor is the product of the two adjacent Δ resistors divided by the sum of the three Δ resistors.'
+        src: b28
+      - kind: law
+        title: Wye → delta
+        body: '$R_a = \frac{R_1R_2+R_2R_3+R_3R_1}{R_1}$, $R_b = \frac{R_1R_2+R_2R_3+R_3R_1}{R_2}$, $R_c = \frac{R_1R_2+R_2R_3+R_3R_1}{R_3}$. Each Δ resistor is the sum of all products of Y resistors taken two at a time divided by the opposite Y resistor.'
+        src: b29
+      - kind: law
+        title: Balanced networks
+        body: 'If $R_1 = R_2 = R_3 = R_Y$ and $R_a = R_b = R_c = R_\Delta$ (balanced), then $R_Y = \frac{R_\Delta}{3}$, $R_\Delta = 3R_Y$.'
+        src: b30
+    formulas:
+      - title: Δ → Y
+        tex: 'R_1 = \frac{R_b R_c}{R_a + R_b + R_c},\quad R_2 = \frac{R_c R_a}{R_a + R_b + R_c},\quad R_3 = \frac{R_a R_b}{R_a + R_b + R_c}'
+        src: b28
+      - title: Y → Δ
+        tex: 'R_a = \frac{R_1R_2 + R_2R_3 + R_3R_1}{R_1}'
+        cond: 'Similarly $R_b$ (divide by $R_2$) and $R_c$ (divide by $R_3$).'
+        src: b29
+      - title: Balanced networks
+        tex: 'R_\Delta = 3R_Y'
+        src: b30
+    examples:
+      - title: 'Δ → Y (Example 1, slide L2·34)'
+        given: '$R_a = 15\ \Omega$, $R_b = 10\ \Omega$, $R_c = 25\ \Omega$.'
+        steps:
+          - 'Sum $= 50\ \Omega$.'
+          - '$R_1 = \frac{10\cdot25}{50} = 5\ \Omega$, $R_2 = \frac{25\cdot15}{50} = 7.5\ \Omega$, $R_3 = \frac{15\cdot10}{50} = 3\ \Omega$.'
+        answer: '$R_1 = 5\ \Omega$, $R_2 = 7.5\ \Omega$, $R_3 = 3\ \Omega$'
+        src: b45
+      - title: 'Y → Δ and current (Example 2, slides L2·35)'
+        given: '$120$ V source; network $12.5, 10, 5, 15, 20, 30\ \Omega$. Convert the Y of $5, 10, 20\ \Omega$.'
+        steps:
+          - '$R_1 = 10$, $R_2 = 20$, $R_3 = 5$: $\Sigma = 10\cdot20 + 20\cdot5 + 5\cdot10 = 350$.'
+          - '$R_a = 350/10 = 35\ \Omega$, $R_b = 350/20 = 17.5\ \Omega$, $R_c = 350/5 = 70\ \Omega$.'
+          - '$70\parallel30 = 21$, $12.5\parallel17.5 = 7.292$, $15\parallel35 = 10.5\ \Omega$.'
+          - '$R_{ab} = (7.292 + 10.5)\parallel21 = 9.632\ \Omega$; $i = 120/9.632$.'
+        answer: '$R_{ab} = 9.632\ \Omega$, $i = 12.458$ A'
+        src: [b48, b49]
+    questions:
+      - type: numeric
+        cat: problem
+        q: 'Convert the Δ ($R_a = 15$, $R_b = 10$, $R_c = 25\ \Omega$) to Y. Find $R_2$ (Ω).'
+        num: { value: 7.5, unit: 'Ω', check: '25*15/50' }
+        hint: '$R_2 = R_cR_a/\Sigma$.'
+        explain: '$25\cdot15/50 = 7.5\ \Omega$.'
+        fromSource: true
+        src: b45
+        sol: { method: 'Worked solution.', steps: ['$25\cdot15/50 = 7.5\ \Omega$.'], answer: '7.5 Ω' }
+      - type: numeric
+        cat: problem
+        q: 'Example 2 (L2·35): find the current $i$ (A).'
+        num: { value: 12.458, unit: 'A', tolAbs: 0.01, check: '120/(1/(1/(12.5*17.5/30 + 15*35/50) + 1/21))' }
+        hint: '$R_{ab} = 9.632\ \Omega$.'
+        explain: '$i = 120/9.632 = 12.46$ A.'
+        fromSource: true
+        src: b49
+        sol: { method: 'Worked solution.', steps: ['$i = 120/9.632 = 12.46$ A.'], answer: '12.458 A' }
+      - type: numeric
+        cat: problem
+        q: 'A balanced Y has $R_Y = 4\ \Omega$. Find the equivalent Δ resistance (Ω).'
+        num: { value: 12, unit: 'Ω', check: '3*4' }
+        hint: '$R_\Delta = 3R_Y$.'
+        explain: '$3\cdot4 = 12\ \Omega$.'
+        src: b30
+        sol: { method: 'Worked solution.', steps: ['$3\cdot4 = 12\ \Omega$.'], answer: '12 Ω' }
+      - type: numeric
+        cat: problem
+        q: 'Y network $R_1 = 10$, $R_2 = 20$, $R_3 = 5\ \Omega$. Find $R_c$ of the equivalent Δ (Ω).'
+        num: { value: 70, unit: 'Ω', check: '350/5' }
+        hint: 'Divide $\Sigma R_iR_j$ by the opposite resistor $R_3$.'
+        explain: '$350/5 = 70\ \Omega$.'
+        fromSource: true
+        src: b48
+        sol: { method: 'Worked solution.', steps: ['$350/5 = 70\ \Omega$.'], answer: '70 Ω' }
+      - type: single
+        cat: theory
+        q: 'When is a Δ–Y transformation needed?'
+        opts: ['When resistors are neither in series nor in parallel', 'Only in AC circuits', 'When all resistors are equal', 'When the circuit contains a dependent source']
+        ans: a
+        hint: 'Slide L2·30.'
+        explain: 'It lets us simplify networks (bridges, etc.) that cannot be reduced by series–parallel rules alone.'
+        src: b27
+
+  - id: ct-l2-application
+    title: 'Application: light bulbs'
+    pages: [b31, b50, b51, b53, b54]
+    theory:
+      - kind: text
+        title: Resistors as models of devices
+        body: 'Resistors model devices that convert electrical energy into heat or other forms of energy: wires, light bulbs, electric heaters, ovens, loudspeakers. Light bulbs may be connected in **parallel** (each bulb gets the full supply voltage; one failing bulb does not switch off the others) or in **series** (one current through all bulbs).'
+        src: b31
+    examples:
+      - title: 'Three bulbs on a 9-V battery (Example 1, slide L2·37)'
+        given: 'Bulbs of $15$ W and $10$ W in series, together in parallel with a $20$ W bulb, all on $9$ V.'
+        steps:
+          - 'Total power $p = 15 + 10 + 20 = 45$ W, so $I = p/V = 45/9 = 5$ A.'
+          - 'The 20-W bulb ($R_1$) has the full $9$ V: $I_1 = 20/9 = 2.222$ A.'
+          - 'KCL: $I_2 = I - I_1 = 2.778$ A through $R_2$ and $R_3$.'
+          - '$R_1 = 20/2.222^2 = 4.05\ \Omega$, $R_2 = 15/2.778^2 = 1.944\ \Omega$, $R_3 = 10/2.778^2 = 1.296\ \Omega$.'
+        answer: '$I = 5$ A; $I_1 = 2.222$ A, $I_2 = 2.778$ A; $R_1 = 4.05$, $R_2 = 1.944$, $R_3 = 1.296\ \Omega$'
+        src: [b50, b53, b54]
+    questions:
+      - type: numeric
+        cat: problem
+        q: 'Three bulbs (15 W, 10 W, 20 W) take their rated power from a $9$ V battery. Find the battery current (A).'
+        num: { value: 5, unit: 'A', check: '45/9' }
+        hint: 'Total power / voltage.'
+        explain: '$I = 45/9 = 5$ A.'
+        fromSource: true
+        src: b53
+        sol: { method: 'Worked solution.', steps: ['$I = 45/9 = 5$ A.'], answer: '5 A' }
+      - type: numeric
+        cat: problem
+        q: 'Same circuit: find the resistance of the 20-W bulb (Ω).'
+        num: { value: 4.05, unit: 'Ω', tolAbs: 0.01, check: '9**2/20' }
+        hint: 'It has the full $9$ V: $R = V^2/P$.'
+        explain: '$R_1 = 81/20 = 4.05\ \Omega$ (the slide gets the same value as $20/2.222^2$).'
+        fromSource: true
+        src: b54
+        sol: { method: 'Worked solution.', steps: ['$R_1 = 81/20 = 4.05\ \Omega$ (the slide gets the same value as $20/2.222^2$).'], answer: '4.05 Ω' }
+      - type: numeric
+        cat: problem
+        q: 'Same circuit: find the current through the series pair (15 W and 10 W) in A.'
+        num: { value: 2.778, unit: 'A', tolAbs: 0.002, check: '5-20/9' }
+        hint: 'KCL: $I_2 = I - I_1$.'
+        explain: '$I_2 = 5 - 2.222 = 2.778$ A.'
+        fromSource: true
+        src: b54
+        sol: { method: 'Worked solution.', steps: ['$I_2 = 5 - 2.222 = 2.778$ A.'], answer: '2.778 A' }
+      - type: single
+        cat: theory
+        q: 'Why are household lamps connected in parallel rather than in series?'
+        opts: ['Each lamp gets the full supply voltage and works independently of the others', 'Parallel connection uses less energy', 'In series all lamps get the full voltage', 'Parallel connection has a larger equivalent resistance']
+        ans: a
+        hint: 'Parallel ⇒ same voltage.'
+        explain: 'In parallel every lamp has the rated voltage; if one fails, the others keep working.'
+        src: b31

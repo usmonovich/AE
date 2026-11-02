@@ -1,0 +1,306 @@
+# Lecture 1. Basic concepts of electrical circuits (slides a01–a22).
+subsection: ct-l1
+
+refs:
+  - &os91 { title: 'University Physics Volume 2, §9.1 Electrical Current', url: 'https://openstax.org/books/university-physics-volume-2/pages/9-1-electrical-current', org: OpenStax, checked: '2026-11-02' }
+
+topics:
+  - id: ct-l1-charge-current
+    title: Electric charge and electric current
+    pages: [a01, a02, a03, a04, a05, a06, a07, a08, a09, a10, a11, a12, a13, a14, a15]
+    theory:
+      - kind: text
+        title: What does electricity mean?
+        body: |
+          All materials are made of atoms (protons, neutrons, electrons). Without a voltage, the free electrons of a conductor move randomly. When a voltage is applied, they drift in one direction — this directional motion of charges is the **electric current**.
+
+          A higher voltage difference is like a higher height difference in a water system: it causes a stronger flow. So: the battery creates a voltage, the voltage makes the electrons move, and the motion of the electrons is the current.
+        src: [a04, a05, a06]
+      - kind: definition
+        title: Electric circuit
+        body: 'An **electric circuit** is an interconnection of electrical elements. A basic circuit consists of a battery (the source of electricity), electrical loads, and wires connecting them.'
+        src: a08
+      - kind: definition
+        title: Electric charge
+        body: |
+          **Charge** is an electrical property of the atomic particles of which matter consists, measured in **coulombs (C)**. The charge of the electron is negative and equal in magnitude to $e = 1.602\times10^{-19}$ C. Realistic (laboratory) values of charge are of the order of pC or nC.
+
+          Electric charge ($Q$) is a property of matter; electrons carry negative charge; the motion of electric charges forms the electric current ($I$).
+        src: a09
+      - kind: definition
+        title: Electric current
+        body: |
+          **Electric current** is the time rate of change of charge — the rate at which charge flows through a conductor — measured in **amperes (A)**:
+          $i = \frac{dq}{dt}$, $\quad 1\ \text{A} = 1\ \text{C/s}$.
+
+          The total charge transferred between $t_0$ and $t$ is the integral of the current: $Q = \int_{t_0}^{t} i\,dt$ («how much charge flows through a conductor during a given period of time»).
+        src: [a10, a13]
+      - kind: note
+        title: Direction of the current (addition)
+        body: 'The slides ask «What is the direction of the electric current?» (L1·10). In circuit analysis the **conventional current** is used: its direction is the direction in which **positive** charge would move — from the higher potential to the lower one through a resistor. In a metal wire the electrons actually move the other way, so conventional current is opposite to the electron flow. All formulas and arrows in this course use conventional current.'
+        src: a10
+        web: [*os91]
+      - kind: definition
+        title: Types of current
+        body: '**Direct current (DC)** remains constant with time. **Alternating current (AC)** varies sinusoidally with time.'
+        src: a14
+      - kind: definition
+        title: System of units
+        body: 'The course uses SI: length — metre (m), mass — kilogram (kg), time — second (s), electric current — ampere (A), thermodynamic temperature — kelvin (K), luminous intensity — candela (cd); the derived unit of charge is the coulomb (C). Prefixes from exa ($10^{18}$) to atto ($10^{-18}$) scale the units (Table 1.2 on the slide).'
+        src: a15
+    formulas:
+      - title: Current as rate of change of charge
+        tex: 'i = \frac{dq}{dt}'
+        vars:
+          - { sym: i, name: current, unit: A }
+          - { sym: q, name: charge, unit: C }
+          - { sym: t, name: time, unit: s }
+        src: a13
+      - title: Charge transferred by a current
+        tex: 'Q = \int_{t_0}^{t} i\,dt'
+        src: a13
+      - title: Charge of the electron
+        tex: 'e = 1.602\times10^{-19}\ \text{C}'
+        src: a09
+    examples:
+      - title: Charge from a constant current
+        given: 'A DC current of $2$ A flows through a wire for $1$ minute.'
+        steps:
+          - 'For constant current $Q = I\,\Delta t$.'
+          - '$Q = 2\ \text{A}\times60\ \text{s} = 120$ C.'
+          - 'Number of electrons: $N = Q/e = 120/(1.602\times10^{-19}) \approx 7.49\times10^{20}$.'
+        answer: '$Q = 120$ C, $N \approx 7.5\times10^{20}$ electrons'
+        src: [a09, a13]
+    questions:
+      - type: single
+        cat: theory
+        q: 'Electric current is defined as'
+        opts: ['the time rate of change of charge, $i = dq/dt$', 'the energy per unit charge', 'the product of voltage and charge', 'the opposition to the flow of charge']
+        ans: a
+        hint: 'Current tells how fast charge moves.'
+        explain: '$i = dq/dt$, measured in amperes (1 A = 1 C/s).'
+        src: a13
+      - type: numeric
+        cat: problem
+        q: 'How many electrons make up a charge of $-1$ C? (give the number divided by $10^{18}$)'
+        num: { value: 6.242, unit: '×10¹⁸', tolAbs: 0.005, check: '1/1.602e-19/1e18' }
+        hint: '$N = Q/e$.'
+        explain: '$N = 1/(1.602\times10^{-19}) \approx 6.24\times10^{18}$ electrons.'
+        sol: { method: 'Divide the total charge by the charge of one electron.', steps: ['$N = 1/1.602\times10^{-19}$', '$N \approx 6.242\times10^{18}$'], answer: '≈ 6.24·10¹⁸' }
+        src: a09
+      - type: numeric
+        cat: problem
+        q: 'A constant current of $5$ mA flows for $10$ s. Find the transferred charge in mC.'
+        num: { value: 50, unit: 'mC', check: '5*10' }
+        hint: '$Q = I\Delta t$.'
+        explain: '$Q = 5\ \text{mA}\times10\ \text{s} = 50$ mC.'
+        sol: { method: 'Integral of a constant current.', steps: ['$Q = \int i\,dt = I\,\Delta t$', '$5\times10 = 50$ mC'], answer: '50 mC' }
+        src: a13
+      - type: numeric
+        cat: problem
+        q: 'The charge entering an element is $q(t) = 3t^2$ C ($t$ in s). Find the current at $t = 2$ s.'
+        num: { value: 12, unit: 'A', check: '6*2' }
+        hint: '$i = dq/dt = 6t$.'
+        explain: '$i(2) = 6\cdot2 = 12$ A.'
+        sol: { method: 'Differentiate the charge.', steps: ['$i = \frac{d}{dt}(3t^2) = 6t$', '$i(2) = 12$ A'], answer: '12 A' }
+        src: a13
+      - type: single
+        cat: theory
+        q: 'In a metal wire, the conventional current direction is'
+        opts: ['opposite to the motion of the electrons', 'the same as the motion of the electrons', 'always from the negative to the positive terminal outside the source', 'undefined for DC']
+        ans: a
+        hint: 'Conventional current is the motion of positive charge.'
+        explain: 'Electrons are negative, so their motion is opposite to the conventional current.'
+        src: a10
+      - type: matching
+        cat: theory
+        q: 'Match the type of current with its description.'
+        pairs:
+          - ['DC', 'remains constant with time']
+          - ['AC', 'varies sinusoidally with time']
+        hint: 'Slide L1·14.'
+        explain: 'DC — constant; AC — sinusoidal.'
+        src: a14
+      - type: single
+        cat: theory
+        q: 'Which statement about a basic electric circuit is correct (slide L1·8)?'
+        opts: ['It is an interconnection of elements: a source, loads and connecting wires', 'It must contain a capacitor', 'It needs no source if the wires are long', 'It is a single resistor']
+        ans: a
+        hint: 'Battery + load + wires.'
+        explain: 'A basic circuit = battery (source) + electrical loads + wires connecting them.'
+        src: a08
+
+  - id: ct-l1-voltage
+    title: Voltage (potential difference)
+    pages: [a16, a17, a18]
+    theory:
+      - kind: definition
+        title: Voltage
+        body: |
+          Moving electrons in a conductor in a particular direction requires work (energy transfer). This work is done by an external **electromotive force (emf)**, typically a battery.
+
+          The **voltage** $v_{ab}$ between points $a$ and $b$ is the energy (work) needed to move a unit charge from $a$ to $b$:
+          $v_{ab} = \frac{dw}{dq}$, $\quad 1\ \text{V} = 1\ \text{J/C} = 1\ \text{N·m/C}$.
+
+          Voltage (potential difference) is measured in volts (V).
+        src: a16
+      - kind: text
+        title: Water analogy
+        body: 'A DC circuit compares to a water loop: the voltage source is the pump (it creates the pressure difference), the electron flow is the water flow, the light bulb is the turbine. A higher pump pressure (voltage) gives a stronger flow (current).'
+        src: a17
+      - kind: law
+        title: Polarity
+        body: 'The «+» and «−» signs define the reference polarity. A voltage of $9$ V with «+» at $a$ means that $a$ is $9$ V above $b$. The same voltage can be written as $-9$ V with «+» at $b$: $b$ is $-9$ V above $a$. In general $v_{ab} = -v_{ba}$.'
+        src: a18
+    formulas:
+      - title: Voltage as energy per unit charge
+        tex: 'v_{ab} = \frac{dw}{dq}'
+        vars:
+          - { sym: 'v_{ab}', name: voltage between a and b, unit: V }
+          - { sym: w, name: energy (work), unit: J }
+          - { sym: q, name: charge, unit: C }
+        src: a16
+      - title: Reversing the polarity
+        tex: 'v_{ab} = -v_{ba}'
+        src: a18
+    questions:
+      - type: single
+        cat: theory
+        q: 'One volt equals'
+        opts: ['one joule per coulomb', 'one coulomb per second', 'one watt per ampere squared', 'one ohm per ampere']
+        ans: a
+        hint: '$v = dw/dq$.'
+        explain: '$1\ \text{V} = 1\ \text{J/C} = 1\ \text{N·m/C}$. (One watt per ampere is also a volt, but not «per ampere squared».)'
+        src: a16
+      - type: numeric
+        cat: problem
+        q: 'Moving a charge of $2$ C from $a$ to $b$ requires $30$ J. Find $v_{ab}$ in volts.'
+        num: { value: 15, unit: 'V', check: '30/2' }
+        hint: '$v = w/q$.'
+        explain: '$v_{ab} = 30/2 = 15$ V.'
+        sol: { method: 'Energy per unit charge.', steps: ['$v_{ab} = w/q$', '$30/2 = 15$ V'], answer: '15 V' }
+        src: a16
+      - type: numeric
+        cat: problem
+        q: 'If $v_{ab} = 9$ V, find $v_{ba}$.'
+        num: { value: -9, unit: 'V', check: '-9' }
+        hint: 'Swapping the points changes the sign.'
+        explain: '$v_{ba} = -v_{ab} = -9$ V.'
+        sol: { method: 'Polarity reversal.', steps: ['$v_{ba} = -v_{ab}$'], answer: '−9 V' }
+        src: a18
+      - type: single
+        cat: theory
+        q: 'In the water analogy of slide L1·18, the voltage source corresponds to'
+        opts: ['the pump', 'the turbine', 'the lower water tank', 'the pipe']
+        ans: a
+        hint: 'What creates the pressure difference?'
+        explain: 'The pump creates the pressure (height) difference, like the source creates the potential difference.'
+        src: a17
+
+  - id: ct-l1-power
+    title: Power, energy and the passive sign convention
+    pages: [a19, a20, a21, a22]
+    theory:
+      - kind: text
+        title: Why power and energy?
+        body: 'Current and voltage alone are not sufficient: we need to know how much power a device can handle (a 100-W bulb gives more light than a 60-W bulb), and electric bills charge for the energy consumed over a period.'
+        src: a19
+      - kind: definition
+        title: Power
+        body: '**Power** is the rate at which work is done, measured in watts (W): $p = \frac{dw}{dt} = \frac{dw}{dq}\cdot\frac{dq}{dt} = vi$. One watt is one joule of work done in one second.'
+        src: a20
+      - kind: law
+        title: Passive sign convention
+        body: |
+          The **passive sign convention** is satisfied when the current enters through the **positive** terminal of an element; then $p = +vi$. If the current enters through the negative terminal, $p = -vi$.
+
+          $p > 0$: the element **absorbs** power; $p < 0$: it **supplies** power. «+ power absorbed = − power supplied».
+        src: [a20, a21]
+      - kind: law
+        title: Conservation of energy
+        body: 'The algebraic sum of the powers in a circuit, at any instant of time, must be zero: $\sum p = 0$. The total power supplied equals the total power absorbed.'
+        src: a21
+      - kind: definition
+        title: Energy
+        body: '**Energy** is the capacity to do work, measured in joules (J) or watt-seconds: $w = \int_{t_0}^{t} p\,dt = \int_{t_0}^{t} vi\,dt$. Electric utilities measure energy in watt-hours: $1\ \text{Wh} = 3600$ J.'
+        src: a22
+    formulas:
+      - title: Electric power
+        tex: 'p = \frac{dw}{dt} = v\,i'
+        cond: 'With the passive sign convention ($i$ enters the «+» terminal). Otherwise $p = -vi$.'
+        src: a20
+      - title: Energy
+        tex: 'w = \int_{t_0}^{t} p\,dt = \int_{t_0}^{t} v\,i\,dt'
+        src: a22
+      - title: Watt-hour
+        tex: '1\ \text{Wh} = 3600\ \text{J}'
+        src: a22
+      - title: Conservation of power
+        tex: '\sum p = 0'
+        src: a21
+    examples:
+      - title: 'Absorbing or supplying? (slide L1·22)'
+        given: 'An element has $v = 4$ V across it and a current of $3$ A.'
+        steps:
+          - 'Current enters the «+» terminal: $p = +vi = 4\times3 = 12$ W — the element absorbs 12 W.'
+          - 'Current enters the «−» terminal (same values): $p = -vi = -12$ W — the element supplies 12 W.'
+        answer: '$\pm 12$ W depending on the direction of the current relative to the polarity'
+        src: a21
+      - title: Energy of a bulb
+        given: 'A $100$-W bulb is on for $5$ hours.'
+        steps:
+          - '$w = p\,t = 100\ \text{W}\times5\ \text{h} = 500$ Wh $= 0.5$ kWh.'
+          - 'In joules: $500\times3600 = 1.8\times10^6$ J.'
+        answer: '$0.5$ kWh $= 1.8$ MJ'
+        src: a22
+    questions:
+      - type: numeric
+        cat: problem
+        q: 'Current $3$ A enters the «+» terminal of an element with $v = 4$ V. Find the absorbed power (W).'
+        num: { value: 12, unit: 'W', check: '4*3' }
+        hint: 'Passive sign convention: $p = +vi$.'
+        explain: '$p = 4\times3 = 12$ W, absorbed.'
+        sol: { method: 'Passive sign convention.', steps: ['Current enters «+» ⇒ $p = +vi$.', '$p = 12$ W'], answer: '12 W' }
+        fromSource: true
+        src: a21
+      - type: numeric
+        cat: problem
+        q: 'Current $3$ A enters the «−» terminal of an element with $v = 4$ V. Find $p$ (W) with the passive sign convention.'
+        num: { value: -12, unit: 'W', check: '-4*3' }
+        hint: 'Current enters the negative terminal ⇒ $p = -vi$.'
+        explain: '$p = -12$ W: the element supplies 12 W.'
+        sol: { method: 'Passive sign convention.', steps: ['$p = -vi = -12$ W', 'Negative ⇒ supplied power.'], answer: '−12 W' }
+        fromSource: true
+        src: a21
+      - type: numeric
+        cat: problem
+        q: 'How many joules are in $1$ kWh?'
+        num: { value: 3600000, unit: 'J', check: '1000*3600' }
+        hint: '$1$ Wh $= 3600$ J.'
+        explain: '$1000\times3600 = 3.6\times10^6$ J.'
+        sol: { method: 'Unit conversion.', steps: ['$1\ \text{kWh} = 1000\ \text{Wh}$', '$\times3600 = 3.6\times10^6$ J'], answer: '3.6 MJ' }
+        src: a22
+      - type: numeric
+        cat: problem
+        q: 'In a circuit, three elements absorb $p_1 = 60$ W, $p_2 = 48$ W and $p_3 = -8$ W. What power (W) must the fourth element absorb?'
+        num: { value: -100, unit: 'W', check: '-(60+48-8)' }
+        hint: '$\sum p = 0$.'
+        explain: '$p_4 = -(60 + 48 - 8) = -100$ W, i.e. it supplies 100 W (compare Example 1 of Lecture 2).'
+        sol: { method: 'Conservation of power.', steps: ['$p_1 + p_2 + p_3 + p_4 = 0$', '$p_4 = -100$ W'], answer: '−100 W' }
+        src: a21
+      - type: single
+        cat: theory
+        q: 'An element has $p = vi < 0$ with the passive sign convention. The element'
+        opts: ['supplies power', 'absorbs power', 'stores no energy and has no current', 'violates energy conservation']
+        ans: a
+        hint: '+power absorbed = −power supplied.'
+        explain: 'Negative absorbed power means the element delivers power to the rest of the circuit.'
+        src: a21
+      - type: numeric
+        cat: problem
+        q: 'A $60$-W lamp operates for $10$ hours. Find the energy in kWh.'
+        num: { value: 0.6, unit: 'kWh', check: '60*10/1000' }
+        hint: '$w = pt$.'
+        explain: '$60\times10 = 600$ Wh $= 0.6$ kWh.'
+        sol: { method: 'Energy at constant power.', steps: ['$w = 60\times10 = 600$ Wh', '$= 0.6$ kWh'], answer: '0.6 kWh' }
+        src: a22

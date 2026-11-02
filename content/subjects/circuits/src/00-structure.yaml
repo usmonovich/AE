@@ -1,22 +1,98 @@
-# ⚡ Circuit Theory
-# Структура курса, файлы-источники, словарь обозначений, замечания к источнику.
-# Предмет создан пустым: разделы, темы и записи добавляются только по присланным материалам.
-# ID разделов, подразделов, тем и записей начинаются с «ct-».
-# Как добавлять материалы — docs/07-adding-materials.md; журнал предмета — docs/subjects/circuits.md.
+# ⚡ Circuit Theory — course structure, source files, errata.
+# Source: 6 lecture presentations and 7 practice files by Sarvar Ruzimov (course [AE-26-II] Circuit Theory, edu.turin.uz),
+# downloaded by the owner on 01.11.2026. Content in English, as the owner asked.
+# A page = a slide (PDF page). Prefixes: a–f — Lectures 1–6; p — PS01, q — PS02, r — PS03, s — PS03 Lab-1,
+# t — PS04, u — PS04 Lab-2, v — PS05. Example: c13 = Lecture 3, PDF page 13.
+# Pages left out: exact duplicates (b52, c34, d15, d18, d28, d31, d44) and the closing pictures (b55, c45, d45).
+# Section «Foundations» is NOT from the presentations: it was added for beginners; every record there has web sources.
+# IDs start with «ct-».
 
 course:
   id: circuits
-  title: "Circuit Theory"
+  title: Circuit Theory
   owner: Husniddin
-  language: ru
+  language: en
 
-# файлы-источники (PDF, фото, презентации): id, title, fileName, kind, pdfPages, sha256, pagePrefix, notes
-sourceFiles: []
+sourceFiles:
+  - { id: ct-lec1, title: 'Lecture 1. Basic concepts of electrical circuits', fileName: '01 - L1_Basic_concepts_PPT_for_students.pdf', kind: pdf, pdfPages: 22, sha256: 58752c7a0fcde2ee, pagePrefix: a, pageLabel: 'L1·', notes: ['22 slides; several slides are pictures (atoms, water analogy).'] }
+  - { id: ct-lec2, title: 'Lecture 2. Electrical components and basic laws', fileName: '02 - L2_Basic_Laws.pdf', kind: pdf, pdfPages: 55, sha256: 3f941bce2f43e6ca, pagePrefix: b, pageLabel: 'L2·', notes: ['55 slides; worked examples are at the end of the file (slides 32–54).'] }
+  - { id: ct-lec3, title: 'Lecture 3. Methods of analysis', fileName: '03 - L3_Method of Analysis.pdf', kind: pdf, pdfPages: 45, sha256: 7843f8f0d63a7c1b, pagePrefix: c, pageLabel: 'L3·', notes: ['Some example slides are empty grids: those examples were solved in class; the app gives worked solutions.'] }
+  - { id: ct-lec4, title: 'Lecture 4. Circuit theorems', fileName: '04 - L4_Circuit theorems.pdf', kind: pdf, pdfPages: 45, sha256: bd77a8f8c7c6b0e9, pagePrefix: d, pageLabel: 'L4·', notes: ['Most solution slides are empty grids (solved in class); the solutions in the app were worked out and checked.'] }
+  - { id: ct-lec5, title: 'Lecture 5. The operational amplifier', fileName: '05 - L5_Operational Amplifiers.pdf', kind: pdf, pdfPages: 23, sha256: cdd6bf0e3ed50f96, pagePrefix: e, pageLabel: 'L5·' }
+  - { id: ct-lec6, title: 'Lecture 6. Capacitors and inductors', fileName: '06-L6_Capacitors_and_Inductors.pdf', kind: pdf, pdfPages: 22, sha256: 9589f9e92675da62, pagePrefix: f, pageLabel: 'L6·', notes: ['No text layer: read from the slide images.'] }
+  - { id: ct-ps01, title: 'PS01. Solution of circuits by reduction, voltage and current division', fileName: '01-PS01.pdf', kind: pdf, pdfPages: 4, sha256: f593f2acc23a0f43, pagePrefix: p, pageLabel: 'PS1·' }
+  - { id: ct-ps02, title: 'PS02. Practice session 2', fileName: '02-PS02.pdf', kind: pdf, pdfPages: 5, sha256: f79b79e3c4758bf4, pagePrefix: q, pageLabel: 'PS2·' }
+  - { id: ct-ps03, title: 'PS03. Basic laws: exercises 1–9', fileName: '03-PS03.pdf', kind: pdf, pdfPages: 8, sha256: 2e81c968882092f9, pagePrefix: r, pageLabel: 'PS3·' }
+  - { id: ct-lab1, title: 'PS03 Lab-1. Introduction to lab equipment', fileName: '03_PS03_Lab-1.pdf', kind: pdf, pdfPages: 8, sha256: 2b87b49764489f8d, pagePrefix: s, pageLabel: 'Lab1·' }
+  - { id: ct-ps04, title: 'PS04. Analysis methods and theorems', fileName: '04-PS04.pdf', kind: pdf, pdfPages: 5, sha256: 2996da511290bf62, pagePrefix: t, pageLabel: 'PS4·', notes: ['No text layer and no answers: all answers in the app were worked out and checked.'] }
+  - { id: ct-lab2, title: 'PS04 Lab-2. Series and parallel circuits', fileName: '04_PS04_Lab-2.pdf', kind: pdf, pdfPages: 4, sha256: 22b8a3f7b709bb0d, pagePrefix: u, pageLabel: 'Lab2·' }
+  - { id: ct-ps05, title: 'PS05. Review: basic laws, analysis methods, theorems, op-amp', fileName: 'PS05.pdf', kind: pdf, pdfPages: 8, sha256: 1f3437335f18f242, pagePrefix: v, pageLabel: 'PS5·' }
 
-sections: []
+sections:
+  - { id: ct-sec-start, title: 'Foundations (added for beginners)', status: active }
+  - { id: ct-sec-dc, title: 'Resistive DC circuits', status: active }
+  - { id: ct-sec-adv, title: 'Op-amps and energy-storage elements', status: active }
+  - { id: ct-sec-lab, title: 'Laboratory', status: active }
 
-subsections: []
+subsections:
+  - { id: ct-s0, sectionId: ct-sec-start, title: 'Before you start: units, symbols and maths' }
+  - { id: ct-l1, sectionId: ct-sec-dc, title: 'Lecture 1. Basic concepts' }
+  - { id: ct-l2, sectionId: ct-sec-dc, title: 'Lecture 2. Basic laws' }
+  - { id: ct-l3, sectionId: ct-sec-dc, title: 'Lecture 3. Methods of analysis' }
+  - { id: ct-l4, sectionId: ct-sec-dc, title: 'Lecture 4. Circuit theorems' }
+  - { id: ct-l5, sectionId: ct-sec-adv, title: 'Lecture 5. The operational amplifier' }
+  - { id: ct-l6, sectionId: ct-sec-adv, title: 'Lecture 6. Capacitors and inductors' }
+  - { id: ct-labs, sectionId: ct-sec-lab, title: 'Labs 1–2. Measurements, series and parallel circuits' }
 
 symbols: {}
 
-errata: []
+errata:
+  - id: ct-e01
+    page: a04
+    severity: unclear
+    target: direction of the electric current
+    original: 'Slides L1·4–L1·8: «Electric current = directional motion of electrons»; slide L1·10 asks «What is the direction of the electric current?» without an answer.'
+    issue: 'Circuit analysis uses conventional current: it is defined as the direction in which positive charge would move, i.e. opposite to the motion of electrons in a metal wire. The slides do not state this.'
+    suggestion: 'Add: «the direction of conventional current is opposite to electron flow». In the app this is a separate note with a source (OpenStax University Physics 2, §9.1).'
+  - id: ct-e02
+    page: b31
+    severity: typo
+    target: slide title
+    original: '«APPLICATION LIGHTNING BULBS»'
+    issue: 'Lightning (молния) instead of lighting (освещение).'
+    suggestion: '«Application: lighting bulbs».'
+  - id: ct-e03
+    page: b54
+    severity: note
+    target: rounding in the light-bulb example
+    original: '$I_2 = 5 - 2.222 = 2.778$ A, but $R_2 = 15/2.777^2$ and $R_3 = 10/2.777^2$.'
+    issue: 'The same current is rounded in two different ways (2.778 and 2.777). The results 1.945 Ω and 1.297 Ω are still correct to three digits.'
+    suggestion: 'Use $I_2 = 25/9 \approx 2.778$ A everywhere: $R_2 \approx 1.944$ Ω, $R_3 \approx 1.296$ Ω.'
+  - id: ct-e04
+    page: e05
+    severity: note
+    target: op-amp gain notation
+    original: '$A = 200.000\ (\sim 10^5 \div 10^6)$'
+    issue: 'A dot is used as a thousands separator (European style): 200.000 means two hundred thousand, not two hundred.'
+    suggestion: 'Write $A = 200\,000$ or $2\times10^5$.'
+  - id: ct-e05
+    page: s05
+    severity: note
+    target: percent error formula in the labs
+    original: '$\frac{\text{Measured} - \text{Theoretical}}{\text{Theoretical}} \times 100 = \text{Percent Error}$'
+    issue: 'The formula gives a signed value. Percent error is often reported as an absolute value; a negative result only means that the measured value is below the theoretical one.'
+    suggestion: 'State whether the sign should be kept, or use $\left|\frac{\text{Measured}-\text{Theoretical}}{\text{Theoretical}}\right|\times100\%$.'
+  - id: ct-e06
+    page: q01
+    severity: unclear
+    target: title of PS02
+    original: 'PS02 has the same title as PS01: «Solution of circuits by reduction. Voltage and current division rules».'
+    issue: 'PS02 actually contains other exercises (equivalent resistance of a resistor network and two circuits with sources).'
+    suggestion: 'Rename PS02 according to its content.'
+  - id: ct-e07
+    page: e01
+    severity: typo
+    target: spelling on title slides
+    original: '«Mechanical ad Aerospace Engineering» (L5·1, L6·1), «Indcutors» (L6·1), «CONTRLLED SOURCES» (PS5·5).'
+    issue: 'Spelling mistakes.'
+    suggestion: '«Mechanical and Aerospace Engineering», «Inductors», «Controlled sources».'

@@ -1,0 +1,469 @@
+# Lecture 4. Circuit theorems (slides d01–d43) + PS04 (t03–t05).
+# Solution slides of the examples are empty grids (solved in class): the worked solutions here were computed and checked.
+subsection: ct-l4
+
+topics:
+  - id: ct-l4-superposition
+    title: Superposition theorem
+    pages: [d01, d02, d03, d04, d05, d06, d07, d08, d09, d10, t03]
+    theory:
+      - kind: text
+        title: Why circuit theorems?
+        body: 'Kirchhoff''s laws, nodal and mesh analysis are enough for simple circuits. For large and complex circuits other tools help: **superposition, source transformation, Thevenin''s and Norton''s theorems**.'
+        src: d02
+      - kind: law
+        title: Superposition principle
+        body: 'In a **linear** circuit with two or more independent sources, the voltage across (or current through) an element is the **algebraic sum** of the voltages (currents) due to each independent source acting alone.'
+        src: d03
+      - kind: rule
+        title: How to turn sources off
+        body: |
+          Consider one independent source at a time; all other **independent** sources are turned off:
+          - a voltage source is replaced by $0$ V — a **short circuit**;
+          - a current source is replaced by $0$ A — an **open circuit**.
+          **Dependent sources are left intact**: they are controlled by circuit variables. Disadvantage: superposition may involve more work than a single nodal/mesh analysis.
+        src: d04
+      - kind: rule
+        title: Steps
+        body: |
+          1. Turn off all independent sources except one.
+          2. Find the output (voltage or current) due to that source using the previous techniques.
+          3. Repeat for each of the other independent sources.
+          4. Add all the contributions algebraically.
+        src: d05
+      - kind: note
+        title: Superposition does not apply to power
+        body: 'Power is not linear ($p = i^2R$): find the total current or voltage by superposition first, then compute the power. Adding the powers of the separate contributions gives a wrong result.'
+        src: d03
+        web:
+          - { title: 'University Physics Volume 2, §10.3 Kirchhoff''s Rules', url: 'https://openstax.org/books/university-physics-volume-2/pages/10-3-kirchhoffs-rules', org: OpenStax, checked: '2026-11-02' }
+    examples:
+      - title: 'Superposition, Example 1 (slide L4·5)'
+        given: '$6$ V source with $8\ \Omega$ in series, $4\ \Omega$ (voltage $v$), $3$ A source in parallel.'
+        steps:
+          - '$6$ V alone (current source open): voltage divider $v_1 = 6\cdot\frac{4}{8+4} = 2$ V.'
+          - '$3$ A alone (voltage source shorted): $8\parallel4 = \frac83\ \Omega$, $v_2 = 3\cdot\frac83 = 8$ V.'
+          - '$v = v_1 + v_2$.'
+        answer: '$v = 2 + 8 = 10$ V'
+        src: [d06, d07]
+      - title: 'Superposition with a dependent source, Example 2 (slide L4·6)'
+        given: '$4$ A source, $20$ V source, resistors $2, 3, 1, 5, 4\ \Omega$ and a dependent voltage source $5i_o$.'
+        steps:
+          - '$4$ A alone ($20$ V shorted), mesh analysis: $i_o'' = \frac{52}{17} \approx 3.059$ A.'
+          - '$20$ V alone ($4$ A opened): $i_o'''' = -\frac{60}{17} \approx -3.529$ A.'
+          - 'The dependent source stays in both sub-circuits.'
+        answer: '$i_o = i_o'' + i_o'''' = -\frac{8}{17} \approx -0.4706$ A'
+        src: [d08, d09, d10]
+    questions:
+      - type: numeric
+        cat: problem
+        q: 'Example 1 (L4·5): find $v$ (V).'
+        num: { value: 10, unit: 'V', check: '6*4/12 + 3*(8*4/12)' }
+        hint: '$v_1$ from the 6 V source, $v_2$ from the 3 A source.'
+        explain: '$v_1 = 2$ V, $v_2 = 8$ V, $v = 10$ V.'
+        sol: { method: 'Superposition.', steps: ['6 V alone: $v_1 = 6\cdot4/12 = 2$ V', '3 A alone: $v_2 = 3\cdot(8\parallel4) = 8$ V', '$v = 10$ V'], answer: '10 V' }
+        fromSource: true
+        src: d06
+      - type: numeric
+        cat: problem
+        q: 'Example 1 (L4·5): the contribution $v_2$ of the 3 A source alone (V).'
+        num: { value: 8, unit: 'V', check: '3*8*4/12' }
+        hint: 'Short the voltage source: $8\ \Omega \parallel 4\ \Omega$.'
+        explain: '$v_2 = 3\cdot\frac{8\cdot4}{8+4} = 8$ V.'
+        sol: { method: 'One source at a time.', steps: ['$8\parallel4 = 8/3\ \Omega$', '$v_2 = 3\cdot8/3 = 8$ V'], answer: '8 V' }
+        fromSource: true
+        src: d06
+      - type: numeric
+        cat: problem
+        q: 'Example 2 (L4·6): find $i_o$ (A).'
+        num: { value: -0.4706, unit: 'A', tolAbs: 0.002, check: '-8/17' }
+        hint: '$i_o'' = 52/17$ A, $i_o'''' = -60/17$ A.'
+        explain: '$i_o = (52 - 60)/17 = -8/17 \approx -0.471$ A.'
+        sol: { method: 'Superposition with a dependent source (kept in both sub-circuits).', steps: ['4 A alone: $i_o'' = 52/17$ A', '20 V alone: $i_o'''' = -60/17$ A', '$i_o = -8/17$ A'], answer: '≈ −0.471 A' }
+        fromSource: true
+        src: d08
+      - type: single
+        cat: theory
+        q: 'When applying superposition, a dependent source is'
+        opts: ['left intact', 'replaced by a short circuit', 'replaced by an open circuit', 'removed together with its controlling variable']
+        ans: a
+        hint: 'Slide L4·3.'
+        explain: 'Only independent sources are turned off; dependent sources are controlled by circuit variables.'
+        src: d04
+      - type: matching
+        cat: theory
+        q: 'How is each independent source turned off?'
+        pairs:
+          - ['voltage source', 'short circuit (0 V)']
+          - ['current source', 'open circuit (0 A)']
+        hint: 'Slide L4·3.'
+        explain: 'A 0-V source is a wire; a 0-A source is a break.'
+        src: d04
+      - type: numeric
+        cat: problem
+        q: 'PS04: $I_1 = 2$ A, $I_2 = 4$ A, $E_1 = 120$ V, $E_2 = 80$ V, $R_1 = 10$, $R_2 = 20$, $R_3 = 40\ \Omega$. Find the current $i$ in $R_1$ by superposition (A).'
+        num: { value: -2.2857, unit: 'A', tolAbs: 0.003, check: '12/7 - 8/7 - 12/7 - 8/7' }
+        hint: 'Contributions: $I_1 \to +12/7$, $I_2 \to -8/7$, $E_1 \to -12/7$, $E_2 \to -8/7$ A.'
+        explain: '$i = \frac{12 - 8 - 12 - 8}{7} = -\frac{16}{7} \approx -2.29$ A; a single nodal analysis gives the same value. (No answer on the sheet; computed here.)'
+        sol: { method: 'Superposition (four sub-circuits).', steps: ['$I_1$ alone: $+12/7$ A', '$I_2$ alone: $-8/7$ A', '$E_1$ alone: $-12/7$ A', '$E_2$ alone: $-8/7$ A', 'Sum: $-16/7 \approx -2.29$ A'], answer: '≈ −2.29 A' }
+        fromSource: true
+        src: t03
+      - type: single
+        cat: theory
+        q: 'Can the power in a resistor be found by adding the powers due to each source acting alone?'
+        opts: ['No — power is not linear; add currents or voltages first', 'Yes, always', 'Only for DC sources', 'Only when there are two sources']
+        ans: a
+        hint: '$(i_1 + i_2)^2 \ne i_1^2 + i_2^2$.'
+        explain: 'Superposition holds for linear quantities (voltages and currents), not for power.'
+        src: d03
+
+  - id: ct-l4-source-transform
+    title: Source transformation
+    pages: [d11, d12, d13, d14, d16, d17]
+    theory:
+      - kind: law
+        title: Source transformation
+        body: |
+          A **source transformation** replaces a voltage source $v_s$ in series with a resistor $R$ by a current source $i_s$ in parallel with the same $R$, or vice versa:
+          $v_s = i_sR \quad\Leftrightarrow\quad i_s = \frac{v_s}{R}$.
+          Both networks give the same voltage and current at terminals $a$–$b$. Like series–parallel combination and Δ–Y transformation, it is a tool for simplifying circuits.
+        src: [d11, d12]
+      - kind: rule
+        title: Notes
+        body: |
+          1. The arrow of the current source is directed **toward the positive terminal** of the voltage source.
+          2. Transformation is not possible when $R = 0$ (ideal voltage source) or $R = \infty$ (ideal current source).
+          3. It also works for dependent sources, as long as the controlling variable stays in the circuit.
+        src: d12
+    formulas:
+      - title: Source transformation
+        tex: 'v_s = i_s R, \qquad i_s = \frac{v_s}{R}'
+        src: d11
+    examples:
+      - title: 'Source transformation, Example 1 (slide L4·9)'
+        given: '$4\ \Omega$, $3$ A source (pointing down), $2\ \Omega$, $8\ \Omega$ ($v_o$), $3\ \Omega$, $12$ V source.'
+        steps:
+          - '$3$ A $\parallel 4\ \Omega$ → $12$ V source in series with $4\ \Omega$; add $2\ \Omega$: $6\ \Omega$ → back to a $2$ A source $\parallel 6\ \Omega$.'
+          - '$12$ V in series with $3\ \Omega$ → $4$ A source $\parallel 3\ \Omega$ (opposite direction).'
+          - 'Combine: net $4 - 2 = 2$ A, $6\parallel3 = 2\ \Omega$; current divider into $8\ \Omega$: $i = 2\cdot\frac{2}{2+8} = 0.4$ A.'
+        answer: '$v_o = 8\cdot0.4 = 3.2$ V (checked by nodal analysis)'
+        src: [d13, d14, d16]
+      - title: 'With a dependent source, Example 2 (slide L4·10)'
+        given: '$6$ V, $2\ \Omega$, $2\ \Omega$ ($v_x$), $4\ \Omega$ with a dependent current source $0.25v_x$, $18$ V.'
+        steps:
+          - '$6$ V + $2\ \Omega$ → $3$ A $\parallel 2\ \Omega$; with the other $2\ \Omega$: $1\ \Omega$ → $3$ V source + $1\ \Omega$.'
+          - '$0.25v_x \parallel 4\ \Omega$ → dependent voltage source $4\cdot0.25v_x = v_x$ in series with $4\ \Omega$.'
+          - 'Loop: $-3 + 5i + v_x + 18 = 0$ and $v_x = 3 - i$ ⇒ $4i = -18$, $i = -4.5$ A.'
+        answer: '$v_x = 3 - (-4.5) = 7.5$ V'
+        src: [d16, d17]
+    questions:
+      - type: numeric
+        cat: problem
+        q: 'A $12$ V source in series with $3\ \Omega$ is transformed into a current source in parallel with $3\ \Omega$. Find $i_s$ (A).'
+        num: { value: 4, unit: 'A', check: '12/3' }
+        hint: '$i_s = v_s/R$.'
+        explain: '$12/3 = 4$ A, arrow toward the «+» terminal.'
+        sol: { method: 'Source transformation.', steps: ['$i_s = 12/3 = 4$ A'], answer: '4 A' }
+        src: d11
+      - type: numeric
+        cat: problem
+        q: 'Example 1 (L4·9): find $v_o$ (V).'
+        num: { value: 3.2, unit: 'V', check: '8*2*2/(2+8)' }
+        hint: 'Reduce to a $2$ A source with $2\ \Omega$ in parallel with $8\ \Omega$.'
+        explain: '$i_{8} = 0.4$ A, $v_o = 3.2$ V.'
+        sol: { method: 'Repeated source transformations.', steps: ['left part → 2 A ∥ 6 Ω', 'right part → 4 A ∥ 3 Ω', 'net 2 A, 2 Ω ∥ 8 Ω: $i = 0.4$ A', '$v_o = 3.2$ V'], answer: '3.2 V' }
+        fromSource: true
+        src: d13
+      - type: numeric
+        cat: problem
+        q: 'Example 2 (L4·10): find $v_x$ (V).'
+        num: { value: 7.5, unit: 'V', check: '3+4.5' }
+        hint: '$-3 + 5i + v_x + 18 = 0$, $v_x = 3 - i$.'
+        explain: '$i = -4.5$ A, $v_x = 7.5$ V.'
+        sol: { method: 'Transform, then one KVL.', steps: ['$-3 + 5i + (3 - i) + 18 = 0$', '$i = -4.5$ A', '$v_x = 7.5$ V'], answer: '7.5 V' }
+        fromSource: true
+        src: d16
+      - type: single
+        cat: theory
+        q: 'Source transformation is NOT possible for'
+        opts: ['an ideal voltage source ($R = 0$)', 'a voltage source with $R = 5\ \Omega$', 'a dependent source', 'a current source with $R = 10\ \Omega$ in parallel']
+        ans: a
+        hint: 'Slide L4·8, note 2.'
+        explain: 'With $R = 0$ the current $v_s/R$ would be infinite; similarly an ideal current source ($R = \infty$) cannot be replaced.'
+        src: d12
+      - type: single
+        cat: theory
+        q: 'After the transformation, the current-source arrow points'
+        opts: ['toward the positive terminal of the original voltage source', 'toward the negative terminal', 'always downward', 'in either direction']
+        ans: a
+        hint: 'Note 1 on slide L4·8.'
+        explain: 'This keeps the terminal behaviour identical.'
+        src: d12
+
+  - id: ct-l4-thevenin
+    title: Thevenin's theorem
+    pages: [d19, d20, d21, d22, d23, d24, d25, d26, d27, d29, d30, t04]
+    theory:
+      - kind: text
+        title: Motivation
+        body: 'Often one element (the **load**) is variable while the rest is fixed — e.g. a household outlet with different appliances. Re-analysing the whole circuit for every load is wasteful; Thevenin''s theorem replaces the fixed part by a simple equivalent circuit.'
+        src: d19
+      - kind: law
+        title: Thevenin's theorem
+        body: |
+          A linear two-terminal circuit can be replaced by an equivalent circuit consisting of a voltage source $V_{Th}$ in series with a resistor $R_{Th}$:
+          - $V_{Th}$ is the **open-circuit voltage** $v_{oc}$ at the terminals;
+          - $R_{Th}$ is the input (equivalent) resistance at the terminals when the independent sources are turned off.
+        src: [d20, d21]
+      - kind: rule
+        title: Finding $R_{Th}$
+        body: |
+          **Case 1 — no dependent sources:** turn off all independent sources; $R_{Th}$ is the input resistance seen from $a$–$b$.
+
+          **Case 2 — dependent sources present:** turn off the independent sources (dependent ones stay), apply a test voltage $v_o$ (or test current $i_o$) at $a$–$b$ and compute the other quantity: $R_{Th} = \frac{v_o}{i_o}$. Any value can be assumed ($v_o = 1$ V or $i_o = 1$ A). $R_{Th}$ may come out negative: the circuit then supplies power ($v = -iR$).
+        src: [d22, d23, d24]
+      - kind: law
+        title: Load current and voltage
+        body: 'With the Thevenin equivalent: $I_L = \frac{V_{Th}}{R_{Th} + R_L}$, $V_L = R_LI_L = \frac{R_L}{R_{Th} + R_L}V_{Th}$.'
+        src: d25
+    formulas:
+      - title: Load current
+        tex: 'I_L = \frac{V_{Th}}{R_{Th} + R_L}'
+        src: d25
+      - title: Load voltage
+        tex: 'V_L = \frac{R_L}{R_{Th} + R_L}\,V_{Th}'
+        src: d25
+      - title: Thevenin resistance with a test source
+        tex: 'R_{Th} = \frac{v_o}{i_o}'
+        src: d23
+    examples:
+      - title: 'Thevenin, Example 1 (slide L4·18)'
+        given: '$32$ V, $4\ \Omega$, $12\ \Omega$, $2$ A source, $1\ \Omega$; load $R_L = 6, 16, 36\ \Omega$.'
+        steps:
+          - '$R_{Th}$: sources off ⇒ $4\parallel12 + 1 = 3 + 1 = 4\ \Omega$.'
+          - '$V_{Th}$: node voltage $v$ with $a$–$b$ open: $\frac{32 - v}{4} + 2 = \frac{v}{12} \Rightarrow v = 30$ V ($1\ \Omega$ carries no current).'
+          - '$I_L = \frac{30}{4 + R_L}$: $3$ A, $1.5$ A, $0.75$ A.'
+        answer: '$V_{Th} = 30$ V, $R_{Th} = 4\ \Omega$; $I_L = 3$, $1.5$, $0.75$ A'
+        src: [d26, d27]
+      - title: 'Thevenin with a dependent source, Example 2 (slide L4·19)'
+        given: '$5$ A source, $4\ \Omega$ ($v_x$), $2\ \Omega$ with a dependent voltage source $2v_x$ across it, $6\ \Omega$, $2\ \Omega$ to terminal $a$.'
+        steps:
+          - 'The source fixes the voltage of the $2\ \Omega$ resistor: the right node is at $3v_x$.'
+          - 'Open circuit: KCL for the two nodes together: $5 = \frac{v_x}{4} + \frac{3v_x}{6} \Rightarrow v_x = \frac{20}{3}$ V, $V_{Th} = 3v_x = 20$ V.'
+          - '$R_{Th}$ (5 A off, test current $i_o$ into $a$): $i_o = \frac{v_x}{4} + \frac{3v_x}{6}$, $v_a = 3v_x + 2i_o \Rightarrow R_{Th} = 6\ \Omega$.'
+        answer: '$V_{Th} = 20$ V, $R_{Th} = 6\ \Omega$'
+        src: [d29, d30]
+    questions:
+      - type: numeric
+        cat: problem
+        q: 'Thevenin Example 1 (L4·18): find $V_{Th}$ (V).'
+        num: { value: 30, unit: 'V', check: '(8+2)*3' }
+        hint: '$\frac{32 - v}{4} + 2 = \frac{v}{12}$.'
+        explain: '$v = 30$ V.'
+        sol: { method: 'Open-circuit voltage by nodal analysis.', steps: ['$8 - v/4 + 2 = v/12$', '$10 = v/3$', '$V_{Th} = 30$ V'], answer: '30 V' }
+        fromSource: true
+        src: d26
+      - type: numeric
+        cat: problem
+        q: 'Thevenin Example 1: find the load current for $R_L = 16\ \Omega$ (A).'
+        num: { value: 1.5, unit: 'A', check: '30/(4+16)' }
+        hint: '$I_L = V_{Th}/(R_{Th} + R_L)$.'
+        explain: '$30/20 = 1.5$ A.'
+        sol: { method: 'Thevenin equivalent with load.', steps: ['$I_L = 30/(4+16) = 1.5$ A'], answer: '1.5 A' }
+        fromSource: true
+        src: d26
+      - type: numeric
+        cat: problem
+        q: 'Thevenin Example 2 (L4·19): find $R_{Th}$ (Ω).'
+        num: { value: 6, unit: 'Ω', check: '6' }
+        hint: 'Test source: the right node stays at $3v_x$.'
+        explain: '$i_o = v_x/4 + v_x/2 = 3v_x/4$, $v_a = 3v_x + 2i_o = 6i_o$, so $R_{Th} = 6\ \Omega$; $V_{Th} = 20$ V.'
+        sol: { method: 'Case 2: test current.', steps: ['$i_o = \frac{v_x}{4} + \frac{3v_x}{6} = \frac{3v_x}{4}$', '$v_a = 3v_x + 2i_o = 4i_o + 2i_o$', '$R_{Th} = 6\ \Omega$'], answer: '6 Ω' }
+        fromSource: true
+        src: d29
+      - type: single
+        cat: theory
+        q: '$V_{Th}$ is'
+        opts: ['the open-circuit voltage at the terminals', 'the short-circuit current times the load', 'the source voltage of the circuit', 'the voltage across the load in every case']
+        ans: a
+        hint: 'Slide L4·12.'
+        explain: '$V_{Th} = v_{oc}$; $R_{Th}$ is the resistance seen with independent sources off.'
+        src: d20
+      - type: single
+        cat: theory
+        q: 'If the circuit contains dependent sources, $R_{Th}$ is found by'
+        opts: ['applying a test source $v_o$ or $i_o$ and computing $v_o/i_o$', 'turning off the dependent sources too', 'series–parallel reduction only', 'it cannot be found']
+        ans: a
+        hint: 'Case 2.'
+        explain: 'Dependent sources stay; a test source excites the circuit.'
+        src: d23
+      - type: numeric
+        cat: problem
+        q: 'PS04: the resistor $R$ between A and B sees on the left a $10$ V source with $2\ \Omega$ in series and $2\ \Omega$ to ground, on the right $4\ \Omega$ to ground and a $5$ A source into node B. Find $R_{Th}$ of the one-port connected to $R$ (Ω).'
+        num: { value: 5, unit: 'Ω', check: '2*2/4 + 4' }
+        hint: 'Sources off: $2\parallel2$ on the left, $4\ \Omega$ on the right, in series through ground.'
+        explain: '$R_{Th} = 1 + 4 = 5\ \Omega$; $V_{Th} = v_A - v_B = 5 - 20 = -15$ V, so $i_R = -\frac{15}{5 + R}$ A (from A to B). (No answer on the sheet.)'
+        sol: { method: 'Thevenin equivalent seen by $R$.', steps: ['left: $5$ V behind $1\ \Omega$', 'right: $5\ \text{A}\cdot4\ \Omega = 20$ V behind $4\ \Omega$', '$V_{Th} = 5 - 20 = -15$ V, $R_{Th} = 5\ \Omega$', '$i_R = -15/(5 + R)$'], answer: '5 Ω' }
+        fromSource: true
+        src: t04
+      - type: single
+        cat: problem
+        q: 'PS04 (same circuit): the current $i_R$ (from A to B) is'
+        opts: ['$i_R = -\dfrac{15}{5 + R}$ A', '$i_R = \dfrac{15}{5 + R}$ A', '$i_R = \dfrac{25}{5 + R}$ A', '$i_R = -\dfrac{15}{R}$ A']
+        ans: a
+        hint: '$V_{Th} = -15$ V, $R_{Th} = 5\ \Omega$.'
+        explain: 'Thevenin: $i_R = V_{Th}/(R_{Th} + R)$; B is at a higher potential, so the current flows from B to A.'
+        fromSource: true
+        src: t04
+
+  - id: ct-l4-norton
+    title: Norton's theorem
+    pages: [d32, d33, d34, d35, d36, d37, d38, t05]
+    theory:
+      - kind: law
+        title: Norton's theorem
+        body: |
+          A linear two-terminal circuit can be replaced by an equivalent circuit consisting of a current source $I_N$ in parallel with a resistor $R_N$:
+          - $I_N$ is the **short-circuit current** through the terminals;
+          - $R_N$ is the input (equivalent) resistance at the terminals when the independent sources are turned off.
+        src: d32
+      - kind: law
+        title: Thevenin–Norton transformation
+        body: '$R_N = R_{Th}$ and $I_N = \frac{V_{Th}}{R_{Th}}$ — the Norton equivalent is the source transformation of the Thevenin equivalent. Any two of $v_{oc}$, $i_{sc}$, $R_{Th}$ determine the third: $R_{Th} = \frac{v_{oc}}{i_{sc}}$.'
+        src: [d33, d34]
+    formulas:
+      - title: Norton current
+        tex: 'I_N = i_{sc} = \frac{V_{Th}}{R_{Th}}'
+        src: d34
+      - title: Norton resistance
+        tex: 'R_N = R_{Th}'
+        src: d33
+    examples:
+      - title: 'Norton, Example 1 (slide L4·23)'
+        given: '$2$ A source, $4\ \Omega$ with a $12$ V source, $8\ \Omega$ (top), $8\ \Omega$ (bottom), $5\ \Omega$ across $a$–$b$.'
+        steps:
+          - '$R_N$: sources off ⇒ $5\parallel(8 + 4 + 8) = 5\parallel20 = 4\ \Omega$.'
+          - '$I_N$: short $a$–$b$ (the $5\ \Omega$ is shorted) and solve the remaining circuit (e.g. by mesh analysis): $i_{sc} = 1$ A.'
+          - 'Check: $V_{Th} = I_NR_N = 4$ V.'
+        answer: '$R_N = 4\ \Omega$, $I_N = 1$ A'
+        src: [d35, d36]
+      - title: 'Norton with a dependent source, Example 2 (slide L4·24)'
+        given: '$4\ \Omega$ (current $i_x$), $10$ V source, $5\ \Omega$ to $a$, dependent current source $2i_x$ in parallel with the $5\ \Omega$.'
+        steps:
+          - 'The $4\ \Omega$ is directly across the $10$ V source: $i_x = 10/4 = 2.5$ A.'
+          - 'Short $a$–$b$: $i_{sc} = \frac{10}{5} + 2i_x = 2 + 5 = 7$ A.'
+          - '$R_N$: $10$ V off ⇒ $i_x = 0$, the dependent source is $0$, only $5\ \Omega$ remains.'
+        answer: '$R_N = 5\ \Omega$, $I_N = 7$ A'
+        src: [d37, d38]
+    questions:
+      - type: numeric
+        cat: problem
+        q: 'Norton Example 1 (L4·23): find $R_N$ (Ω).'
+        num: { value: 4, unit: 'Ω', check: '5*20/25' }
+        hint: '$5\parallel(8+4+8)$.'
+        explain: '$5\cdot20/25 = 4\ \Omega$.'
+        sol: { method: 'Sources off, input resistance.', steps: ['$8 + 4 + 8 = 20\ \Omega$', '$5\parallel20 = 4\ \Omega$'], answer: '4 Ω' }
+        fromSource: true
+        src: d35
+      - type: numeric
+        cat: problem
+        q: 'Norton Example 2 (L4·24): find $I_N$ (A).'
+        num: { value: 7, unit: 'A', check: '10/5 + 2*10/4' }
+        hint: '$i_x = 2.5$ A.'
+        explain: '$I_N = 10/5 + 2\cdot2.5 = 7$ A, $R_N = 5\ \Omega$.'
+        sol: { method: 'Short-circuit current.', steps: ['$i_x = 10/4 = 2.5$ A', '$i_{sc} = 2 + 2i_x = 7$ A'], answer: '7 A' }
+        fromSource: true
+        src: d37
+      - type: numeric
+        cat: problem
+        q: 'A circuit has $V_{Th} = 30$ V and $R_{Th} = 4\ \Omega$. Find $I_N$ (A).'
+        num: { value: 7.5, unit: 'A', check: '30/4' }
+        hint: '$I_N = V_{Th}/R_{Th}$.'
+        explain: '$30/4 = 7.5$ A, $R_N = 4\ \Omega$.'
+        sol: { method: 'Thevenin–Norton transformation.', steps: ['$I_N = 30/4 = 7.5$ A'], answer: '7.5 A' }
+        src: d34
+      - type: numeric
+        cat: problem
+        q: 'PS04: derive the Norton equivalent at $a$–$b$ ($50$ V battery, $10\ \Omega$, $1.5$ A source, $10\ \Omega$, $20\ \Omega$ across $a$–$b$, $10$ V battery in the bottom wire with «+» toward $b$). Find $I_N$ (A).'
+        num: { value: 2.75, unit: 'A', check: '(37.5-10)/10' }
+        hint: 'Short $a$–$b$: then $v_a = v_b = 10$ V; KCL at the middle node: $\frac{50 - v}{10} + 1.5 = \frac{v - 10}{10}$.'
+        explain: '$v = 37.5$ V, $I_N = \frac{37.5 - 10}{10} = 2.75$ A; $R_N = (10 + 10)\parallel20 = 10\ \Omega$; check $V_{Th} = 27.5$ V. (No answer on the sheet; computed here.)'
+        sol: { method: 'Short-circuit current and input resistance.', steps: ['short: $v_a = v_b = 10$ V', 'middle node: $(50 - v)/10 + 1.5 = (v - 10)/10 \Rightarrow v = 37.5$ V', '$I_N = 2.75$ A', '$R_N = 20\parallel20 = 10\ \Omega$'], answer: '2.75 A' }
+        fromSource: true
+        src: t05
+      - type: single
+        cat: theory
+        q: '$I_N$ in Norton''s theorem is'
+        opts: ['the short-circuit current through the terminals', 'the open-circuit voltage divided by the load', 'the current of the largest source', 'always equal to the load current']
+        ans: a
+        hint: 'Slide L4·20.'
+        explain: '$I_N = i_{sc}$; $R_N = R_{Th}$.'
+        src: d32
+
+  - id: ct-l4-max-power
+    title: Maximum power transfer
+    pages: [d39, d40, d41, d42, d43]
+    theory:
+      - kind: law
+        title: Maximum power transfer
+        fig: ct-max-power
+        body: |
+          A circuit is often designed to deliver power to a load (e.g. in communications). With the Thevenin equivalent, the load power is
+          $p = i^2R_L = \left(\frac{V_{Th}}{R_{Th} + R_L}\right)^2 R_L$.
+          **Maximum power is transferred when the load resistance equals the Thevenin resistance: $R_L = R_{Th}$.** Then $p_{\max} = \frac{V_{Th}^2}{4R_{Th}}$.
+        src: d39
+      - kind: text
+        title: Proof
+        body: 'Differentiate $p$ with respect to $R_L$: $\frac{dp}{dR_L} = V_{Th}^2\left[\frac{(R_{Th}+R_L)^2 - 2R_L(R_{Th}+R_L)}{(R_{Th}+R_L)^4}\right] = V_{Th}^2\frac{R_{Th} - R_L}{(R_{Th}+R_L)^3} = 0 \Rightarrow R_L = R_{Th}$.'
+        src: d40
+    formulas:
+      - title: Condition for maximum power
+        tex: 'R_L = R_{Th}'
+        src: d40
+      - title: Maximum power
+        tex: 'p_{\max} = \frac{V_{Th}^2}{4R_{Th}}'
+        src: d39
+    examples:
+      - title: 'Maximum power transfer, Example 1 (slide L4·27)'
+        given: '$12$ V, $6\ \Omega$, $12\ \Omega$, $3\ \Omega$, $2$ A source, $2\ \Omega$, load $R_L$.'
+        steps:
+          - '$R_{Th} = 6\parallel12 + 3 + 2 = 4 + 5 = 9\ \Omega$.'
+          - '$V_{Th}$ (by nodal analysis or superposition) $= 22$ V.'
+          - '$R_L = R_{Th} = 9\ \Omega$; $p_{\max} = \frac{22^2}{4\cdot9} = 13.44$ W.'
+        answer: '$R_L = 9\ \Omega$, $p_{\max} = 13.44$ W'
+        src: [d41, d42, d43]
+    questions:
+      - type: numeric
+        cat: problem
+        q: 'Example 1 (L4·27): find $R_L$ for maximum power transfer (Ω).'
+        num: { value: 9, unit: 'Ω', check: '6*12/18+3+2' }
+        hint: '$R_L = R_{Th}$.'
+        explain: '$R_{Th} = 4 + 3 + 2 = 9\ \Omega$.'
+        sol: { method: 'Thevenin resistance.', steps: ['$6\parallel12 = 4$', '$R_{Th} = 4 + 3 + 2 = 9\ \Omega$'], answer: '9 Ω' }
+        fromSource: true
+        src: d41
+      - type: numeric
+        cat: problem
+        q: 'Example 1: with $V_{Th} = 22$ V, find the maximum power (W).'
+        num: { value: 13.44, unit: 'W', tolAbs: 0.01, check: '22**2/36' }
+        hint: '$p_{\max} = V_{Th}^2/(4R_{Th})$.'
+        explain: '$484/36 = 13.44$ W.'
+        sol: { method: 'Maximum power formula.', steps: ['$p_{\max} = 22^2/(4\cdot9) = 13.44$ W'], answer: '13.44 W' }
+        fromSource: true
+        src: d42
+      - type: numeric
+        cat: problem
+        q: 'A source has $V_{Th} = 30$ V, $R_{Th} = 4\ \Omega$. Find the maximum power it can deliver (W).'
+        num: { value: 56.25, unit: 'W', check: '900/16' }
+        hint: '$V_{Th}^2/(4R_{Th})$.'
+        explain: '$900/16 = 56.25$ W at $R_L = 4\ \Omega$.'
+        sol: { method: 'Maximum power formula.', steps: ['$p_{\max} = 30^2/16 = 56.25$ W'], answer: '56.25 W' }
+        src: d39
+      - type: single
+        cat: theory
+        q: 'Maximum power is delivered to the load when'
+        opts: ['$R_L = R_{Th}$', '$R_L = 0$', '$R_L \to \infty$', '$R_L = 2R_{Th}$']
+        ans: a
+        hint: 'Set $dp/dR_L = 0$.'
+        explain: 'At $R_L = R_{Th}$ the derivative vanishes; the efficiency is then 50 %.'
+        src: d40

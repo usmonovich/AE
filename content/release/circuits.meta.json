@@ -1,8 +1,8 @@
 {
   "sourcePack": "content/subjects/circuits/pack.json",
-  "sourceSha256": "f7331c2bf03d9c9bef67e80500f05a8e42ac091fcddb16d311d2103aa62619c1",
-  "overlay": null,
-  "createdAt": "2026-10-30T20:46:59.545Z",
+  "sourceSha256": "9ac30351d9184d1039d9675f411cf6bc28e627bdc2339716a2d2272738adb06b",
+  "overlay": "content/release/overlays/circuits",
+  "createdAt": "2026-11-02T05:18:36.689Z",
   "kept": {
     "theory": 0,
     "formulas": 0,

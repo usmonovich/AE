@@ -28,7 +28,7 @@
       "tone": "warn",
       "title": "Circuit Theory",
       "short": "Circuit Theory",
-      "tagline": "Теория электрических цепей",
+      "tagline": "Законы цепей, методы анализа, теоремы, операционные усилители, конденсаторы и катушки (материал на английском)",
       "style": "notes",
       "vocab": "materials"
     },
