@@ -1,8 +1,8 @@
 {
   "sourcePack": "content/subjects/hpm/pack.json",
-  "sourceSha256": "f2bff4ac434ef716d4da1f4329cf7dae0a5550d5b48e32d4a7b119aa3418f5f5",
-  "overlay": null,
-  "createdAt": "2026-10-30T20:46:59.547Z",
+  "sourceSha256": "37262d2a1fb6d5ee262ecfbc66874a51e2291dbe6b9a525730beee6c3b5a72f1",
+  "overlay": "content/release/overlays/hpm",
+  "createdAt": "2026-11-04T04:45:41.206Z",
   "kept": {
     "theory": 0,
     "formulas": 0,
