@@ -20,3 +20,4 @@ content/subjects/*/transcript/
 content/subjects/*/originals/
 # служебные скрипты разработки
 tools/dev/
+__pycache__/

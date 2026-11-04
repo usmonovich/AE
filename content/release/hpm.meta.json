@@ -2,11 +2,11 @@
   "sourcePack": "content/subjects/hpm/pack.json",
   "sourceSha256": "37262d2a1fb6d5ee262ecfbc66874a51e2291dbe6b9a525730beee6c3b5a72f1",
   "overlay": "content/release/overlays/hpm",
-  "createdAt": "2026-11-04T04:45:41.206Z",
+  "createdAt": "2026-11-04T15:29:06.824Z",
   "kept": {
-    "theory": 0,
-    "formulas": 0,
-    "examples": 0,
-    "questions": 0
+    "theory": 148,
+    "formulas": 7,
+    "examples": 5,
+    "questions": 205
   }
 }

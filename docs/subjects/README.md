@@ -8,7 +8,7 @@
 | 🧠 | Aviation Psychology and Crew Resource Management (CRM) | `crm` | `#/crm` · ID `crm-…` | notes | темы 1–8 из 14 (22 темы, 136 вопросов), утверждено и опубликовано | [журнал](crm.md) · [отчёт](crm-report.md) |
 | ⚡ | Circuit Theory | `circuits` | `#/ct` · ID `ct-…` | notes | лекции 1–6, практики и лабораторные (30 тем, 181 вопрос), утверждено и опубликовано | [журнал](circuits.md) · [отчёт](circuits-report.md) |
 | 💰 | Cost Engineering | `cost` | `#/ce` · ID `ce-…` | notes | курс готовится | [журнал](cost.md) · [отчёт](cost-report.md) |
-| 🩺 | Human Performance and Medicine | `hpm` | `#/hpm` · ID `hpm-…` | notes | лекции 1–7 (31 тема, 205 вопросов) — на проверке у владельца | [журнал](hpm.md) · [отчёт](hpm-report.md) |
+| 🩺 | Human Performance and Medicine | `hpm` | `#/hpm` · ID `hpm-…` | notes | лекции 1–7 (31 тема, 205 вопросов), утверждено и опубликовано | [журнал](hpm.md) · [отчёт](hpm-report.md) |
 | 💧 | Hydraulics and Hydraulic Systems | `hydraulics` | `#/hyd` · ID `hyd-…` | notes | курс готовится | [журнал](hydraulics.md) · [отчёт](hydraulics-report.md) |
 | 📐 | Mathematics III | `math3` | `#/m3` · ID `m3-…` | notes | лекции 1–8 (30 тем, 206 вопросов), утверждено и опубликовано | [журнал](math3.md) · [отчёт](math3-report.md) |
 | ⚙️ | Mechanics | `mechanics` | `#/mech` · ID `mech-…` | notes | курс готовится | [журнал](mechanics.md) · [отчёт](mechanics-report.md) |
