@@ -50,3 +50,10 @@ h02.webp
 h03.webp
 h04.webp
 h05.webp
+i01.webp
+i02.webp
+i03.webp
+i04.webp
+i05.webp
+i06.webp
+i07.webp
