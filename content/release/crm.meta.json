@@ -1,8 +1,8 @@
 {
   "sourcePack": "content/subjects/crm/pack.json",
-  "sourceSha256": "b780f62c102afe1e4b3a4a099512b001642aa973cc01bc70c89d7068a0727904",
+  "sourceSha256": "31f4f833530cc36cc6ed23a5d8e9d17592991abf582554bd52b96e3fe26455ed",
   "overlay": "content/release/overlays/crm",
-  "createdAt": "2026-11-06T16:28:07.278Z",
+  "createdAt": "2026-11-10T15:51:30.137Z",
   "kept": {
     "theory": 96,
     "formulas": 2,
