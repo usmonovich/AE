@@ -2,11 +2,11 @@
   "sourcePack": "content/subjects/crm/pack.json",
   "sourceSha256": "31f4f833530cc36cc6ed23a5d8e9d17592991abf582554bd52b96e3fe26455ed",
   "overlay": "content/release/overlays/crm",
-  "createdAt": "2026-11-10T15:51:30.137Z",
+  "createdAt": "2026-11-10T16:31:36.902Z",
   "kept": {
-    "theory": 96,
+    "theory": 127,
     "formulas": 2,
     "examples": 2,
-    "questions": 136
+    "questions": 181
   }
 }
